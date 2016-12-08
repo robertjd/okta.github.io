@@ -317,10 +317,10 @@ $(function() {
 			isMobile = window.getComputedStyle(document.body,':before').content.includes("toc-mobile");
 
 			if (isMobile) {
-                $toc.scrollLock('disable');
+        		$toc.scrollLock('disable');
 			}
 			else {
-                $toc.scrollLock('enable');
+				$toc.scrollLock('enable');
 			}
 		});
 		$(window).on('scroll', onScroll);
