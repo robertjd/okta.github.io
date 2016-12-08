@@ -179,7 +179,7 @@ $(function() {
 			// Defined in _sass/okta/components/_Sidebar.scss
 			// See also: _source/_sass/okta/_/base/_variables.scss:66
 			if (! isMobile) {
-                $toc.scrollLock('enable');
+				$toc.scrollLock('enable');
 			}
 		};
 
