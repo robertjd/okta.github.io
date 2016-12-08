@@ -1,5 +1,5 @@
 ---
-layout: legal_notice
+layout: plain
 title: Okta Windows Shared product
 ---
 
@@ -16,10 +16,10 @@ THIRD PARTY NOTICES
 
 _Apache Ant Contrib_
 
-  VERSION (IF ANY):     1.0b3
-  --------------------- -------------------------------------------------------
+  |VERSION (IF ANY):|     1.0b3|
+  |-
   0BRIEF DESCRIPTION:   A home for additional useful tasks and types for Ant.
-  LICENSE:              Apache 2.0
+  |LICENSE:|              Apache 2.0|
 
 Copyright (c) 2004 Ant-Contrib project. All rights reserved.
 
@@ -43,10 +43,10 @@ _*Modifications by Okta, Inc._
 
 _CodeProject Article, "The MFC CDHtmlDialog class"_
 
-  VERSION (IF ANY):
-  -------------------- ------
-  BRIEF DESCRIPTION:
-  LICENSE:             CPOL
+  |VERSION (IF ANY):||
+  |-
+  |BRIEF DESCRIPTION:||
+  |LICENSE:|             CPOL|
 
 License
 

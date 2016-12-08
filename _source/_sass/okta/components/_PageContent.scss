@@ -1,9 +1,10 @@
 .PageContent {
 	@extend %Wrap;
-	@include padding(0);
+	@include padding(large 0);
 	box-sizing: border-box;
 	display: flex;
 	max-width: $site-width + get-spacing('medium') * 2;
+	overflow: hidden;
 	position: relative;
 	width: 100%;
 	z-index: 10;
@@ -17,7 +18,7 @@
     }
 
 	&-main {
-		@include padding(large);
+		@include padding(0 large);
 		flex-grow: 1;
 
 		header {

@@ -236,6 +236,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/events.html">Events</a></li>
 		     
 		     
@@ -343,7 +346,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/factors.html">Factors (MFA)</a></li>
+		     
+		     
+		     
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/factors.html">Factors</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -399,6 +411,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/groups.html">Groups</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -565,6 +580,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/roles.html">Admin Roles</a></li>
 		     
 		     
@@ -620,7 +641,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/schemas.html">Schemas</a></li>
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/schemas.html">Schemas API</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -678,6 +705,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/system_log.html">System Log (Beta)</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -839,7 +869,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/users.html">Users</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -932,11 +971,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <p>This API is currently in <strong>Early Access (EA)</strong> status.</p>
 </blockquote>
 
-<h1 id="overview">Overview</h1>
+<h1 id="policy-api">Policy API</h1>
 
-<p>The Okta Policy API enables you to peform policy and rule operations. These operation apply to various policies including Okta Sign on.</p>
+<p>The Okta Policy API enables an Administrator to perform policy and policy rule operations.  The policy framework is used by Okta to control rules and settings that govern, among other things, user session lifetime, whether multi-factor authentication is required when logging in, what MFA factors may be employed, password complexity requirements, and what types of self-service operations are permitted under various circumstances.</p>
 
-<p>This API supports the following <strong>policy operations</strong>:</p>
+<p>Policy settings for a particular policy type, such as Sign On Policy, consist of one or more Policy objects, each of which contains one or more Policy Rules.  Policies and rules contain conditions that determine whether they are applicable to a particular user at a particular time.</p>
+
+<p>The policy API supports the following <strong>policy operations</strong>:</p>
 
 <ul>
   <li>Get all policies of a specific type</li>
@@ -944,7 +985,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <li>Activate and deactivate a policy</li>
 </ul>
 
-<p>This API supports the following <strong>rule operations</strong>:</p>
+<p>The policy API supports the following <strong>rule operations</strong>:</p>
 
 <ul>
   <li>Get all rules for a policy</li>
@@ -952,9 +993,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <li>Activate and deactivate a rule</li>
 </ul>
 
-<h1 id="policies">Policies</h1>
+<h2 id="policies">Policies</h2>
 
-<h2 id="policy-model-and-defaults">Policy Model and Defaults</h2>
+<h3 id="policy-evaluation">Policy Evaluation</h3>
+
+<p>When a policy needs to be retrieved for a particular user, for example when the user attempts to log in to Okta, or when the user initiates a self-service operation, then a policy evaluation takes place.
+During policy evaluation each policy of the appropriate type is considered in turn, in the order indicated by the policy priority.   Each of the conditions associated with the policy is evaluated.  If one or more of the conditions cannot be met, then the next policy in the list is considered.  If the conditions can be met, then each of the rules associated with the policy is considered in turn, in the order specified by the rule priority.  Each of the conditions associated with a given rule is evaluated.  If all of the conditions associated with a rule are met, then the settings contained in the rule and in the associated policy are applied to the user.  If none of the policy rules have conditions that can be met, then the next policy in the list is considered.</p>
+
+<p>Policies that have no rules are not considered during evaluation, and will never be applied.</p>
+
+<h3 id="policy-types">Policy Types</h3>
+<p>Different policy types control settings for different operations.  All policy types share a common framework, message structure and API, but have different policy settings and rule data.  The data structures specific to each policy type are discussed in the various sections below.</p>
+
+<p><a href="#OktaSignOnPolicy">Okta Sign On Policy</a></p>
+
+<p><a href="#OktaMFAPolicy">Okta MFA Policy</a></p>
+
+<p><a href="#GroupPasswordPolicy">Password Policy</a></p>
+
+<h3 id="policy-priority-and-defaults">Policy Priority and Defaults</h3>
 
 <h3 id="default-policies">Default Policies</h3>
 
@@ -967,19 +1024,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <li>The <code class="highlighter-rouge">system</code> attribute determines whether a policy is created by a system or by a user.</li>
 </ul>
 
-<h3 id="policy-model">Policy Model</h3>
+<h3 id="policy-priorities">Policy Priorities</h3>
 
-<p>Policies and rules are ordered numerically by priority. This priority determines the order in which they are searched for a context match. The highest priority policy has a <code class="highlighter-rouge">priorityOrder</code> of 1.</p>
+<p>Policies and are ordered numerically by priority. This priority determines the order in which they are evaluated for a context match. The highest priority policy has a <code class="highlighter-rouge">priority</code> of 1.</p>
 
-<p>For example, assume the following conditions are in effect.</p>
+<p>For example, assume the following policies exist.</p>
 
 <ul>
-  <li>Rule A has priority 1 and applies to RADIUS VPN scenarios.</li>
-  <li>Rule B has priority 2 and applies to ON_NETWORK scenarios.</li>
+  <li>Policy A has priority 1 and applies to members of the “Administrators” group.</li>
+  <li>Policy B has priority 2 and applies to members of the “Everyone” group.</li>
 </ul>
 
-<p>Because Rule A has a higher priority, even though requests are coming from ON_NETWORK due to VPN,
-the action in Rule A is taken, and Rule B is not evaluated.</p>
+<p>When policy is evaluated for a user, policy “A” will be evaluated first.  If the user is a member of the “Administrators” group then the rules associated with policy “A” will be evaluated.   If a match is found then the policy settings will be applied.
+If the user is not a member of teh “Administrators” group, then policy B would be evaluated.</p>
+
+<!-- ### Policy JSON Example
+
+~~~json
+{
+    [ADD UPDATED JSON HERE]
+}
+~~~ -->
 
 <h3 id="PolicyObject">Policy Object</h3>
 
@@ -998,7 +1063,7 @@ the action in Rule A is taken, and Rule B is not evaluated.</p>
   <tbody>
     <tr>
       <td>id</td>
-      <td>Identifier for the policy</td>
+      <td>Identifier of the policy</td>
       <td>String</td>
       <td>No</td>
       <td>Assigned</td>
@@ -1006,44 +1071,37 @@ the action in Rule A is taken, and Rule B is not evaluated.</p>
     <tr>
       <td>type</td>
       <td>Policy type</td>
-      <td><code class="highlighter-rouge">OKTA_SIGN_ON</code> or <code class="highlighter-rouge">MFA_ENROLL</code></td>
+      <td>Specifies the type of the policy, e.g. <code class="highlighter-rouge">OKTA_SIGN_ON</code> or <code class="highlighter-rouge">MFA_ENROLL</code></td>
       <td>Yes</td>
       <td> </td>
     </tr>
     <tr>
       <td>name</td>
-      <td>Name for the policy</td>
+      <td>Name of the policy</td>
       <td>String</td>
       <td>Yes</td>
       <td> </td>
     </tr>
     <tr>
-      <td>priority</td>
-      <td>This is set to <code class="highlighter-rouge">1</code> on system policies, which can not be deleted.</td>
-      <td>Integer</td>
+      <td>system</td>
+      <td>This is set to ‘true’ on system policies, which cannot be deleted.</td>
+      <td>Boolean</td>
       <td>No</td>
-      <td>0</td>
+      <td>false</td>
     </tr>
     <tr>
       <td>description</td>
-      <td>Description for the policy</td>
+      <td>Description of the policy</td>
       <td>String</td>
       <td>No</td>
       <td>Null</td>
     </tr>
     <tr>
-      <td>priorityOrder</td>
-      <td>Priority for the policy</td>
+      <td>priority</td>
+      <td>Priority of the policy</td>
       <td>Int</td>
       <td>No</td>
       <td>Last / Lowest Priority</td>
-    </tr>
-    <tr>
-      <td>system</td>
-      <td>Whether or not the policy is the default</td>
-      <td>Boolean</td>
-      <td>No</td>
-      <td>false</td>
     </tr>
     <tr>
       <td>status</td>
@@ -1054,14 +1112,14 @@ the action in Rule A is taken, and Rule B is not evaluated.</p>
     </tr>
     <tr>
       <td>conditions</td>
-      <td>Conditions for rule</td>
-      <td><a href="#ConditionsObject">Conditions Object</a></td>
+      <td>Conditions for policy</td>
+      <td><a href="#PolicyConditionsObject">Conditions Object</a></td>
       <td>No</td>
       <td> </td>
     </tr>
     <tr>
       <td>settings</td>
-      <td>Settings for rule</td>
+      <td>Settings for policy</td>
       <td><a href="#PolicySettingsObject">Policy Settings Object</a></td>
       <td>No</td>
       <td> </td>
@@ -1092,383 +1150,12 @@ the action in Rule A is taken, and Rule B is not evaluated.</p>
 
 <h3 id="PolicySettingsObject">Policy Settings Object</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>factors</td>
-      <td> </td>
-      <td><a href="#PolicyFactorsConfigurationObject">Policy Factors Configuration Object</a></td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
+<p>The policy settings object contains the policy level settings for the particular policy type.  Not all policy types have policy level settings.  For example, in Password Policy the settings object contains, among other items, the password complexity settings.   In Sign On policy, on the other hand, there are no policy level settings; all of the policy data is contained in the rules.  Each policy type section explains the settings objects specific to that type.</p>
 
-<h3 id="PolicyFactorsConfigurationObject">Policy Factors Configuration Object</h3>
+<h3 id="PolicyConditionsObject">Conditions Object</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>google_otp</td>
-      <td>Google Authenticator</td>
-      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>okta_otp</td>
-      <td>Okta Verify TOTP</td>
-      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>okta_push</td>
-      <td>Okta Verify Push</td>
-      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>okta_question</td>
-      <td>Okta Security Question</td>
-      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>okta_sms</td>
-      <td>Okta SMS</td>
-      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>rsa_token</td>
-      <td>RSA Token</td>
-      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>symantec_vip</td>
-      <td>Symantic VIP</td>
-      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="PolicyFactorObject">Policy MFA Factor Object</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>consent</td>
-      <td> </td>
-      <td><a href="#PolicyFactorConsentObject">Policy Factor Consent Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>enroll</td>
-      <td> </td>
-      <td><a href="#PolicyFactorEnrollObject">Policy Factor Enroll Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="PolicyFactorEnrollObject">Policy Factor Enroll Object</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>self</td>
-      <td> </td>
-      <td><code class="highlighter-rouge">NOT_ALLOWED</code>, <code class="highlighter-rouge">OPTIONAL</code> or <code class="highlighter-rouge">REQUIRED</code></td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="PolicyFactorConsentObject">Policy Factor Consent Object</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>terms</td>
-      <td>The format of the consent dialog to be presented.</td>
-      <td><code class="highlighter-rouge">TEXT</code>, <code class="highlighter-rouge">RTF</code>, <code class="highlighter-rouge">MARKDOWN</code> or <code class="highlighter-rouge">URL</code></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>type</td>
-      <td>Does the user need to consent to <code class="highlighter-rouge">NONE</code> or <code class="highlighter-rouge">TERMS_OF_SERVICE</code>.</td>
-      <td>String</td>
-      <td>No</td>
-      <td>NONE</td>
-    </tr>
-    <tr>
-      <td>value</td>
-      <td>The contents of the consent dialog.</td>
-      <td>String</td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="ConditionsObject">Conditions Object</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>authContext</td>
-      <td> </td>
-      <td><a href="#AuthContextConditionObject">authContext Condition Object</a></td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>network</td>
-      <td> </td>
-      <td><a href="#NetworkConditionObject">Network Condition Object</a></td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>people</td>
-      <td> </td>
-      <td><a href="#PeopleConditionObject">People Condition Object</a></td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="PeopleObject">People Object</h3>
-
-<p>The people condition identifies users and groups that are used together. For policies, you can only include a group.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>groups</td>
-      <td>The group condition</td>
-      <td>String</td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>users</td>
-      <td>The user condition</td>
-      <td>String</td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="UserConditionObject">User Condition Object</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>include</td>
-      <td>The users to be included</td>
-      <td>Array</td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>exclude</td>
-      <td>The users to be excluded</td>
-      <td>Array</td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="GroupConditionObject">Group Condition Object</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>include</td>
-      <td>The groups to be included</td>
-      <td>Array</td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>exclude</td>
-      <td>The groups to be excluded</td>
-      <td>Array</td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="AuthContextConditionObject">authContext Condition Object</h3>
-
-<p>Specifies an authentication entry point.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>authType</td>
-      <td> </td>
-      <td><code class="highlighter-rouge">ANY</code> or <code class="highlighter-rouge">RADIUS</code></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="NetworkConditionObject">Network Condition Object</h3>
-
-<p>Specifies a network segment.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>connection</td>
-      <td> </td>
-      <td><code class="highlighter-rouge">ANYWHERE</code>, <code class="highlighter-rouge">ON_NETWORK</code> or <code class="highlighter-rouge">OFF_NETWORK</code></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="PeopleConditionObject">People Condition Object</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>users</td>
-      <td> </td>
-      <td><a href="#UserConditionObject">User Condition Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
+<p>The Conditions Object(s) specify the conditions that must be met during policy evaluation in order to apply the policy in question.   All policy conditions, as well as conditions for at least one rule must be met in order to apply the settings specified in the policy and the associated rule.  Policies and rules may contain different conditions depending on the policy type.  The conditions which can be used with a particular policy depends on the policy type.
+See <a href="#Conditions">conditions</a></p>
 
 <h3 id="LinksObject">Links Object</h3>
 
@@ -1523,7 +1210,341 @@ the action in Rule A is taken, and Rule B is not evaluated.</p>
   </tbody>
 </table>
 
-<h2 id="policy-operations">Policy Operations</h2>
+<h2 id="rules">Rules</h2>
+<p>Each policy may contain one or more rules.  Rules, like policies contain conditions, which must be satisfied in order for the rule to be applied.</p>
+
+<h3 id="rule-priority-and-defaults">Rule Priority and Defaults</h3>
+
+<h3 id="default-rules">Default Rules</h3>
+
+<ul>
+  <li>Only the default policy contains a default rule. The default rule cannot be edited or deleted.</li>
+  <li>The default rule is required and always is the last rule in the priority order. If you add rules to the default policy, they have a higher priority than the default rule.</li>
+  <li>The <code class="highlighter-rouge">system</code> attribute determines whether a rule is created by a system or by a user. The default rule is the only rule that has this attribute.</li>
+</ul>
+
+<h3 id="rule-priority">Rule Priority</h3>
+
+<p>Like policies, rules have a priority which governs the order in which they are considered during evaluation. The highest priority rule has a <code class="highlighter-rouge">priority</code> of 1.
+For example if a particular policy had two rules, “A” and “B” as below.</p>
+
+<ul>
+  <li>Rule A has priority 1 and applies to RADIUS VPN scenarios.</li>
+  <li>Rule B has priority 2 and applies to ON_NETWORK scenarios.</li>
+</ul>
+
+<p>If a request came in from the Radius endpoint but the request was on network then because Rule A has a higher priority, even though requests are coming from ON_NETWORK,
+the action in Rule A would be taken, and Rule B is not evaluated.</p>
+
+<!-- ### Rules Message Example
+
+~~~json
+{
+    [ADD UPDATED JSON HERE]
+}
+~~~ -->
+
+<h3 id="RulesObject">Rules Object</h3>
+
+<p>The Rules model defines several attributes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>Identifier of the rule</td>
+      <td>String</td>
+      <td>No</td>
+      <td>Assigned</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>Rule type</td>
+      <td><code class="highlighter-rouge">OKTA_SIGN_ON</code> or <code class="highlighter-rouge">MFA_ENROLL</code></td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>status</td>
+      <td>Status of the rule: <code class="highlighter-rouge">ACTIVE</code> or <code class="highlighter-rouge">INACTIVE</code></td>
+      <td>String</td>
+      <td>No</td>
+      <td>ACTIVE</td>
+    </tr>
+    <tr>
+      <td>priority</td>
+      <td>Priority of the rule</td>
+      <td>Integer</td>
+      <td>No</td>
+      <td>Last / Lowest Priority</td>
+    </tr>
+    <tr>
+      <td>system</td>
+      <td>This is set to ‘true’ on system rules, which cannot be deleted.</td>
+      <td>Boolean</td>
+      <td>No</td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td>created</td>
+      <td>Timestamp when the rule was created</td>
+      <td>Date</td>
+      <td>No</td>
+      <td>Assigned</td>
+    </tr>
+    <tr>
+      <td>lastUpdated</td>
+      <td>Timestamp when the rule was last modified</td>
+      <td>Date</td>
+      <td>No</td>
+      <td>Assigned</td>
+    </tr>
+    <tr>
+      <td>conditions</td>
+      <td>Conditions for rule</td>
+      <td><a href="#RuleConditionsObject">Conditions Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>actions</td>
+      <td>Actions for rule</td>
+      <td><a href="#RulesActionsObject">Rules Actions Objects</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="RulesActionsObject">Actions Objects</h3>
+
+<p>Just as policies contains settings, rules contain “Actions”, which typically specify actions to be taken, or operations that may be allowed, if the rule conditions are satisfied.  For example, in Password Policy rule actions govern whether or not self-service operations such as reset password or unlock are permitted.   Just as different policy types have different settings, rules have different actions depending on the type of the policy they belong to.</p>
+
+<h3 id="RuleConditionsObject">Conditions Object</h3>
+
+<p>The Conditions Object(s) specify the conditions that must be met during policy evaluation in order to apply the rule in question.   All policy conditions, as well as conditions for at least one rule must be met in order to apply the settings specified in the policy and the associated rule.  Policies and rules may contain different conditions depending on the policy type.  The conditions which can be used with a particular policy depends on the policy type.
+See <a href="#Conditions">conditions</a></p>
+
+<h3 id="LinksObject">Links Object</h3>
+
+<p>Specifies link relations (See <a href="http://tools.ietf.org/html/rfc5988">Web Linking</a>) available for the current rule.  The Links Object is used for dynamic discovery of related resources.  The Links Object is <strong>read-only</strong>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>self</td>
+      <td>The policy or rule</td>
+      <td>String</td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>activate</td>
+      <td>Action to activate a policy or rule</td>
+      <td>String</td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>deactivate</td>
+      <td>Action to deactivate a policy or rule</td>
+      <td>String</td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="Conditions">Conditions</h3>
+
+<h4 id="PeopleObject">People Condition Object</h4>
+
+<p>The people condition identifies users and groups that are used together. For policies, you can only include a group.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>groups</td>
+      <td>The group condition</td>
+      <td>String</td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>users</td>
+      <td>The user condition</td>
+      <td>String</td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="UserConditionObject">User Condition Object</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>include</td>
+      <td>The users to be included</td>
+      <td>Array</td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>exclude</td>
+      <td>The users to be excluded</td>
+      <td>Array</td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="GroupConditionObject">Group Condition Object</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>include</td>
+      <td>The groups to be included</td>
+      <td>Array</td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>exclude</td>
+      <td>The groups to be excluded</td>
+      <td>Array</td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="AuthContextConditionObject">AuthContext Condition Object</h4>
+
+<p>Specifies an authentication entry point.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>authType</td>
+      <td> </td>
+      <td><code class="highlighter-rouge">ANY</code> or <code class="highlighter-rouge">RADIUS</code></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="NetworkConditionObject">Network Condition Object</h4>
+
+<p>Specifies a network segment.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>connection</td>
+      <td> </td>
+      <td><code class="highlighter-rouge">ANYWHERE</code>, <code class="highlighter-rouge">ON_NETWORK</code> or <code class="highlighter-rouge">OFF_NETWORK</code></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="PeopleConditionObject">People Condition Object</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>users</td>
+      <td> </td>
+      <td><a href="#UserConditionObject">User Condition Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- #### Authentication Provider Condition Object
+
+[THIS SECTION TBD] -->
+
+<h2 id="policy-api-operations">Policy API Operations</h2>
 
 <h3 class="api api-operation" id="get-a-policy">Get a Policy</h3>
 
@@ -1742,350 +1763,6 @@ HTTP 204:
 <p>HTTP 200: 
 <em>No Content is returned when the deactivation is successful.</em></p>
 
-<h1 id="rules">Rules</h1>
-
-<h2 id="rules-model-and-defaults">Rules Model and Defaults</h2>
-
-<h3 id="default-rules">Default Rules</h3>
-
-<ul>
-  <li>Only the default policy contains a default rule. The default rule cannot be edited or deleted.</li>
-  <li>The default rule is required and always is the last rule in the priority order. If you add rules to the default policy, they have a higher priority than the default rule.</li>
-  <li>The <code class="highlighter-rouge">system</code> attribute determines whether a rule is created by a system or by a user. The default rule is the only rule that has this attribute.</li>
-</ul>
-
-<h3 id="rules-model-example">Rules Model Example</h3>
-
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"actions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"access"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ALLOW"</span><span class="p">,</span><span class="w"> 
-        </span><span class="nt">"enroll"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LOGIN"</span><span class="w">
-        </span><span class="p">},</span><span class="w"> 
-        </span><span class="nt">"signon"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"access"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ALLOW"</span><span class="p">,</span><span class="w"> 
-            </span><span class="nt">"factorLifetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> 
-            </span><span class="nt">"factorPromptMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ALWAYS"</span><span class="p">,</span><span class="w"> 
-            </span><span class="nt">"requireFactor"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
-            </span><span class="nt">"session"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nt">"maxSessionIdleMinutes"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> 
-                </span><span class="nt">"maxSessionLifetimeMinutes"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"> 
-                </span><span class="nt">"usePersistentCookie"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">},</span><span class="w"> 
-    </span><span class="nt">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"authContext"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"authType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ANY"</span><span class="w">
-        </span><span class="p">},</span><span class="w"> 
-        </span><span class="nt">"network"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"connection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ANYWHERE"</span><span class="w">
-        </span><span class="p">},</span><span class="w"> 
-        </span><span class="nt">"people"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nt">"exclude"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"example.user"</span><span class="w">
-                </span><span class="p">],</span><span class="w"> 
-                </span><span class="nt">"include"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"example.user"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">},</span><span class="w"> 
-    </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2010-01-01T00:00:00.000Z"</span><span class="p">,</span><span class="w"> 
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abcd1234"</span><span class="p">,</span><span class="w"> 
-    </span><span class="nt">"lastUpdated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2010-01-01T00:00:00.000Z"</span><span class="p">,</span><span class="w"> 
-    </span><span class="nt">"priorityOrder"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Last / Lowest Priority"</span><span class="p">,</span><span class="w"> 
-        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Priority for the rule"</span><span class="p">,</span><span class="w"> 
-        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="w">
-    </span><span class="p">},</span><span class="w"> 
-    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACTIVE"</span><span class="p">,</span><span class="w"> 
-    </span><span class="nt">"system"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> 
-    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OKTA_SIGN_ON"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
-
-<h3 id="RulesObject">Rules Object</h3>
-
-<p>The Rules model defines several attributes:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>id</td>
-      <td>Identifier for the rule</td>
-      <td>String</td>
-      <td>No</td>
-      <td>Assigned</td>
-    </tr>
-    <tr>
-      <td>type</td>
-      <td>Rule type</td>
-      <td><code class="highlighter-rouge">OKTA_SIGN_ON</code> or <code class="highlighter-rouge">MFA_ENROLL</code></td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>status</td>
-      <td>Status of the rule: <code class="highlighter-rouge">ACTIVE</code> or <code class="highlighter-rouge">INACTIVE</code></td>
-      <td>String</td>
-      <td>No</td>
-      <td>ACTIVE</td>
-    </tr>
-    <tr>
-      <td>priorityOrder</td>
-      <td>Priority for the rule</td>
-      <td>Integer</td>
-      <td>No</td>
-      <td>Last / Lowest Priority</td>
-    </tr>
-    <tr>
-      <td>system</td>
-      <td>Whether or not the rule is the default</td>
-      <td>Boolean</td>
-      <td>No</td>
-      <td>false</td>
-    </tr>
-    <tr>
-      <td>created</td>
-      <td>Timestamp when the rule was created</td>
-      <td>Date</td>
-      <td>No</td>
-      <td>Assigned</td>
-    </tr>
-    <tr>
-      <td>lastUpdated</td>
-      <td>Timestamp when the rule was last modified</td>
-      <td>Date</td>
-      <td>No</td>
-      <td>Assigned</td>
-    </tr>
-    <tr>
-      <td>conditions</td>
-      <td>Conditions for rule</td>
-      <td><a href="#ConditionsObject">Conditions Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>actions</td>
-      <td>Actions for rule</td>
-      <td><a href="#RulesActionsObject">Actions Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="RulesActionsObject">Actions Object</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>access</td>
-      <td><code class="highlighter-rouge">ALLOW</code> or <code class="highlighter-rouge">DENY</code></td>
-      <td><code class="highlighter-rouge">ALLOW</code> or <code class="highlighter-rouge">DENY</code></td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>enroll</td>
-      <td> </td>
-      <td><a href="#RulesActionsEnrollObject">Rules Actions Enroll Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>signon</td>
-      <td> </td>
-      <td><a href="#SignonObject">Signon Action Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="RulesActionsEnrollObject">Rules Actions Enroll Object</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>self</td>
-      <td>Should the user be enrolled the first time they <code class="highlighter-rouge">LOGIN</code>, the next time they are <code class="highlighter-rouge">CHALLENGE</code>d, or <code class="highlighter-rouge">NEVER</code>?</td>
-      <td><code class="highlighter-rouge">CHALLENGE</code>, <code class="highlighter-rouge">LOGIN</code> or <code class="highlighter-rouge">NEVER</code></td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="NetworkConditionObject">Network Condition Object</h3>
-
-<p>Specifies a network segment.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>connection</td>
-      <td> </td>
-      <td><code class="highlighter-rouge">ANYWHERE</code>, <code class="highlighter-rouge">ON_NETWORK</code> or <code class="highlighter-rouge">OFF_NETWORK</code></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="AuthContextConditionObject">authContext Condition Object</h3>
-
-<p>Specifies an authentication entry point.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>authType</td>
-      <td> </td>
-      <td><code class="highlighter-rouge">ANY</code> or <code class="highlighter-rouge">RADIUS</code></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="SignonObject">Signon Action Object</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>access</td>
-      <td><code class="highlighter-rouge">ALLOW</code> or <code class="highlighter-rouge">DENY</code></td>
-      <td><code class="highlighter-rouge">ALLOW</code> or <code class="highlighter-rouge">DENY</code></td>
-      <td>Yes</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>requireFactor</td>
-      <td> </td>
-      <td>Boolean</td>
-      <td>No</td>
-      <td>false</td>
-    </tr>
-    <tr>
-      <td>factorPromptMode</td>
-      <td><code class="highlighter-rouge">DEVICE</code>, <code class="highlighter-rouge">SESSION</code> or <code class="highlighter-rouge">ALWAYS</code></td>
-      <td><code class="highlighter-rouge">DEVICE</code>, <code class="highlighter-rouge">SESSION</code> or <code class="highlighter-rouge">ALWAYS</code></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>factorLifetime</td>
-      <td>How long until factor times out</td>
-      <td>Integer</td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>session</td>
-      <td>Session Rules</td>
-      <td><a href="#SignonSessionObject">Signon Session Object</a></td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="SignonSessionObject">Signon Session Object</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Description</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>maxSessionIdleMinutes</td>
-      <td>Maximum number of minutes that a user session can be idle before the session is ended.</td>
-      <td>Integer</td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>maxSessionLifetimeMinutes</td>
-      <td>Maximum number of minutes from user login that a user session will be active. Set this to force users to sign-in again after the number of specified minutes. Disable by setting to <code class="highlighter-rouge">0</code>.</td>
-      <td>Integer</td>
-      <td>No</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>usePersistentCookie</td>
-      <td>If set to <code class="highlighter-rouge">false</code>, user session cookies will only last the length of a browser session. If set to <code class="highlighter-rouge">true</code>, user session cookies will last across browser sessions. This setting does not impact Okta Administrator users, who can <em>never</em> have persistant session cookies.</td>
-      <td>Boolean</td>
-      <td>No</td>
-      <td>false</td>
-    </tr>
-  </tbody>
-</table>
-
 <h2 id="rules-operations">Rules Operations</h2>
 
 <h3 class="api api-operation" id="get-policy-rules">Get Policy Rules</h3>
@@ -2288,6 +1965,317 @@ HTTP 204:
 <p>HTTP 204: 
 <em>No content</em></p>
 
+<h2 id="type-specific-policy-data-structures">Type Specific Policy Data Structures</h2>
+
+<h2 id="OktaSignOnPolicy">Okta Sign On Policy</h2>
+
+<!-- [THIS SECTION IN PROGRESS] -->
+
+<h3 id="policy-settings-data">Policy Settings Data</h3>
+
+<p>Okta sign on policy does not contain policy settings data.  In the case of sign on policy all of the data is contained in the rules.</p>
+
+<h3 id="policy-conditions">Policy Conditions</h3>
+<p>The following conditions may be applied to Okta Sign On Policy</p>
+
+<h3 id="rules-action-data">Rules Action Data</h3>
+
+<h3 id="SignonObject">Signon Action Object</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>access</td>
+      <td><code class="highlighter-rouge">ALLOW</code> or <code class="highlighter-rouge">DENY</code></td>
+      <td><code class="highlighter-rouge">ALLOW</code> or <code class="highlighter-rouge">DENY</code></td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>requireFactor</td>
+      <td> </td>
+      <td>Boolean</td>
+      <td>No</td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td>factorPromptMode</td>
+      <td><code class="highlighter-rouge">DEVICE</code>, <code class="highlighter-rouge">SESSION</code> or <code class="highlighter-rouge">ALWAYS</code></td>
+      <td><code class="highlighter-rouge">DEVICE</code>, <code class="highlighter-rouge">SESSION</code> or <code class="highlighter-rouge">ALWAYS</code></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>factorLifetime</td>
+      <td>How long until factor times out</td>
+      <td>Integer</td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>session</td>
+      <td>Session Rules</td>
+      <td><a href="#SignonSessionObject">Signon Session Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="SignonSessionObject">Signon Session Object</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>maxSessionIdleMinutes</td>
+      <td>Maximum number of minutes that a user session can be idle before the session is ended.</td>
+      <td>Integer</td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>maxSessionLifetimeMinutes</td>
+      <td>Maximum number of minutes from user login that a user session will be active. Set this to force users to sign-in again after the number of specified minutes. Disable by setting to <code class="highlighter-rouge">0</code>.</td>
+      <td>Integer</td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>usePersistentCookie</td>
+      <td>If set to <code class="highlighter-rouge">false</code>, user session cookies will only last the length of a browser session. If set to <code class="highlighter-rouge">true</code>, user session cookies will last across browser sessions. This setting does not impact Okta Administrator users, who can <em>never</em> have persistant session cookies.</td>
+      <td>Boolean</td>
+      <td>No</td>
+      <td>false</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="rules-conditions">Rules Conditions</h3>
+<p>The following conditions may be applied to the rules associated with Okta Sign On Policy</p>
+
+<h2 id="OktaMFAPolicy">Okta MFA Policy</h2>
+
+<!-- [THIS SECTION IN PROGRESS] -->
+
+<h3 id="policy-settings-data-1">Policy Settings Data</h3>
+
+<h4 id="PolicyFactorsConfigurationObject">Policy Factors Configuration Object</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>google_otp</td>
+      <td>Google Authenticator</td>
+      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>okta_otp</td>
+      <td>Okta Verify TOTP</td>
+      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>okta_push</td>
+      <td>Okta Verify Push</td>
+      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>okta_question</td>
+      <td>Okta Security Question</td>
+      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>okta_sms</td>
+      <td>Okta SMS</td>
+      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>rsa_token</td>
+      <td>RSA Token</td>
+      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>symantec_vip</td>
+      <td>Symantic VIP</td>
+      <td><a href="#PolicyFactorObject">Policy MFA Factor Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="PolicyFactorObject">Policy MFA Factor Object</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>consent</td>
+      <td> </td>
+      <td><a href="#PolicyFactorConsentObject">Policy Factor Consent Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>enroll</td>
+      <td> </td>
+      <td><a href="#PolicyFactorEnrollObject">Policy Factor Enroll Object</a></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="PolicyFactorEnrollObject">Policy Factor Enroll Object</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>self</td>
+      <td> </td>
+      <td><code class="highlighter-rouge">NOT_ALLOWED</code>, <code class="highlighter-rouge">OPTIONAL</code> or <code class="highlighter-rouge">REQUIRED</code></td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="PolicyFactorConsentObject">Policy Factor Consent Object</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>terms</td>
+      <td>The format of the consent dialog to be presented.</td>
+      <td><code class="highlighter-rouge">TEXT</code>, <code class="highlighter-rouge">RTF</code>, <code class="highlighter-rouge">MARKDOWN</code> or <code class="highlighter-rouge">URL</code></td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>Does the user need to consent to <code class="highlighter-rouge">NONE</code> or <code class="highlighter-rouge">TERMS_OF_SERVICE</code>.</td>
+      <td>String</td>
+      <td>No</td>
+      <td>NONE</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>The contents of the consent dialog.</td>
+      <td>String</td>
+      <td>No</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="policy-conditions-1">Policy Conditions</h3>
+<p>The following conditions may be applied to Okta MFA Policy</p>
+
+<h3 id="rules-action-data-1">Rules Action Data</h3>
+
+<h4 id="RulesActionsEnrollObject">Rules Actions Enroll Object</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>self</td>
+      <td>Should the user be enrolled the first time they <code class="highlighter-rouge">LOGIN</code>, the next time they are <code class="highlighter-rouge">CHALLENGE</code>d, or <code class="highlighter-rouge">NEVER</code>?</td>
+      <td><code class="highlighter-rouge">CHALLENGE</code>, <code class="highlighter-rouge">LOGIN</code> or <code class="highlighter-rouge">NEVER</code></td>
+      <td>Yes</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="rules-conditions-1">Rules Conditions</h3>
+<p>The following conditions may be applied to the rules associated with Okta MFA Policy</p>
+
+<h2 id="GroupPasswordPolicy">Password Policy</h2>
+
+<p>[THIS SECTION TBD]</p>
+
+<h3 id="policy-settings-data-2">Policy Settings Data</h3>
+
+<h3 id="policy-conditions-2">Policy Conditions</h3>
+<p>The following conditions may be applied to Password Policy</p>
+
+<h3 id="rules-action-data-2">Rules Action Data</h3>
+
+<h3 id="rules-conditions-2">Rules Conditions</h3>
+<p>The following conditions may be applied to the rules associated with Okta Password Policy</p>
 
       </div>
       <!-- END Page Content -->

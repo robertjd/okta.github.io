@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="/assets/css/okta.css">
 
     <title>Set Up Authorization Service | Okta Developer</title>
-    <meta name="description" content="Set Up an Authorization Service with OAuth 2.0 or OpenID Connect">
+    <meta name="description" content="Set Up an Authorization Service">
     <link rel="canonical" href="http://developer.okta.com/docs/how-to/set-up-auth-server.html">
     <link rel="alternate" type="application/rss+xml" title="Okta Developer" href="http://developer.okta.com/feed.xml">
 
@@ -236,6 +236,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/events.html">Events</a></li>
 		     
 		     
@@ -343,7 +346,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/factors.html">Factors (MFA)</a></li>
+		     
+		     
+		     
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/factors.html">Factors</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -399,6 +411,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/groups.html">Groups</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -565,6 +580,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/roles.html">Admin Roles</a></li>
 		     
 		     
@@ -620,7 +641,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/schemas.html">Schemas</a></li>
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/schemas.html">Schemas API</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -678,6 +705,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/system_log.html">System Log (Beta)</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -839,7 +869,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/users.html">Users</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -930,6 +969,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <div class="PageContent-main" id="docs-body">
       <h2 id="overview">Overview</h2>
 
+<blockquote>
+  <p>API Access Management is EA.</p>
+</blockquote>
+
 <p>API Access Management allows you to build custom authorization servers in Okta which can be used to protect your own API endpoints. 
 An authorization server defines your security boundary, for example “staging” or “production.”
 Within each authorization server you can define your own OAuth scopes, claims, and access policies. 
@@ -990,10 +1033,10 @@ claims as defined in the authorization server.</p>
     <p>Choose <strong>Add Authorization Server</strong> and supply the requested information.</p>
 
     <ul>
-      <li>Name</li>
-      <li>Resource URI. URI for the OAuth resource that consumes the Access Tokens. Use an absolute path such as <code class="highlighter-rouge">http://api.example.com/pets</code>.
+      <li><strong>Name</strong></li>
+      <li><strong>Resource URI</strong>—URI for the OAuth resource that consumes the Access Tokens. Use an absolute path such as <code class="highlighter-rouge">http://api.example.com/pets</code>.
 This value is used as the default <a href="https://tools.ietf.org/html/rfc7519#section-4.1.3">audience</a> for Access Tokens.</li>
-      <li>Description</li>
+      <li><strong>Description</strong></li>
     </ul>
   </li>
 </ol>
@@ -1029,12 +1072,11 @@ and the access policy decides which ones to grant and which ones to deny.</p>
 
 <ol>
   <li>In the Okta user interface, navigate to <strong>Security &gt; API</strong>.</li>
+  <li>Choose the name of the authorization server to display it, and choose <strong>Claims</strong>.
+<img src="/assets/img/claims1.png" alt="Choose Claims" width="800px" />
+ Okta provides a default subject claim. You can edit the mapping, or create your own claims.</li>
   <li>
-    <p>Choose the name of the authorization server to display it.
-<img src="/assets/img/claims1.png" alt="Choose Claims" width="800px" /></p>
-  </li>
-  <li>
-    <p>Choose <strong>Claims &gt; Add Claim</strong> and provide the requested information.
+    <p>Choose <strong>Add Claim</strong> and provide the requested information.
 <img src="/assets/img/claim.png" alt="Edit Claims" width="800px" /></p>
 
     <ul>
@@ -1053,6 +1095,17 @@ Be sure to check that your expression returns the results expected–the express
   </li>
 </ol>
 
+<p>While in the Claims list, you can:</p>
+
+<ul>
+  <li>Sort claims by type.</li>
+  <li>
+    <p>Delete claims you’ve created, or disable claims for testing or debugging purposes.</p>
+
+    <p><img src="/assets/img/claims2.png" alt="Claims List" width="640px" /></p>
+  </li>
+</ul>
+
 <h3 id="create-access-policies">Create Access Policies</h3>
 
 <p>Create access policies and rules for a client or set of clients.</p>
@@ -1060,24 +1113,22 @@ Be sure to check that your expression returns the results expected–the express
 <ol>
   <li>In the Okta user interface, navigate to <strong>Security &gt; API</strong>.</li>
   <li>Choose the name of an authorization server.</li>
-  <li>
-    <p>Choose <strong>Access Policies &gt; Add New Access Policy</strong> and provide the requested information.
-<img src="/assets/img/access_policy1.png" alt="Add Access Policy" width="640px" /></p>
-
+  <li>Choose <strong>Access Policies &gt; Add New Access Policy</strong> 
+ <img src="/assets/img/access_policy1.png" alt="Add Access Policy" width="640px" /></li>
+  <li>Provide the requested information:
     <ul>
-      <li>Name</li>
-      <li>Description</li>
-      <li>Assign to <strong>All clients</strong>, or select <strong>The following clients:</strong> and enter the name of the clients covered by this access policy.</li>
+      <li><strong>Name</strong></li>
+      <li><strong>Description</strong></li>
+      <li>Assign to <strong>All clients</strong>, or select <strong>The following clients:</strong> and enter the name of the clients covered by this access policy.
+ <img src="/assets/img/access_policy2.png" alt="Access Policy Configuration" width="640px" /></li>
     </ul>
   </li>
 </ol>
 
-<p>While in the Access Policy list, you can:</p>
-
-<ul>
-  <li>Set access policies to be active or deactivate them for testing or debugging purposes.</li>
-  <li>Reorder any policies you create using drag-n-drop.</li>
-</ul>
+<p>While in the Access Policy list, you can:
+* Set access policies to be active or deactivate them for testing or debugging purposes.
+* Reorder any policies you create using drag-n-drop.<br />
+    <img src="/assets/img/access_policy3.png" alt="Access Policy List" width="640px" /></p>
 
 <p>Polices are evaluated in priority order, as are the rules in a policy. 
 The first policy and rule that matches the client request is applied and no further rule or policy processing occurs.</p>

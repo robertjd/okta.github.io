@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="/assets/css/okta.css">
 
     <title>Sessions | Okta Developer</title>
-    <meta name="description" content="Overview">
+    <meta name="description" content="Sessions API">
     <link rel="canonical" href="http://developer.okta.com/docs/api/resources/sessions.html">
     <link rel="alternate" type="application/rss+xml" title="Okta Developer" href="http://developer.okta.com/feed.xml">
 
@@ -236,6 +236,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/events.html">Events</a></li>
 		     
 		     
@@ -343,7 +346,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/factors.html">Factors (MFA)</a></li>
+		     
+		     
+		     
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/factors.html">Factors</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -399,6 +411,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/groups.html">Groups</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -565,6 +580,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/roles.html">Admin Roles</a></li>
 		     
 		     
@@ -620,7 +641,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/schemas.html">Schemas</a></li>
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/schemas.html">Schemas API</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -678,6 +705,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/system_log.html">System Log (Beta)</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -839,7 +869,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/users.html">Users</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -928,7 +967,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <!-- END Fixed sidebar -->
       <!-- START Page Content -->
       <div class="PageContent-main" id="docs-body">
-      <h2 id="overview">Overview</h2>
+      <h1 id="sessions-api">Sessions API</h1>
 
 <p>Okta uses a cookie-based authentication mechanism to maintain a user’s authentication session across web requests. The Okta Sessions API provides operations to create and manage authentication sessions for users in your Okta organization.</p>
 
@@ -952,323 +991,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <p><strong>Session Tokens</strong> are secrets and should be protected at rest as well as during transit. A session token for a user is equivalent to having the user’s actual credentials.</p>
 </blockquote>
 
-<h2 id="session-model">Session Model</h2>
+<h2 id="getting-started">Getting Started</h2>
 
-<h3 id="example">Example</h3>
-
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"101W_juydrDRByB7fUdRyE2JQ"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"login"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user@example.com"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"userId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00ubgaSARVOQDIOXMORI"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"expiresAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-08-30T18:41:35.818Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACTIVE"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"lastPasswordVerification"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-08-30T18:41:35.818Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"lastFactorVerification"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-08-30T18:41:35.818Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"amr"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="s2">"pwd"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"otp"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"mfa"</span><span class="w">
-  </span><span class="p">],</span><span class="w">
-  </span><span class="nt">"idp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00oi5cpnylv792IcF0g3"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OKTA"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"mfaActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://your-domain.okta.com/api/v1/sessions/101W_juydrDRByB7fUdRyE2JQ"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"hints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-          </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"DELETE"</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"refresh"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://your-domain.okta.com/api/v1/sessions/101W_juydrDRByB7fUdRyE2JQ/lifecycle/refresh"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"hints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-          </span><span class="s2">"POST"</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isaac Brock"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://your-domain.okta.com/api/v1/users/00uit00ZK6ELuzPoD0g3"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"hints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-          </span><span class="s2">"GET"</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
-
-<h3 id="session-properties">Session Properties</h3>
-
-<p>Sessions have the following properties:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Description</th>
-      <th>DataType</th>
-      <th>Nullable</th>
-      <th>Unique</th>
-      <th>Readonly</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>id</td>
-      <td>unique key for the session</td>
-      <td>String</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-      <td>TRUE</td>
-    </tr>
-    <tr>
-      <td>login</td>
-      <td>unique identifier for the user (username)</td>
-      <td>String</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-      <td>TRUE</td>
-    </tr>
-    <tr>
-      <td>userId</td>
-      <td>unique key for the <a href="users.html#get-user-with-id">user</a></td>
-      <td>String</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-      <td>TRUE</td>
-    </tr>
-    <tr>
-      <td>expiresAt</td>
-      <td>timestamp when session expires</td>
-      <td>Date</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-      <td>TRUE</td>
-    </tr>
-    <tr>
-      <td>status</td>
-      <td>current <a href="#session-status">status</a> of the session</td>
-      <td><code class="highlighter-rouge">ACTIVE</code>, <code class="highlighter-rouge">MFA_REQUIRED</code>, or <code class="highlighter-rouge">MFA_ENROLL</code></td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-      <td>TRUE</td>
-    </tr>
-    <tr>
-      <td>lastPasswordVerification</td>
-      <td>timestamp when user last performed primary or step-up authentication with password</td>
-      <td>Date</td>
-      <td>TRUE</td>
-      <td>TRUE</td>
-      <td>TRUE</td>
-    </tr>
-    <tr>
-      <td>lastFactorVerification</td>
-      <td>timestamp when user last performed multi-factor authentication</td>
-      <td>Date</td>
-      <td>TRUE</td>
-      <td>TRUE</td>
-      <td>TRUE</td>
-    </tr>
-    <tr>
-      <td>amr</td>
-      <td>authentication method reference</td>
-      <td><a href="#amr-object">AMR Object</a></td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-    </tr>
-    <tr>
-      <td>idp</td>
-      <td>identity provider used to authenticate the user</td>
-      <td><a href="#idp-object">IDP Object</a></td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-    </tr>
-    <tr>
-      <td>mfaActive</td>
-      <td>indicates whether the user has <a href="./factors.html#list-enrolled-factors">enrolled an MFA factor</a></td>
-      <td>Boolean</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-    </tr>
-  </tbody>
-</table>
-
-<blockquote>
-  <p>The <code class="highlighter-rouge">mfaActive</code> param is deprecated. Use the <code class="highlighter-rouge">lastFactorVerification</code> attribute in conjunction with <code class="highlighter-rouge">amr</code> to understand if the user has performed MFA for the current session. Use the <a href="./factors.html#list-enrolled-factors">Factors API</a> to query the factor enrollment status for a given user.</p>
-</blockquote>
-
-<h4 id="optional-session-properties">Optional Session Properties</h4>
-
-<p>The <a href="#create-session">Create Session</a> operation can optionally return the following properties when requested.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>cookieToken</td>
-      <td>Another one-time token which can be used to obtain a session cookie by visiting either an application’s embed link or a session redirect URL.</td>
-    </tr>
-    <tr>
-      <td>cookieTokenUrl</td>
-      <td>URL for a a transparent 1x1 pixel image which contains a one-time session token which when visited sets the session cookie in your browser for your organization.</td>
-    </tr>
-  </tbody>
-</table>
-
-<blockquote>
-  <p>The <code class="highlighter-rouge">cookieToken</code> is deprecated in favor of the <a href="./authn.html">Authentication API</a> which supports the full user authentication pipeline and produces a <code class="highlighter-rouge">sessionToken</code> which can be used in this API.</p>
-</blockquote>
-
-<blockquote>
-  <p>The <code class="highlighter-rouge">cookieTokenUrl</code> is deprecated as modern browsers block cookies set via embedding images from another origin (cross-domain).</p>
-</blockquote>
-
-<h3 id="session-status">Session Status</h3>
-
-<p>The following values are defined for the status of a session:</p>
-
-<ul>
-  <li><code class="highlighter-rouge">ACTIVE</code>: the session is established and fully validated</li>
-  <li><code class="highlighter-rouge">MFA_REQUIRED</code>: the session is established but requires second factor verification</li>
-  <li><code class="highlighter-rouge">MFA_ENROLL</code>: the session is established but the user needs to enroll in a second factor</li>
-</ul>
-
-<h3 id="amr-object">AMR Object</h3>
-
-<p>The <a href="https://tools.ietf.org/html/draft-ietf-oauth-amr-values-01">authentication methods reference</a> (“AMR”) specifies which authentication methods were used to establish the session. The value is a JSON array with one or more of the following values:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Value</th>
-      <th>Description</th>
-      <th>Example</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">pwd</code></td>
-      <td>Password authentication</td>
-      <td>Standard password-based login</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">swk</code></td>
-      <td>Proof-of-possession (PoP) of a software key</td>
-      <td>Okta Verify with Push</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">hwk</code></td>
-      <td>Proof-of-possession (PoP) of a hardware key</td>
-      <td>Yubikey factor</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">otp</code></td>
-      <td>One-time password</td>
-      <td>Okta Verify, Google Authenticator</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">sms</code></td>
-      <td>SMS text message to the user at a registered number</td>
-      <td>SMS factor</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">tel</code></td>
-      <td>Telephone call to the user at a registered number</td>
-      <td>Phone call factor</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">geo</code></td>
-      <td>Use of geo-location information</td>
-      <td>IP Trust and Network Zone policy conditions</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">fpt</code></td>
-      <td>Fingerprint biometric authentication</td>
-      <td>Okta Verify with Touch ID</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">kba</code></td>
-      <td>Knowledge-based authentication</td>
-      <td>Security Question factor</td>
-    </tr>
-    <tr>
-      <td><code class="highlighter-rouge">mfa</code></td>
-      <td>Multiple factor authentication</td>
-      <td>(This value is present whenever any MFA factor verification is performed)</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="idp-object">IDP Object</h3>
-
-<p>Specifies the identity provider used to authentication the user.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>DataType</th>
-      <th>Nullable</th>
-      <th>Unique</th>
-      <th>Readonly</th>
-      <th>MinLength</th>
-      <th>MaxLength</th>
-      <th>Validation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>id</td>
-      <td>String</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>type</td>
-      <td><code class="highlighter-rouge">OKTA</code>, <code class="highlighter-rouge">ACTIVE_DIRECTORY</code>, <code class="highlighter-rouge">LDAP</code>, <code class="highlighter-rouge">FEDERATION</code>, or <code class="highlighter-rouge">SOCIAL</code></td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<blockquote>
-  <p>The <code class="highlighter-rouge">id</code> will be the org id if the type is <code class="highlighter-rouge">OKTA</code>; otherwise it will be the IDP instance id.</p>
-</blockquote>
-
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"idp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0oabhnUQFYHMBNVSVXMV"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACTIVE_DIRECTORY"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+<p>Explore the Sessions API: <a href="https://app.getpostman.com/run-collection/17d9f7e4f331c1d3c858"><img src="https://run.pstmn.io/button.svg" alt="Run in Postman" /></a></p>
 
 <h2 id="session-operations">Session Operations</h2>
 
@@ -1729,7 +1454,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </code></pre>
 </div>
 
-<h4 class="api api-operation" id="get-current-session">Get Current Session</h4>
+<h3 class="api api-operation" id="get-current-session">Get Current Session</h3>
 
 <p><span class="api-uri-template api-uri-get"><span class="api-label">GET</span> /sessions/me</span> <span class="api-label api-label-cors api-uri-template-cors"><i class="fa fa-cloud-download"></i> CORS</span></p>
 
@@ -1905,6 +1630,324 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
 </code></pre>
+</div>
+
+<h2 id="session-model">Session Model</h2>
+
+<h3 id="example">Example</h3>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"101W_juydrDRByB7fUdRyE2JQ"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"login"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user@example.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"userId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00ubgaSARVOQDIOXMORI"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"expiresAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-08-30T18:41:35.818Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACTIVE"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"lastPasswordVerification"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-08-30T18:41:35.818Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"lastFactorVerification"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-08-30T18:41:35.818Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"amr"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"pwd"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"otp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mfa"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"idp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00oi5cpnylv792IcF0g3"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OKTA"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"mfaActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://your-domain.okta.com/api/v1/sessions/101W_juydrDRByB7fUdRyE2JQ"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"hints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"DELETE"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"refresh"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://your-domain.okta.com/api/v1/sessions/101W_juydrDRByB7fUdRyE2JQ/lifecycle/refresh"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"hints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"POST"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isaac Brock"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://your-domain.okta.com/api/v1/users/00uit00ZK6ELuzPoD0g3"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"hints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"GET"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="session-properties">Session Properties</h3>
+
+<p>Sessions have the following properties:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Description</th>
+      <th>DataType</th>
+      <th>Nullable</th>
+      <th>Unique</th>
+      <th>Readonly</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>unique key for the session</td>
+      <td>String</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+      <td>TRUE</td>
+    </tr>
+    <tr>
+      <td>login</td>
+      <td>unique identifier for the user (username)</td>
+      <td>String</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+      <td>TRUE</td>
+    </tr>
+    <tr>
+      <td>userId</td>
+      <td>unique key for the <a href="users.html#get-user-with-id">user</a></td>
+      <td>String</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+      <td>TRUE</td>
+    </tr>
+    <tr>
+      <td>expiresAt</td>
+      <td>timestamp when session expires</td>
+      <td>Date</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+      <td>TRUE</td>
+    </tr>
+    <tr>
+      <td>status</td>
+      <td>current <a href="#session-status">status</a> of the session</td>
+      <td><code class="highlighter-rouge">ACTIVE</code>, <code class="highlighter-rouge">MFA_REQUIRED</code>, or <code class="highlighter-rouge">MFA_ENROLL</code></td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+      <td>TRUE</td>
+    </tr>
+    <tr>
+      <td>lastPasswordVerification</td>
+      <td>timestamp when user last performed primary or step-up authentication with password</td>
+      <td>Date</td>
+      <td>TRUE</td>
+      <td>TRUE</td>
+      <td>TRUE</td>
+    </tr>
+    <tr>
+      <td>lastFactorVerification</td>
+      <td>timestamp when user last performed multi-factor authentication</td>
+      <td>Date</td>
+      <td>TRUE</td>
+      <td>TRUE</td>
+      <td>TRUE</td>
+    </tr>
+    <tr>
+      <td>amr</td>
+      <td>authentication method reference</td>
+      <td><a href="#amr-object">AMR Object</a></td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+    </tr>
+    <tr>
+      <td>idp</td>
+      <td>identity provider used to authenticate the user</td>
+      <td><a href="#idp-object">IDP Object</a></td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+    </tr>
+    <tr>
+      <td>mfaActive</td>
+      <td>indicates whether the user has <a href="./factors.html#list-enrolled-factors">enrolled an MFA factor</a></td>
+      <td>Boolean</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>The <code class="highlighter-rouge">mfaActive</code> param is deprecated. Use the <code class="highlighter-rouge">lastFactorVerification</code> attribute in conjunction with <code class="highlighter-rouge">amr</code> to understand if the user has performed MFA for the current session. Use the <a href="./factors.html#list-enrolled-factors">Factors API</a> to query the factor enrollment status for a given user.</p>
+</blockquote>
+
+<h4 id="optional-session-properties">Optional Session Properties</h4>
+
+<p>The <a href="#create-session">Create Session</a> operation can optionally return the following properties when requested.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cookieToken</td>
+      <td>Another one-time token which can be used to obtain a session cookie by visiting either an application’s embed link or a session redirect URL.</td>
+    </tr>
+    <tr>
+      <td>cookieTokenUrl</td>
+      <td>URL for a a transparent 1x1 pixel image which contains a one-time session token which when visited sets the session cookie in your browser for your organization.</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>The <code class="highlighter-rouge">cookieToken</code> is deprecated in favor of the <a href="./authn.html">Authentication API</a> which supports the full user authentication pipeline and produces a <code class="highlighter-rouge">sessionToken</code> which can be used in this API.</p>
+</blockquote>
+
+<blockquote>
+  <p>The <code class="highlighter-rouge">cookieTokenUrl</code> is deprecated as modern browsers block cookies set via embedding images from another origin (cross-domain).</p>
+</blockquote>
+
+<h3 id="session-status">Session Status</h3>
+
+<p>The following values are defined for the status of a session:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">ACTIVE</code>: the session is established and fully validated</li>
+  <li><code class="highlighter-rouge">MFA_REQUIRED</code>: the session is established but requires second factor verification</li>
+  <li><code class="highlighter-rouge">MFA_ENROLL</code>: the session is established but the user needs to enroll in a second factor</li>
+</ul>
+
+<h3 id="amr-object">AMR Object</h3>
+
+<p>The <a href="https://tools.ietf.org/html/draft-ietf-oauth-amr-values-01">authentication methods reference</a> (“AMR”) specifies which authentication methods were used to establish the session. The value is a JSON array with one or more of the following values:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">pwd</code></td>
+      <td>Password authentication</td>
+      <td>Standard password-based login</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">swk</code></td>
+      <td>Proof-of-possession (PoP) of a software key</td>
+      <td>Okta Verify with Push</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">hwk</code></td>
+      <td>Proof-of-possession (PoP) of a hardware key</td>
+      <td>Yubikey factor</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">otp</code></td>
+      <td>One-time password</td>
+      <td>Okta Verify, Google Authenticator</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">sms</code></td>
+      <td>SMS text message to the user at a registered number</td>
+      <td>SMS factor</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">tel</code></td>
+      <td>Telephone call to the user at a registered number</td>
+      <td>Phone call factor</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">geo</code></td>
+      <td>Use of geo-location information</td>
+      <td>IP Trust and Network Zone policy conditions</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">fpt</code></td>
+      <td>Fingerprint biometric authentication</td>
+      <td>Okta Verify with Touch ID</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">kba</code></td>
+      <td>Knowledge-based authentication</td>
+      <td>Security Question factor</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">mfa</code></td>
+      <td>Multiple factor authentication</td>
+      <td>(This value is present whenever any MFA factor verification is performed)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="idp-object">IDP Object</h3>
+
+<p>Specifies the identity provider used to authentication the user.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>DataType</th>
+      <th>Nullable</th>
+      <th>Unique</th>
+      <th>Readonly</th>
+      <th>MinLength</th>
+      <th>MaxLength</th>
+      <th>Validation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>String</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td><code class="highlighter-rouge">OKTA</code>, <code class="highlighter-rouge">ACTIVE_DIRECTORY</code>, <code class="highlighter-rouge">LDAP</code>, <code class="highlighter-rouge">FEDERATION</code>, or <code class="highlighter-rouge">SOCIAL</code></td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>The <code class="highlighter-rouge">id</code> will be the org id if the type is <code class="highlighter-rouge">OKTA</code>; otherwise it will be the IDP instance id.</p>
+</blockquote>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"idp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0oabhnUQFYHMBNVSVXMV"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACTIVE_DIRECTORY"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
       </div>

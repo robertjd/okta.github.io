@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="/assets/css/okta.css">
 
     <title>OpenID Connect | Okta Developer</title>
-    <meta name="description" content="Overview">
+    <meta name="description" content="OpenID Connect API">
     <link rel="canonical" href="http://developer.okta.com/docs/api/resources/oidc.html">
     <link rel="alternate" type="application/rss+xml" title="Okta Developer" href="http://developer.okta.com/feed.xml">
 
@@ -236,6 +236,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/events.html">Events</a></li>
 		     
 		     
@@ -343,7 +346,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/factors.html">Factors (MFA)</a></li>
+		     
+		     
+		     
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/factors.html">Factors</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -399,6 +411,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/groups.html">Groups</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -565,6 +580,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/roles.html">Admin Roles</a></li>
 		     
 		     
@@ -620,7 +641,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/schemas.html">Schemas</a></li>
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/schemas.html">Schemas API</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -678,6 +705,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/system_log.html">System Log (Beta)</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -839,7 +869,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/users.html">Users</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -928,7 +967,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <!-- END Fixed sidebar -->
       <!-- START Page Content -->
       <div class="PageContent-main" id="docs-body">
-      <h1 id="overview">Overview</h1>
+      <h1 id="openid-connect-api">OpenID Connect API</h1>
 
 <p>The OpenID Connect API endpoints enable clients to use <a href="http://openid.net/specs/openid-connect-core-1_0.html">OIDC workflows</a> with Okta.
 With OpenID Connect, a client can use Okta as a broker. The user authenticates against identity providers like Google, Facebook, LinkedIn, or Microsoft,
@@ -1041,6 +1080,7 @@ to access <a href="http://developer.okta.com/docs/api/resources/oidc.html#get-us
 be a valid OAuth 2.0 request, but it’s not an OpenID Connect request.</li>
   <li><code class="highlighter-rouge">profile</code> requests access to these default profile claims: <code class="highlighter-rouge">name</code>, <code class="highlighter-rouge">family_name</code>, <code class="highlighter-rouge">given_name</code>, <code class="highlighter-rouge">middle_name</code>, <code class="highlighter-rouge">nickname</code>, <code class="highlighter-rouge">preferred_username</code>, <code class="highlighter-rouge">profile</code>,  
 <code class="highlighter-rouge">picture</code>, <code class="highlighter-rouge">website</code>, <code class="highlighter-rouge">gender</code>, <code class="highlighter-rouge">birthdate</code>, <code class="highlighter-rouge">zoneinfo</code>,<code class="highlighter-rouge">locale</code>, and <code class="highlighter-rouge">updated_at</code>.</li>
+  <li><code class="highlighter-rouge">offline_access</code> can only be requested in combination with a <code class="highlighter-rouge">response_type</code> containing <code class="highlighter-rouge">code</code>. If the <code class="highlighter-rouge">response_type</code> does not contain <code class="highlighter-rouge">code</code>, <code class="highlighter-rouge">offline_access</code> will be ignored.</li>
   <li>For more information about <code class="highlighter-rouge">offline_access</code>, see the <a href="http://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess">OIDC spec</a>.</li>
 </ul>
 
@@ -1366,18 +1406,55 @@ as well as claims about the authenticated user.</p>
 <p>Be aware of the following before you work with scope-dependent claims:</p>
 
 <ul>
-  <li>
-    <p>The client can also optionally request an Access Token along with the ID Token. In this case, in order to keep the size of the ID Token small, the ID Token body does not contain all the scope dependent claims. 
-Instead, the ID token contains the <code class="highlighter-rouge">name</code> and <code class="highlighter-rouge">preferred_username</code> claims if the <code class="highlighter-rouge">profile</code> scope was requested and <code class="highlighter-rouge">email</code> claim if the <code class="highlighter-rouge">email</code> scope was requested.</p>
-  </li>
-  <li>
-    <p>The full set of claims for the requested scopes is available via the <a href="#get-user-information">/oauth2/v1/userinfo</a> endpoint. Call this endpoint using the Access Token.</p>
-  </li>
-  <li>
-    <p>To protect against arbitrarily large numbers of groups matching the group filter, the groups claim has a limit of 100. 
+  <li>To protect against arbitrarily large numbers of groups matching the group filter, the groups claim has a limit of 100. 
 If more than 100 groups match the filter, then the request fails. Expect that this limit may change in the future.
-For more information about configuring an app for OpenID Connect, including group claims, see <a href="https://support.okta.com/help/articles/Knowledge_Article/Using-OpenID-Connect">Using OpenID Connect</a>.</p>
+For more information about configuring an app for OpenID Connect, including group claims, see <a href="https://support.okta.com/help/articles/Knowledge_Article/Using-OpenID-Connect">Using OpenID Connect</a>.</li>
+  <li>
+    <p><strong>Important:</strong> Scope-dependent claims are returned differently depending on the values in <code class="highlighter-rouge">response_type</code> and the scopes requested:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: left">Response Type</th>
+          <th style="text-align: left">Claims Returned in ID Token</th>
+          <th style="text-align: left">Claims Returned from the Userinfo Endpoint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left"><code class="highlighter-rouge">code </code></td>
+          <td style="text-align: left">N/A</td>
+          <td style="text-align: left">N/A</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><code class="highlighter-rouge">token</code></td>
+          <td style="text-align: left">N/A</td>
+          <td style="text-align: left">N/A</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><code class="highlighter-rouge">id_token</code></td>
+          <td style="text-align: left">Claims associated with requested scopes.</td>
+          <td style="text-align: left">N/A</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><code class="highlighter-rouge">id_token</code> <code class="highlighter-rouge">code </code></td>
+          <td style="text-align: left">Claims associated with requested scopes.</td>
+          <td style="text-align: left">N/A</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><code class="highlighter-rouge">id_token</code> <code class="highlighter-rouge">token</code></td>
+          <td style="text-align: left"><code class="highlighter-rouge">email</code> if email scope is requested; <code class="highlighter-rouge">name</code> and <code class="highlighter-rouge">preferred_username</code> if profile scope is requested</td>
+          <td style="text-align: left">Claims associated with the requested scopes</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><code class="highlighter-rouge">code</code> <code class="highlighter-rouge">id_token</code> <code class="highlighter-rouge">token</code></td>
+          <td style="text-align: left"><code class="highlighter-rouge">email</code> if email scope is requested; <code class="highlighter-rouge">name</code> and <code class="highlighter-rouge">preferred_username</code> if profile scope is requested</td>
+          <td style="text-align: left">Claims associated with the requested scopes</td>
+        </tr>
+      </tbody>
+    </table>
   </li>
+  <li>The full set of claims for the requested scopes is available via the <a href="#get-user-information">/oauth2/v1/userinfo</a> endpoint. Call this endpoint using the Access Token.</li>
 </ul>
 
 <h2 id="endpoints">Endpoints</h2>
@@ -1599,10 +1676,10 @@ This API doesn’t require any authentication and returns a JSON object with the
     </span><span class="nt">"response_types_supported"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"code"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"code id_token"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"code token"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"code id_token token"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"id_token"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"id_token token"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"token"</span><span class="w">
+        </span><span class="s2">"id_token token"</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"response_modes_supported"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"query"</span><span class="p">,</span><span class="w">
@@ -1613,7 +1690,8 @@ This API doesn’t require any authentication and returns a JSON object with the
     </span><span class="nt">"grant_types_supported"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"authorization_code"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"implicit"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"refresh_token"</span><span class="w">
+        </span><span class="s2">"refresh_token"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"password"</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"subject_types_supported"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"public"</span><span class="w">
@@ -1626,7 +1704,9 @@ This API doesn’t require any authentication and returns a JSON object with the
         </span><span class="s2">"email"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"profile"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"address"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"phone"</span><span class="w">
+        </span><span class="s2">"phone"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"offline_access"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"groups"</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"token_endpoint_auth_methods_supported"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"client_secret_basic"</span><span class="p">,</span><span class="w">
@@ -1635,14 +1715,15 @@ This API doesn’t require any authentication and returns a JSON object with the
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"claims_supported"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"iss"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ver"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"sub"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"aud"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"iat"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"exp"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"jti"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"auth_time"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"amr"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"idp"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"idp_type"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"nonce"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"name"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"nickname"</span><span class="p">,</span><span class="w">
@@ -1657,7 +1738,13 @@ This API doesn’t require any authentication and returns a JSON object with the
         </span><span class="s2">"locale"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"address"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"phone_number"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"updated_at"</span><span class="w">
+        </span><span class="s2">"picture"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"website"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"gender"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"birthdate"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"updated_at"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"at_hash"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"c_hash"</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"introspection_endpoint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://${org}.okta.com/oauth2/v1/introspect"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"introspection_endpoint_auth_methods_supported"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">

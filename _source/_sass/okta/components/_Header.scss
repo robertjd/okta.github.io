@@ -194,22 +194,12 @@
 
 @include media("<medium") {
 	#header {
-		height: 75px;
-
-		#nav {
-			height: 75px;
-			padding: 0;
-		}
-
-		.logo {
-			top: 20px;
-		}
 
 		#mobile-nav {
 			display: block;
 			position: absolute;
 			right: 40px;
-			top: 17px;
+			top: 25px;
 
 			#mobile-search {
 				@include margin(0 small 0 0);
@@ -219,8 +209,8 @@
 				border-radius: 100%;
 				display: block;
 				float: left;
-				width: 40px;
-				height: 40px;
+				width: 50px;
+				height: 50px;
 				z-index: 3;
 			}
 
@@ -228,8 +218,8 @@
 				border-radius: 100%;
 				border: 2px solid get-color('accent');
 				float: left;
-				width: 40px;
-				height: 40px;
+				width: 50px;
+				height: 50px;
 				z-index: 3;
 				position: relative;
 				display: block;
@@ -369,11 +359,12 @@
 			position: absolute;
 			border-radius: 100%;
 			border: 2px solid get-color('white');
-			width: 40px;
-			height: 40px;
+			width: 50px;
+			height: 50px;
+			position: absolute;
 			z-index: 100000;
 			right: get-spacing('medium');
-			top: 17px;
+			top: get-spacing('medium');
 
 			&:hover {
 				text-decoration: none;

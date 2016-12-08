@@ -236,6 +236,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/events.html">Events</a></li>
 		     
 		     
@@ -343,7 +346,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/factors.html">Factors (MFA)</a></li>
+		     
+		     
+		     
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/factors.html">Factors</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -399,6 +411,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/groups.html">Groups</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -565,6 +580,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/roles.html">Admin Roles</a></li>
 		     
 		     
@@ -620,7 +641,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/schemas.html">Schemas</a></li>
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/schemas.html">Schemas API</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -678,6 +705,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/system_log.html">System Log (Beta)</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -839,7 +869,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/users.html">Users</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -928,7 +967,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <!-- END Fixed sidebar -->
       <!-- START Page Content -->
       <div class="PageContent-main" id="docs-body">
-      <h2 id="overview">Overview</h2>
+      <h1 id="social-authentication">Social Authentication</h1>
 
 <p>Okta Social Authentication allows Okta to integrate with a Social Identity Provider such as Facebook, Google, LinkedIn, and Microsoft. These integrations support the following features:</p>
 
@@ -1001,8 +1040,8 @@ Identity Provider that you want to configure.</p>
     <ul>
       <li><strong>Name</strong>: We suggest using the name you would
 expect to see on a button, something like “Log in to Facebook”.</li>
-      <li><strong>Transform username</strong>: Set to “<code class="highlighter-rouge">idpuser.email</code>”.</li>
-      <li><strong>Authenticate if username matches</strong>: Leave set to the default.</li>
+      <li><strong>IdP Username</strong>: Set to “<code class="highlighter-rouge">idpuser.email</code>”.</li>
+      <li><strong>Match against</strong>: Leave set to the default.</li>
       <li><strong>Account Link Policy</strong>: Leave set to “Automatic” for now.</li>
       <li><strong>Auto-Link Restrictions</strong>: Leave set to the default.</li>
       <li><strong>Provisioning Policy</strong>: Leave set to “Automatic” for now.</li>

@@ -244,6 +244,9 @@
   border-bottom: 1px solid #ccc;
   padding-bottom: 15px;
   margin: 30px 0; }
+  @media screen and (min-width: 1200px) {
+    .post-title-block {
+      margin-left: 110px; } }
 
 .post-title-block h1 {
   margin: 10px 0 5px; }
@@ -265,7 +268,8 @@
   border-radius: 25px;
   vertical-align: middle;
   padding-top: 0px;
-  padding-bottom: 0px; }
+  padding-bottom: 0px;
+  margin-left: 0px; }
   @media screen and (min-width: 1200px) {
     .post-block .author-avatar {
       position: absolute;

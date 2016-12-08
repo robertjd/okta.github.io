@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="/assets/css/okta.css">
 
     <title>Platform Release Notes | Okta Developer</title>
-    <meta name="description" content="Summary of changes to the Okta Platform since Release 2016.43">
+    <meta name="description" content="Summary of changes to the Okta Platform since Release 2016.47">
     <link rel="canonical" href="http://developer.okta.com/docs/platform-release-notes/platform-release-notes.html">
     <link rel="alternate" type="application/rss+xml" title="Okta Developer" href="http://developer.okta.com/feed.xml">
 
@@ -236,6 +236,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/events.html">Events</a></li>
 		     
 		     
@@ -343,7 +346,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/factors.html">Factors (MFA)</a></li>
+		     
+		     
+		     
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/factors.html">Factors</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -399,6 +411,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/groups.html">Groups</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -565,6 +580,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/roles.html">Admin Roles</a></li>
 		     
 		     
@@ -620,7 +641,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/schemas.html">Schemas</a></li>
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/schemas.html">Schemas API</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -678,6 +705,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/system_log.html">System Log (Beta)</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -839,7 +869,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/users.html">Users</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -928,53 +967,36 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <!-- END Fixed sidebar -->
       <!-- START Page Content -->
       <div class="PageContent-main" id="docs-body">
-      <h1 id="release-201645">Release 2016.45</h1>
+      <h1 id="release-201649">Release 2016.49</h1>
 
 <h2 id="feature-enhancements">Feature Enhancements</h2>
 
-<h3 id="new-version-of-okta-sign-in-widget">New Version of Okta Sign-In Widget</h3>
+<h3 id="delete-user-api-in-ea">Delete User API in EA</h3>
 
-<p>The new version of Okta Sign-In Widget, 1.8.0, is available:</p>
+<p>API access to <a href="/docs/api/resources/users.html#delete-user">delete users</a> is now in EA. To request the feature, contact Support. 
+<!-- OKTA-109291 --></p>
 
-<ul>
-  <li>Localized security questions</li>
-  <li>Added Microsoft as a Social Provider</li>
-  <li>Added an option to provide your own dependencies</li>
-</ul>
+<h3 id="system-query-log-change">System Query Log Change</h3>
 
-<p>Learn about these and other improvements in <a href="https://github.com/okta/okta-signin-widget/releases/tag/okta-signin-widget-1.8.0">the GitHub repository</a>.</p>
-
-<h3 id="improved-error-message-for-openid-connect">Improved Error Message for OpenID Connect</h3>
-
-<p>OpenID Connect error messages related to invalid scopes now return more information. 
-<!-- OKTA-94798 --></p>
-
-<h3 id="user-api-response-always-contains-hal-links">User API Response Always Contains HAL Links</h3>
-
-<p>Previously, HAL links for self-service operations (reset password, change password and self-service unlock) were only returned if a policy evaluation indicated they should be present. As of this release we always return these links, except we don’t return the self-service unlock link if the user is not locked.</p>
-
-<p>This enhancement applies to all new preview and productions orgs. Existing orgs receive the enhancement at a later date.
-<!-- OKTA-104084 --></p>
+<p>System logs are truncated after six months. You may want to revise any system log queries for the new limit.
+This change allows us to provide faster, more consistent responses to a wider range of system-log API requests.
+Because the system keeps less data in memory, it responds faster.
+<!-- OKTA-105346 --></p>
 
 <h2 id="platform-bugs-fixed">Platform Bugs Fixed</h2>
 
 <ul>
-  <li>Blank or empty passwords were allowed when users reset their passwords via the API following a reset password action.
-Following the login with a temporary password the user would be prompted to enter their new password. 
-At that time, the user could enter an empty password without generating an error. (OKTA-100802)</li>
-  <li>Validation of the security answer length in accordance with password policy wasn’t performed 
-when creating a user via the API with the group password policy feature enabled.
-Before the fix, the minimum security answer length was assumed to always be 4, regardless of the policy settings. (OKTA-103407)</li>
-  <li>Improved the error message returned by an HTTP 429 error to remind the user to wait 30 seconds before re-issuing the request for an SMS message. (OKTA-104738)</li>
-  <li>Removed some app metadata that was incorrectly returned from a <code class="highlighter-rouge">GET /api/v1/apps/{app-ID}</code> request for an OpenID Connect app. (OKTA-104767)</li>
-  <li>After resetting an SMS factor for a user, that factor was incorrectly included in a subsequent API call for that user. (OKTA-105672)</li>
-  <li>Changed validation of OpenID Connect client apps to disallow fragment components in configured redirect URIs. (OKTA-106049)</li>
+  <li>Two users created simultaneously with the same login returned an HTTP 500 error. 
+  Now, a validation error is returned. (OKTA-105484)</li>
+  <li>If an Admin was reassigned to a UserAdmin role that was scoped to a group, requests to the Users API returned fewer records than indicated by the limit parameter. (OKTA-107410)</li>
+  <li>Creating users with the Users API failed if a bookmark app was assigned to a group. (OKTA-108185)</li>
+  <li>User profiles weren’t always updated with social profile changes. (OKTA-108602)</li>
 </ul>
 
-<h2 id="does-your-org-have-these-changes-yet">Does Your Org Have These Changes Yet?</h2>
+<h2 id="does-your-org-have-this-change-yet">Does Your Org Have This Change Yet?</h2>
 
 <p>Check the footer of any Admin page in an org to verify the current release for that org. For example,
-scroll to the bottom of the Admin <b>Dashboard</b> page to see the version number:</p>
+scroll to the bottom of the Admin <strong>Dashboard</strong> page to see the version number:</p>
 
 <p><img src="/assets/img/release_notes/version_footer.png" alt="Release Number in Footer" /></p>
 
@@ -985,6 +1007,9 @@ scroll to the bottom of the Admin <b>Dashboard</b> page to see the version numbe
 <h2 id="earlier-release-notes">Earlier Release Notes</h2>
 
 <ul>
+  <li><a href="platform-release-notes2016-47.html">Platform Release Notes for Release 2016.47</a></li>
+  <li><a href="platform-release-notes2016-46.html">Platform Release Notes for Release 2016.46</a></li>
+  <li><a href="platform-release-notes2016-45.html">Platform Release Notes for Release 2016.45</a></li>
   <li><a href="platform-release-notes2016-43.html">Platform Release Notes for Release 2016.43</a></li>
   <li><a href="platform-release-notes2016-41.html">Platform Release Notes for Release 2016.41</a></li>
   <li><a href="platform-release-notes2016-40.html">Platform Release Notes for Release 2016.40</a></li>

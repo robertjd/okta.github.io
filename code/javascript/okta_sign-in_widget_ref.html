@@ -236,6 +236,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/events.html">Events</a></li>
 		     
 		     
@@ -343,7 +346,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/factors.html">Factors (MFA)</a></li>
+		     
+		     
+		     
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/factors.html">Factors</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -399,6 +411,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/groups.html">Groups</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -565,6 +580,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/roles.html">Admin Roles</a></li>
 		     
 		     
@@ -620,7 +641,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/schemas.html">Schemas</a></li>
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/schemas.html">Schemas API</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -678,6 +705,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/system_log.html">System Log (Beta)</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -839,7 +869,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/users.html">Users</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -1461,14 +1500,59 @@ The options object must have an <code class="highlighter-rouge">el</code> proper
       <span class="s1">'help'</span><span class="p">:</span> <span class="s1">'https://acme.com/custom/help'</span>
     <span class="p">}</span>
   <span class="p">},</span>
-  <span class="kd">function</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="s1">'SUCCESS'</span><span class="p">)</span> <span class="p">{</span>
-      <span class="c1">// Success callback</span>
-      <span class="nx">res</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">setCookieAndRedirect</span><span class="p">(</span><span class="s1">'https://acme.com/home'</span><span class="p">);</span>
+
+  <span class="kd">function</span> <span class="nx">success</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// The properties in the response object depend on two factors:</span>
+    <span class="c1">// 1. The type of authentication flow that has just completed, determined by res.status</span>
+    <span class="c1">// 2. What type of token the widget is returning</span>
+
+    <span class="c1">// The user has started the password recovery flow, and is on the confirmation</span>
+    <span class="c1">// screen letting them know that an email is on the way.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="s1">'FORGOT_PASSWORD_EMAIL_SENT'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Any followup action you want to take</span>
+      <span class="k">return</span><span class="p">;</span>
     <span class="p">}</span>
+
+    <span class="c1">// The user has started the unlock account flow, and is on the confirmation</span>
+    <span class="c1">// screen letting them know that an email is on the way.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="s1">'UNLOCK_ACCOUNT_EMAIL_SENT'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Any followup action you want to take</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// The user has successfully completed the authentication flow</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="s1">'SUCCESS'</span><span class="p">)</span> <span class="p">{</span>
+
+      <span class="c1">// If the widget is not configured for OIDC, the response will contain</span>
+      <span class="c1">// user metadata and a sessionToken that can be converted to an Okta</span>
+      <span class="c1">// session cookie:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">user</span><span class="p">);</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">setCookieAndRedirect</span><span class="p">(</span><span class="s1">'https://acme.com/app'</span><span class="p">);</span>
+
+      <span class="c1">// If the widget is configured for OIDC with a single responseType, the</span>
+      <span class="c1">// response will be the token.</span>
+      <span class="c1">// i.e. authParams.responseType = 'id_token':</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">claims</span><span class="p">);</span>
+      <span class="nx">oktaSignIn</span><span class="p">.</span><span class="nx">tokenManager</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'my_id_token'</span><span class="p">,</span> <span class="nx">res</span><span class="p">);</span>
+
+      <span class="c1">// If the widget is configured for OIDC with multiple responseTypes, the</span>
+      <span class="c1">// response will be an array of tokens:</span>
+      <span class="c1">// i.e. authParams.responseType = ['id_token', 'token']</span>
+      <span class="nx">oktaSignIn</span><span class="p">.</span><span class="nx">tokenManager</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'my_id_token'</span><span class="p">,</span> <span class="nx">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+      <span class="nx">oktaSignIn</span><span class="p">.</span><span class="nx">tokenManager</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'my_access_token'</span><span class="p">,</span> <span class="nx">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
   <span class="p">},</span>
-  <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// Error callback</span>
+
+  <span class="kd">function</span> <span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// The widget will handle most types of errors - for example, if the user</span>
+    <span class="c1">// enters an invalid password or there are issues authenticating.</span>
+    <span class="c1">//</span>
+    <span class="c1">// This function is invoked with errors the widget cannot recover from:</span>
+    <span class="c1">// 1. Known errors: CONFIG_ERROR, UNSUPPORTED_BROWSER_ERROR, OAUTH_ERROR</span>
+    <span class="c1">// 2. Uncaught exceptions</span>
     <span class="nx">alert</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
   <span class="p">});</span>
 </code></pre>

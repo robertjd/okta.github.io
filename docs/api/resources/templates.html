@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="/assets/css/okta.css">
 
     <title>Templates | Okta Developer</title>
-    <meta name="description" content="OverviewThe Okta Templates API provides operations to manage custom templates. Currently only the SMS custom templates are implemented.">
+    <meta name="description" content="Custom Templates API">
     <link rel="canonical" href="http://developer.okta.com/docs/api/resources/templates.html">
     <link rel="alternate" type="application/rss+xml" title="Okta Developer" href="http://developer.okta.com/feed.xml">
 
@@ -236,6 +236,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/events.html">Events</a></li>
 		     
 		     
@@ -343,7 +346,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/factors.html">Factors (MFA)</a></li>
+		     
+		     
+		     
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/factors.html">Factors</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -399,6 +411,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/groups.html">Groups</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -565,6 +580,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/roles.html">Admin Roles</a></li>
 		     
 		     
@@ -620,7 +641,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
-		     <li><a href="/docs/api/resources/schemas.html">Schemas</a></li>
+		     
+		     
+		     
+		     <li><a href="/docs/api/resources/schemas.html">Schemas API</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -678,6 +705,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     <li><a href="/docs/api/resources/system_log.html">System Log (Beta)</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -839,7 +869,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		     
 		     
 		     
+		     
+		     
+		     
+		     
+		     
+		     
 		     <li><a href="/docs/api/resources/users.html">Users</a></li>
+		     
+		     
+		     
 		     
 		     
 		     
@@ -928,175 +967,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <!-- END Fixed sidebar -->
       <!-- START Page Content -->
       <div class="PageContent-main" id="docs-body">
-      <h2 id="overview">Overview</h2>
-<p>The Okta Templates API provides operations to manage custom templates. Currently only the SMS custom templates are implemented.</p>
+      <h1 id="custom-templates-api">Custom Templates API</h1>
 
-<h2 id="sms-templates">SMS Templates</h2>
+<p>The Okta Templates API provides operations to manage custom templates.</p>
+
+<blockquote>
+  <p>Currently, only the SMS custom templates are implemented.</p>
+</blockquote>
+
 <p>SMS templates customize the SMS message sent to users. One default SMS template is provided. All custom templates must have the variable <strong>${code}</strong> as part of the text. The <strong>${code}</strong> variable is replaced with the actual SMS code when the message is sent. Optionally, you can use the variable <strong>${org.name}</strong>. If a template contains <strong>${org.name}</strong>, it is replaced with organization name before the SMS message is sent.</p>
 
-<h2 id="sms-template-model">SMS Template Model</h2>
+<h2 id="getting-started-with-custom-templates">Getting Started with Custom Templates</h2>
 
-<h3 id="example">Example</h3>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cstk2flOtuCMDJK4b0g3"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Custom"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SMS_VERIFY_CODE"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"template"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your ${org.name} code is: ${code}"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-21T20:49:52.000Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"lastUpdated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-21T20:49:52.000Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"it"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Il codice ${org.name} è: ${code}."</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"fr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Votre code ${org.name} : ${code}."</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"es"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tu código de ${org.name} es: ${code}."</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
-
-<h3 id="sms-template-attributes">SMS Template Attributes</h3>
-
-<p>All templates have the following properties:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Description</th>
-      <th>DataType</th>
-      <th>Nullable</th>
-      <th>Unique</th>
-      <th>Readonly</th>
-      <th>MinLength</th>
-      <th>MaxLength</th>
-      <th>Validation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>id</td>
-      <td>unique key for template</td>
-      <td>String</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-      <td>TRUE</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>name</td>
-      <td>human readable name of the template</td>
-      <td>String</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>type</td>
-      <td>type of the template</td>
-      <td>String</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>template</td>
-      <td>text of the template</td>
-      <td>String</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>created</td>
-      <td>timestamp when template was created</td>
-      <td>Date</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>lastUpdated</td>
-      <td>timestamp when template was last updated</td>
-      <td>Date</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>translations</td>
-      <td>list of translations</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><language></language></td>
-      <td>language that was used for translation</td>
-      <td>String</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><translated_template></translated_template></td>
-      <td>translated text of the template</td>
-      <td>String</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="sms-template-types">SMS Template Types</h3>
-
-<p>Select a fallback template based on the workflow.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="highlighter-rouge">SMS_VERIFY_CODE</code></td>
-      <td>This template is used when the SMS for code verification is sent.</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="sms-template-translations">SMS Template Translations</h3>
-
-<p>Template translations are optionally provided when we want to be able to localize the SMS messages. Translations are
-provided in pairs: the language and translated template text.</p>
+<p>Explore the Custom Templates API: <a href="https://app.getpostman.com/run-collection/d71f7946d8d56ccdaa06"><img src="https://run.pstmn.io/button.svg" alt="Run in Postman" /></a></p>
 
 <h2 id="template-operations">Template Operations</h2>
 
@@ -1599,6 +1482,170 @@ provided in pairs: the language and translated template text.</p>
 <div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
 </code></pre>
 </div>
+
+<h2 id="sms-template-model">SMS Template Model</h2>
+
+<h3 id="example">Example</h3>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cstk2flOtuCMDJK4b0g3"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Custom"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SMS_VERIFY_CODE"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"template"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your ${org.name} code is: ${code}"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-21T20:49:52.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"lastUpdated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-21T20:49:52.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"translations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"it"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Il codice ${org.name} è: ${code}."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"fr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Votre code ${org.name} : ${code}."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"es"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tu código de ${org.name} es: ${code}."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="sms-template-attributes">SMS Template Attributes</h3>
+
+<p>All templates have the following properties:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Description</th>
+      <th>DataType</th>
+      <th>Nullable</th>
+      <th>Unique</th>
+      <th>Readonly</th>
+      <th>MinLength</th>
+      <th>MaxLength</th>
+      <th>Validation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>unique key for template</td>
+      <td>String</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+      <td>TRUE</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>name</td>
+      <td>human readable name of the template</td>
+      <td>String</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>type of the template</td>
+      <td>String</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>template</td>
+      <td>text of the template</td>
+      <td>String</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>created</td>
+      <td>timestamp when template was created</td>
+      <td>Date</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>lastUpdated</td>
+      <td>timestamp when template was last updated</td>
+      <td>Date</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>TRUE</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>translations</td>
+      <td>list of translations</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><language></language></td>
+      <td>language that was used for translation</td>
+      <td>String</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><translated_template></translated_template></td>
+      <td>translated text of the template</td>
+      <td>String</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td>FALSE</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="sms-template-types">SMS Template Types</h3>
+
+<p>Select a fallback template based on the workflow.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">SMS_VERIFY_CODE</code></td>
+      <td>This template is used when the SMS for code verification is sent.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="sms-template-translations">SMS Template Translations</h3>
+
+<p>Template translations are optionally provided when we want to be able to localize the SMS messages. Translations are
+provided in pairs: the language and translated template text.</p>
 
       </div>
       <!-- END Page Content -->

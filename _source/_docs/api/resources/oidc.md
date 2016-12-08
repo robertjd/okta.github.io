@@ -3,7 +3,7 @@ layout: docs_page
 title: OpenID Connect
 ---
 
-# Overview
+# OpenID Connect API
 
 The OpenID Connect API endpoints enable clients to use [OIDC workflows](http://openid.net/specs/openid-connect-core-1_0.html) with Okta.
 With OpenID Connect, a client can use Okta as a broker. The user authenticates against identity providers like Google, Facebook, LinkedIn, or Microsoft,
@@ -71,6 +71,7 @@ to access [the OIDC `userinfo` endpoint](http://developer.okta.com/docs/api/reso
   be a valid OAuth 2.0 request, but it's not an OpenID Connect request.
 * `profile` requests access to these default profile claims: `name`, `family_name`, `given_name`, `middle_name`, `nickname`, `preferred_username`, `profile`,  
 `picture`, `website`, `gender`, `birthdate`, `zoneinfo`,`locale`, and `updated_at`.
+* `offline_access` can only be requested in combination with a `response_type` containing `code`. If the `response_type` does not contain `code`, `offline_access` will be ignored.
 * For more information about `offline_access`, see the [OIDC spec](http://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess).
 
 ## ID Token
@@ -195,15 +196,21 @@ Claims in the payload are either base claims, independent of scope (always retur
 
 Be aware of the following before you work with scope-dependent claims:
 
-* The client can also optionally request an Access Token along with the ID Token. In this case, in order to keep the size of the ID Token small, the ID Token body does not contain all the scope dependent claims. 
-Instead, the ID token contains the `name` and `preferred_username` claims if the `profile` scope was requested and `email` claim if the `email` scope was requested.
-
-* The full set of claims for the requested scopes is available via the [/oauth2/v1/userinfo](#get-user-information) endpoint. Call this endpoint using the Access Token.
-
 * To protect against arbitrarily large numbers of groups matching the group filter, the groups claim has a limit of 100. 
 If more than 100 groups match the filter, then the request fails. Expect that this limit may change in the future.
 For more information about configuring an app for OpenID Connect, including group claims, see [Using OpenID Connect](https://support.okta.com/help/articles/Knowledge_Article/Using-OpenID-Connect).
+* **Important:** Scope-dependent claims are returned differently depending on the values in `response_type` and the scopes requested:
 
+    | Response Type      | Claims Returned in ID Token    | Claims Returned from the Userinfo Endpoint |
+    |:-------------------|:-------------------|:-------------------------------------------------|
+    | `code `            |  N/A               | N/A                                              |
+    | `token`            |  N/A               | N/A                                              |
+    | `id_token`         |  Claims associated with requested scopes. | N/A                       |
+    | `id_token` `code ` |  Claims associated with requested scopes. | N/A                       |
+    | `id_token` `token` | `email` if email scope is requested; `name` and `preferred_username` if profile scope is requested | Claims associated with the requested scopes |
+    | `code` `id_token` `token` | `email` if email scope is requested; `name` and `preferred_username` if profile scope is requested | Claims associated with the requested scopes |
+
+* The full set of claims for the requested scopes is available via the [/oauth2/v1/userinfo](#get-user-information) endpoint. Call this endpoint using the Access Token.
 
 ## Endpoints
 
@@ -404,10 +411,10 @@ This API doesn't require any authentication and returns a JSON object with the f
     "response_types_supported": [
         "code",
         "code id_token",
+        "code token",
         "code id_token token",
         "id_token",
-        "id_token token",
-        "token"
+        "id_token token"
     ],
     "response_modes_supported": [
         "query",
@@ -418,7 +425,8 @@ This API doesn't require any authentication and returns a JSON object with the f
     "grant_types_supported": [
         "authorization_code",
         "implicit",
-        "refresh_token"
+        "refresh_token",
+        "password"
     ],
     "subject_types_supported": [
         "public"
@@ -431,7 +439,9 @@ This API doesn't require any authentication and returns a JSON object with the f
         "email",
         "profile",
         "address",
-        "phone"
+        "phone",
+        "offline_access",
+        "groups"
     ],
     "token_endpoint_auth_methods_supported": [
         "client_secret_basic",
@@ -440,14 +450,15 @@ This API doesn't require any authentication and returns a JSON object with the f
     ],
     "claims_supported": [
         "iss",
+        "ver",
         "sub",
         "aud",
         "iat",
         "exp",
+        "jti",
         "auth_time",
         "amr",
         "idp",
-        "idp_type",
         "nonce",
         "name",
         "nickname",
@@ -462,7 +473,13 @@ This API doesn't require any authentication and returns a JSON object with the f
         "locale",
         "address",
         "phone_number",
-        "updated_at"
+        "picture",
+        "website",
+        "gender",
+        "birthdate",
+        "updated_at",
+        "at_hash",
+        "c_hash"
     ],
     "introspection_endpoint": "https://${org}.okta.com/oauth2/v1/introspect",
     "introspection_endpoint_auth_methods_supported": [

@@ -838,7 +838,7 @@ application to Okta is the following:
 
 1.  Check the Profile Attributes for your application.
 2.  Check the Attribute Mappings for your application.
-3.  Run the second set of Runscope tests: [Okta SCIM 2.0 CRUD Test](/SCIMFiles/Okta-SCIM-CRUD-Test.json)
+3.  Run the second set of Runscope tests: [Okta SCIM 2.0 CRUD Test](SCIMFiles/Okta-SCIM-CRUD-Test.json)
 
 ## Check the Profile Attributes for Your Application
 
