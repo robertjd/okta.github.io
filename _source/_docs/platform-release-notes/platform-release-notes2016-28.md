@@ -3,7 +3,7 @@ layout: docs_page
 title: Platform Release Notes July 13, 2016
 ---
 
-Release 2016.28
+# Release 2016.28
 
 ## Feature Enhancement: Password Complexity Requirements
 

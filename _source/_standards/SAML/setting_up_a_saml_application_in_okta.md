@@ -8,7 +8,7 @@ redirect_from:
     - "/docs/examples/configuring_a_saml_application_in_okta.html"
 ---
 
-## Overview
+# Overview
 
 The first step in configuring an application to support SAML based Single Sign-On from Okta is to set up an application in Okta.
 

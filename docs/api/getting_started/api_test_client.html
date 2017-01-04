@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="/assets/css/okta.css">
 
     <title>Getting Started With the Okta APIs | Okta Developer</title>
-    <meta name="description" content="Getting Started With the Okta API">
+    <meta name="description" content="Overview">
     <link rel="canonical" href="http://developer.okta.com/docs/api/getting_started/api_test_client.html">
     <link rel="alternate" type="application/rss+xml" title="Okta Developer" href="http://developer.okta.com/feed.xml">
 
@@ -128,6 +128,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <li><a href="/use_cases/mfa">Multi-Factor Authentication</a></li>
             
             
+            <li><a href="/use_cases/api_security">API Access Management</a></li>
+            
+            
             <li><a href="/use_cases/integrate_with_okta">Integrate with Okta</a></li>
             
         </ul>
@@ -140,6 +143,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <ul>
                     
                     
+                        
+                        
+                        
+                        
                         
                         
                         
@@ -301,35 +308,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <!-- END Fixed sidebar -->
       <!-- START Page Content -->
       <div class="PageContent-main" id="docs-body">
-      <h1 id="getting-started-with-the-okta-api">Getting Started With the Okta API</h1>
+        <a id="edit-link" href="https://github.com/okta/okta.github.io/edit/master/_source/_docs/api/getting_started/api_test_client.md">Edit Page</a>
+      <h1 id="overview">Overview</h1>
 
 <p>A great way to learn an API is to issue requests and inspect the responses. You can easily access our Postman collections and Example environment to do just that.</p>
 
-<p><img src="/assets/img/postman.png" alt="Postman and an Okta Collection" /></p>
+<p><img src="/assets/img/okta_postman_logo.png" alt="Postman and an Okta Collection" /></p>
 
 <p>To use these collections, you’ll need to set up your environment, import the collections, send a test request, and verify the results.</p>
 
 <h2 id="set-up-your-environment">Set Up Your Environment</h2>
 
 <ol>
-  <li><a href="https://www.okta.com/platform-signup/">Sign up for an Okta Developer org</a></li>
-  <li>Log into your Okta Developer org and <a href="getting_a_token.html">create an API key</a>.</li>
-  <li><a href="http://getpostman.com">Install the Postman App</a>.</li>
+  <li><a href="getting_a_token.html" target="_blank">Create an API token</a>.</li>
+  <li><a href="https://www.getpostman.com/apps" target="_blank">Install the Postman App</a>.</li>
   <li>
-    <p>Launch Postman and import the Okta Example environment for Postman by copying this link: <a href="http://developer.okta.com/docs/api/postman/example.okta.com.environment">http://developer.okta.com/docs/api/postman/example.okta.com.environment</a>.
+    <p>Launch Postman and click the ‘import button’. Select import from link, and paste this link into the textbox: <code class="highlighter-rouge">http://developer.okta.com/docs/api/postman/example.oktapreview.com.environment</code>
  <img src="/assets/img/import_enviro.png" alt="Importing the Okta Example Environment" /></p>
   </li>
   <li>
-    <p>Make sure the <code class="highlighter-rouge">example.okta.com</code> environment is selected.
+    <p>Once you have clicked import, make sure the <code class="highlighter-rouge">example.oktapreview.com</code> environment is selected.
  <img src="/assets/img/postman_example_start.png" alt="Postman app with collections" /></p>
   </li>
-  <li>Click the eye icon next to <code class="highlighter-rouge">example.okta.com</code> and select <strong>Edit</strong> to replace or add these values:
+  <li>Click the eye icon next to <code class="highlighter-rouge">example.oktapreview.com</code> and select <strong>Edit</strong> to replace or add these values:
     <ul>
-      <li><code class="highlighter-rouge">url</code>: Replace the example value with your org’s URL, for example <strong>https://myOrg.okta.com</strong>. This becomes the new name of your environment.</li>
-      <li><code class="highlighter-rouge">apikey</code>: Enter the API Key you created in your org, for example <strong>00LzMWxMq_0sdErHy9Jf1sijEGexYZlsdGr9a4QjkS</strong>.</li>
+      <li>Rename your environment to something you’ll recognize, for example <strong>myOrg</strong>.</li>
+      <li><code class="highlighter-rouge">url</code>: Replace the example value with your org’s URL, for example <strong>https://myOrg.oktapreview.com</strong>. This becomes the new name of your environment. Do <strong>not</strong> include ‘-admin’ in the subdomain.</li>
+      <li><code class="highlighter-rouge">apikey</code>: Enter the API token you created in your org, for example <strong>00LzMWxMq_0sdErHy9Jf1sijEGexYZlsdGr9a4QjkS</strong>.</li>
       <li><code class="highlighter-rouge">email-suffix</code>: Enter the email suffix for your domain, for example <strong>myOrg.com</strong>.</li>
-      <li><code class="highlighter-rouge">subdomain</code>: Enter the subdomain, for example <strong>myOrg</strong>.</li>
-      <li><code class="highlighter-rouge">username</code>, <code class="highlighter-rouge">password</code>: Enter the username and password for the API user that sends your requests.</li>
+      <li><code class="highlighter-rouge">subdomain</code>: Enter the subdomain, for example <strong>myOrg</strong>. Do <strong>not</strong> include ‘-admin’ in the subdomain.</li>
     </ul>
   </li>
   <li>Save your changes by selecting <strong>Update</strong>. Now your environment looks similar to this example:
@@ -340,11 +347,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <p>Import the collection for the Users API:</p>
 
-<p><a href="https://app.getpostman.com/run-collection/78060451b3ba309f5bcf"><img src="https://run.pstmn.io/button.svg" alt="Run in Postman" /></a></p>
+<p><a href="https://app.getpostman.com/run-collection/78060451b3ba309f5bcf" target="_blank"><img src="https://run.pstmn.io/button.svg" alt="Run in Postman" /></a></p>
 
 <blockquote>
   <p>Note: You can import and work with the rest of the Okta API using the link at the top of each API reference page, 
-or use the <a href="#collections-quick-reference">Collection Quick Reference</a>. This tutorial only requires the Users collection import.</p>
+or use the <a href="#collections-quick-reference">Collections Quick Reference</a>. This tutorial only requires the Users collection import.</p>
 </blockquote>
 
 <h2 id="send-a-request">Send a Request</h2>
@@ -416,7 +423,7 @@ or use the <a href="#collections-quick-reference">Collection Quick Reference</a>
   </tbody>
 </table>
 
-<p>These buttons are also available at the top of each API reference page in <a href="/docs/api/resources/auth.html">developer.okta.com</a>.</p>
+<p>These buttons are also available at the top of each API reference page in <a href="/docs/api/resources/apps.html">developer.okta.com</a>.</p>
 
 <h2 id="tips">Tips</h2>
 

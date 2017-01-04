@@ -1,10 +1,10 @@
 ---
 layout: plain
-title: Okta LDAP Agent Setup product
+title: Okta AD Agent Setup product
 ---
 
 This document contains third party open source licenses and notices for
-the Okta LDAP Agent Setup product. Certain licenses and notices may
+the Okta AD Agent Setup product. Certain licenses and notices may
 appear in other parts of the product in accordance with the applicable
 license requirements.
 

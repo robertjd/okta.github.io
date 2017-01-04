@@ -128,6 +128,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <li class="is-active"><a href="/use_cases/mfa">Multi-Factor Authentication</a></li>
             
             
+            <li><a href="/use_cases/api_security">API Access Management</a></li>
+            
+            
             <li><a href="/use_cases/integrate_with_okta">Integrate with Okta</a></li>
             
         </ul>
@@ -224,7 +227,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <!-- END Fixed sidebar -->
       <!-- START Page Content -->
       <div class="PageContent-main" id="docs-body">
-      <h2 id="introduction">Introduction</h2>
+        <a id="edit-link" href="https://github.com/okta/okta.github.io/edit/master/_source/_use_cases/mfa/index.md">Edit Page</a>
+      <h1 id="introduction">Introduction</h1>
 
 <p>Application developers and organizations are increasingly
 implementing multi-factor authentication to add an extra layer of
@@ -266,7 +270,7 @@ Edition org, follow the
 <a href="http://developer.okta.com/docs/getting_started/api_test_client.html">instructions on the Okta Developer Documentation page for setting up Postman</a>.</li>
 </ol>
 
-<h2 id="overview-of-api-calls-used-for-multi-factor-authentication">Overview of API calls used for multi-factor authentication</h2>
+<h1 id="overview-of-api-calls-used-for-multi-factor-authentication">Overview of API calls used for multi-factor authentication</h1>
 
 <p>Below is an introduction to using Okta’s Multi-Factor Authentication (MFA)
 API to add MFA to an existing application.</p>
@@ -292,7 +296,7 @@ things in the Admin interface to your Okta org.</p>
   <li>Create an API token.</li>
 </ol>
 
-<h4 id="enabling-mfa-in-your-okta-org">Enabling MFA in your Okta org</h4>
+<h3 id="enabling-mfa-in-your-okta-org">Enabling MFA in your Okta org</h3>
 
 <p>You must enable MFA from the Admin
 interface of your Okta org before you can use it from the
@@ -311,7 +315,7 @@ Authentication”.</li>
   <li>Click the green “Save” button.</li>
 </ol>
 
-<h4 id="creating-an-api-token-for-your-okta-org">Creating an API token for your Okta org</h4>
+<h3 id="creating-an-api-token-for-your-okta-org">Creating an API token for your Okta org</h3>
 
 <p>Requests made to the Okta API are authenticated via an API
 token. Here is how to create an API token for your Okta
@@ -328,12 +332,12 @@ org:</p>
   <li>Configure Postman to use the Token you just created.</li>
 </ol>
 
-<h4 id="set-up-postman">Set up Postman</h4>
+<h3 id="set-up-postman">Set up Postman</h3>
 
 <p>If you haven’t set up Postman already, you will need to do that
 now. Here are <a href="http://developer.okta.com/docs/getting_started/api_test_client.html">instructions for setting up Postman to work with Okta</a>.</p>
 
-<h4 id="test-postman">Test Postman</h4>
+<h3 id="test-postman">Test Postman</h3>
 
 <p>Before you get started, you will want to make sure your Postman
 setup is configured correctly, a “<a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">Hello World</a>” of sorts. Test your
@@ -350,7 +354,7 @@ Postman setup as follows:</p>
 
 <p>You’ll know it is working if you get back JSON containing one or more user objects.</p>
 
-<h4 id="create-a-test-user">Create a test user</h4>
+<h3 id="create-a-test-user">Create a test user</h3>
 
 <p>The first step in adding MFA to an existing
 application is to create a user account in Okta. Among other
@@ -404,7 +408,7 @@ similar for all factors an works as follows:</p>
 
 <p>Once the factor has been enrolled, you can verify it as needed.</p>
 
-<h4 id="adding-a-factor-to-a-user-account">Adding a factor to a user account</h4>
+<h3 id="adding-a-factor-to-a-user-account">Adding a factor to a user account</h3>
 
 <p>Using the User ID that you created earlier, add a Google
 Authenticator factor to that user as follows:</p>
@@ -424,7 +428,7 @@ response in Postman. Open this URL in a new tab of your
 favorite browser.</li>
 </ol>
 
-<h4 id="enroll-the-factor">Enroll the factor</h4>
+<h3 id="enroll-the-factor">Enroll the factor</h3>
 
 <p>After adding a factor to an Okta user, the next step is to have
 the user setup their factor and then prove that they have done
@@ -447,7 +451,7 @@ passcode shown on Google Authenticator.</li>
   <li>Click the blue “Send” button.</li>
 </ol>
 
-<h4 id="verifying-the-factor">Verifying the factor</h4>
+<h3 id="verifying-the-factor">Verifying the factor</h3>
 
 <p>Now that you’ve verified the factor, you are ready to start
 verifying MFA tokens! Here is how to do that using Postman:</p>

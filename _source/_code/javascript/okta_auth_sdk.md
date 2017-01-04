@@ -4,7 +4,7 @@ title: Okta Auth SDK
 excerpt: Easily add sign-in capabilities to your fully branded web site.
 ---
 
-## Overview
+# Overview
 
 The Okta Auth SDK builds on top of our [Authentication API](/docs/api/resources/authn.html) and [OAuth 2.0 API](/docs/api/resources/oidc.html) to enable you to create a fully branded sign-in experience using JavaScript.
 

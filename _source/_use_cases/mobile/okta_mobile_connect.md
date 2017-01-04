@@ -6,7 +6,7 @@ redirect_from:
     - "/docs/guides/okta_mobile_connect.html"
 ---
 
-## Overview
+# Overview
 
 Okta Mobile Connect enables single sign-on for native mobile
 apps that support SAML. Once users have established a session in

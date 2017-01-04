@@ -3,7 +3,7 @@ layout: docs_page
 title: Platform Release Notes June 22, 2016
 ---
 
-Release 2016.25
+# Release 2016.25
 
 ## New Platform Feature: Limit on Size of Groups Claim
     

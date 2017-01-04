@@ -6,7 +6,7 @@ redirect_from:
     - "/docs/guides/okta_sign-in_widget.html"
 ---
 
-## Overview
+# Overview
 
 The Okta Sign-In Widget is a JavaScript widget from Okta that gives
 you a fully featured and customizable login experience which

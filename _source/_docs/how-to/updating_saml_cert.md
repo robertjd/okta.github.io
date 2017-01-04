@@ -4,7 +4,7 @@ title: Upgrade SAML Apps to SHA256
 excerpt: Upgrade SAML Apps to SHA256
 ---
 
-## SAML Apps and SHA256 Certificates
+# SAML Apps and SHA256 Certificates
 
 Certificates with a SHA256 signature are supported for SAML 2.0 applications with Okta. You can create new integrations that use SHA256 certificates and update existing integrations from SHA1 certificates to SHA256 certificates. Existing integrations are not changed automatically. The SHA256 certificates and the SHA1 
 certificates are self-signed.

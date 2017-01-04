@@ -56,7 +56,7 @@ _Apache Commons Daemon_
 
   |VERSION (IF ANY):|     1.0.13|
   |-
-  0BRIEF DESCRIPTION:   Apache Commons Daemon provides a portable means of starting and stopping a Java Virtual Machine (JVM) that is running server-side applications.
+  |BRIEF DESCRIPTION:|   Apache Commons Daemon provides a portable means of starting and stopping a Java Virtual Machine (JVM) that is running server-side applications.
   |LICENSE:|              Apache 2.0|
 
 Copyright (c) 1999-2016 The Apache Software Foundation.

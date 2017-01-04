@@ -4,7 +4,7 @@ title: Platform Release Notes
 excerpt: Summary of changes to the Okta Platform since Release 2016.35
 ---
 
-## Release 2016.36
+# Release 2016.36
 
 ### System Log Enhancement
 

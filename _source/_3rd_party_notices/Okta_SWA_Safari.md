@@ -18,7 +18,7 @@ _Apache Ant Contrib_
 
   |VERSION (IF ANY):|     1.0b3|
   |-
-  0BRIEF DESCRIPTION:   A home for additional useful tasks and types for Ant.
+  |BRIEF DESCRIPTION:|   A home for additional useful tasks and types for Ant.
   |LICENSE:|              Apache 2.0|
 
 Copyright (c) 2004 Ant-Contrib project. All rights reserved.

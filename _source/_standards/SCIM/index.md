@@ -1,15 +1,175 @@
 ---
 layout: docs_page
-title: SCIM
+title: Provisioning with Lifecycle Management
 excerpt: Enable SCIM-based provisioning from Okta to your application.
 icon: /assets/img/icons/scim.svg
 permalink: /standards/SCIM/
 redirect_from: "/docs/guides/scim_guidance.html"
 ---
-# SCIM Provisioning Technical Reference
+# Provisioning with Okta's Lifecycle Management 
+Developers at a software vendor (ISV), Okta customers, and system-integrators (SI) want to facilitate fast, 
+enterprise-wide deployment of their app by integrating with Okta for user provisioning primarily via the SCIM standard. 
+This article describes:
+ 
+* The provisioning actions and use cases that your integration should consider supporting. 
+* The technical options for how to build the integration (focusing on SCIM).
+* The process for building, submitting for Okta Review, and publishing in the OAN (if you want the app available for all Okta customers). 
 
+## Understanding Provisioning Use Cases
 
-Thank you for your interest in the Okta SCIM program.
+### The Value of Provisioning
+
+With the proliferation of cloud apps, today’s IT organizations are faced with the prospect of managing user accounts 
+in an ever-expanding number of admin consoles for each app. This is not a problem if an enterprise has one or two cloud apps, 
+but as the number grows, the situation quickly becomes unmanageable. Cloud app vendors hoping to sell into enterprises 
+need to have an answer to this concern.
+
+Thousands of Okta customers have chosen our [Lifecycle Management](https://www.okta.com/products/lifecycle-management/) product as the platform solution 
+to address this challenge of managing the lifecycle of user accounts in their cloud apps, 
+and a key feature of this product is integrations for automated provisioning to those apps. 
+Lifecycle Management (Provisioning) automates many of the traditionally manual tasks required to on-board and off-board employees. 
+New employees are automatically provisioned with user accounts in their apps, profile updates like department changes populate automatically, 
+and inactive employees are automatically deactivated from their apps. By making these actions less time-consuming and error-prone, 
+companies can cut costs, allow new employees to be immediately productive, and reduce the threat of data leakage.
+
+### Provisioning Actions
+
+Provisioning consists of a set of actions between Okta and the cloud app. 
+These actions are building blocks that combine to solve end-to-end use cases. 
+As the developer, you’ll need to define the use cases that your target customer wants 
+and the corresponding actions to build into your integration. 
+
+The set of actions that an integration can do under the Provisioning umbrella 
+are easily described with the acronym CRUD: the common database operations of Create, Read, Update, and Delete. 
+CRUD actions relate to Provisioning in the following ways:
+
+#### Create Users
+
+* Create new users in the downstream application based on values derived from the Okta user profile and Okta group assignment. 
+* Read (Import) users & groups
+* Import users & groups from the downstream application in order to match them to existing Okta users, or to create new Okta users from the imported application.
+
+#### Update Users
+
+For an application user that is affiliated with an Okta user, 
+update the downstream user’s attributes when the Okta user is updated. 
+Or, update the Okta user attributes if the application functions as the [master](#mastering-users) for the full Okta user profile or specific attributes.
+
+#### Deprovision (Deactivate) Users
+
+Deprovisioning the application user removes access to the downstream application. 
+This can take many forms, such as user disabled, user access permissions changed, or user license pulled. 
+Each application may choose different methods for deactivating a user’s access.
+
+For audit purposes, Okta users are never deleted; they are deactivated instead. 
+Because of this, Okta doesn't make delete requests to the user APIs in downstream applications.
+
+#### Sync Password
+
+Okta sets the user’s password to either match the Okta password or to be a randomly generated password. 
+Learn more about the overall use case [here](https://support.okta.com/help/articles/Knowledge_Article/Using-Sync-Password?retURL=%2Fhelp%2Fapex%2FKnowledgeArticleJson%3Fc%3DOkta_Documentation%253ADirectories%26p%3D101%26inline%3D1&popup=true). 
+
+#### Mastering Users
+
+Mastering is a more sophisticated version of read (import) Users. 
+Mastering defines the flow and maintenance of user object attributes and their lifecycle state. 
+When a profile is mastered from a given resource (application or directory), 
+the Okta user profile’s attributes and lifecycle state are derived exclusively from that resource. 
+In other words, an Okta user mastered by Active Directory has an Okta profile. 
+However, the profile isn't editable in Okta by the user or Okta admin, and derives its information exclusively from Active Directory. 
+If the lifecycle state of the user in Active Directory moves to Disabled, 
+the linked Okta user will also switch to the corresponding lifecycle state of Deactivated on the next the read (import). 
+
+A more granular version of mastering is Attribute-Level mastering. 
+This is where Mastering can be applied at the Attribute level, rather than only at the whole Profile level. 
+This permits an Okta user profile to derive portions of its attributes from multiple different Masters. 
+
+Mastering is an advanced action. If you want your integration to support it, we recommend contacting Okta to double check your design before starting development. 
+
+### Provisioning Use Cases
+
+Provisioning actions can be combined to solve for end-to-end use cases.
+
+#### Directory-as-Master (Downstream Provisioning)
+
+<!-- Images for v2: https://oktawiki.atlassian.net/wiki/pages/viewpage.action?pageId=181895852 -->
+
+In many enterprises, Active Directory (or LDAP) is the system of record for employee identities. 
+Okta has developed a powerful, lightweight agent to sync with Active Directory to populate employee and group information. 
+Within Okta, IT admins can leverage features such as [Universal Directory](https://support.okta.com/help/articles/Knowledge_Article/About-Universal-Directory) and [group membership rules](https://support.okta.com/help/articles/Knowledge_Article/About-Universal-Directory) to map that information when provisioning accounts and permissions in downstream apps.
+
+Subsequently, any updates to an employee’s profile, such as a change in department, in either Active Directory or Okta flow into the downstream app. 
+Similarly, removing or deactivating an employee from Active Directory triggers deactivation in the downstream app as well.
+
+Okta supports these common Provisioning use cases:
+
+* Provision downstream apps automatically when new employee joins the company
+* Update downstream app automatically when employee profile attributes change
+* Remove employee access to downstream app automatically on termination or leave
+* Link existing downstream app users with Okta users using one-time app import
+
+#### App-as-Master
+
+While most apps fit the category of a downstream app in the directory-as-master use case, some apps can be the master. This is the App-as-Master use case.
+
+The app-as-master use case typically applies to apps that can be used as the system of record for all employee profile information. An HR app like Workday or Successfactors Employee Central is the most common example. 
+In this scenario, the HR app, not Active Directory, feeds employee profile details downstream into directories like AD and Okta, and apps like Box. 
+
+<!-- More info on configuring app-as-master in Okta is [here](). Note: link was missing from source -->
+
+> Note: Integrations for the “App-as-Master” use case are significantly more complex than the Directory-as-Master use case and take more time to build and support. 
+This is because these integrations sync a larger number of attributes and lifecycle states, and more directly impact the Okta user profile and downstream apps. 
+If you want your integration to support it, we recommend contacting <developers@okta.com> to double check your design before starting development. 
+
+#### Attribute-Level Mastering
+
+Most apps fall clearly into the groupings above: 
+
+* Directory-as-master&mdash;all employee profile attributes in an app are set by the upstream directory
+* App-as-master&mdash;the app itself is the employee system of record for downstream apps, Active Directory, and Okta
+
+However, some apps exist somewhere in the middle. These apps want to be the master for certain employee attributes like phone number, while letting the directory master most other attributes. We call this attribute-level mastering.
+
+Unified communications apps like RingCentral are common examples of apps for which attribute-level mastering might be desired. How does this use case work?
+
+When a new employee joins a company he/she will typically be added first to AD which, via Okta, will trigger the provisioning of a new RingCentral account. In the employee profile attributes that are exchanged between AD and RingCentral, phone number will be missing however, as AD does not initially know the new employee’s phone number. This number is first established in RingCentral.
+
+If the phone number attribute is set in Okta to be Mastered by RingCentral, once the phone number is initially established in RingCentral, it will be synced back to AD. This will allow IT to have more complete information about the new employee.
+
+See Okta's [online help](https://support.okta.com/help/articles/Knowledge_Article/Attribute-Level-Mastering) for more info on configuring attribute-level mastering in Okta.
+
+## Ways to Build Provisioning
+
+Now that you understand the most common provisioning actions and use cases, let’s review your options to support provisioning as an app developer. 
+While we outline a few different methods below, Okta recommends all ISVs support [the SCIM standard](http://www.simplecloud.info/). 
+
+### Provisioning Options Matrix
+
+Okta has seen broad adoption of the standard in the market amongst our network of app developers over the course of 2016. 
+Okta has doubled down on our investment in our SCIM client and launched our own SCIM provisioning developer program.
+
+| Standard | Recommendation  |  Summary |
+|:--|:--|:--|
+| SCIM  | **Recommended**  | Supports all of the use cases above.  |
+| SAML JIT (Just-in-Time)  | Not Recommended - Limited Functionality  | Just-in-Time Provisioning (JIT) is part of the SAML spec. Supports user/group Create and Update (upon user sign-on) but does not support Deactivate, Read, or Sync Password  |
+| Okta API  | Not Recommended - Not Verified by Okta  | Poll Okta API for user & group CRUD operations. Polling Okta API is resource intensive, so provisioning won’t be real-time. Poor admin experience: cannot centralize within Okta  |
+
+### Provisioning to On-Premise Apps
+
+The options above are geared towards cloud apps but we have a solution for on-premise applications as well. 
+See [Configuring On-Premise Provisioning](https://support.okta.com/help/articles/Knowledge_Article/29448976-Configuring-On-Premises-Provisioning) for details about Okta’s agent-based provisioning solution.
+
+### SCIM Facade
+
+Sometimes it isn't feasible for the cloud app to natively support a SCIM Server API. 
+An alternative option is to build and host a SCIM facade middleware that translates 
+between the Okta SCIM Client and the cloud app’s proprietary API. The Okta integration would be to this SCIM facade. 
+
+> Have questions? Need help? Email us at <developers@okta.com> or post your question on [Stack Overflow](http://stackoverflow.com/search?q=okta,scim).
+
+## SCIM-Based Provisioning Integration
+
+### Overview
 
 By implementing support for the SCIM standard, an application in the Okta
 Application Network can be notified when a user is created, updated,
@@ -22,16 +182,7 @@ If you haven't heard of SCIM before, here is a good summary from the
 standard for automating the exchange of user identity information
 between identity domains, or IT systems."
 
-> Need help?
-Email us at <developers@okta.com> or post your question on [Stack Overflow](http://stackoverflow.com/search?q=okta,scim).
-
-# Joining the SCIM Provisioning Developer Program
-
-Before building your SCIM Server, please make sure to [apply for admission](http://pages.okta.com/DeveloperSCIM.html)
-to the SCIM Provisioning Developer Program and familiarize yourself with
-the [program process and resources](scim_developer_program.html).
-
-# Understanding User Provisioning in Okta
+### Understanding User Provisioning in Okta
 
 Okta is a universal directory that stores
 identity-related information.  Users can be created in Okta directly
@@ -55,144 +206,7 @@ Below are the main operations in Okta's SCIM user provisioning lifecycle:
 In Okta, an application instance is a connector that provides Single Sign-On
 and provisioning functionality with the target application.
 
-# Testing your SCIM server with Runscope
-
-The easiest way for you to develop and verify your SCIM integration
-is to make use of an automated test suite that runs on Runscope.
-
-If you are already familiar with Runscope, then import the
-OKTA SCIM Spec Test JSON API test (for SCIM 1.1 or SCIM 2.0) and configure the `SCIM Base
-  URL` variable to point at the base URL for your SCIM server, for
-example: `https://example.com/scim/v2`.
-
-* [Okta SCIM 2.0 Spec Test JSON](SCIMFiles/Okta-SCIM-20-SPEC-Test.json)
-* [Okta SCIM 1.1 Spec Test JSON](SCIMFiles/Okta-SCIM-11-SPEC-Test.json)
-
-If you are not familiar with Runscope, follow the detailed
-instructions below to get started with using Runscope to test your
-SCIM server.
-
-## Set up Runscope
-
-If you do not have a Runscope account already, we suggest starting
-with [Runscope's free plan for Okta](https://www.runscope.com/okta). Here is how to get started:
-
- 1.  Download the Okta SCIM Spec Test for your version of SCIM:
-     * [Okta SCIM 2.0 Spec Test JSON](SCIMFiles/Okta-SCIM-20-SPEC-Test.json)
-     * [Okta SCIM 1.1 Spec Test JSON](SCIMFiles/Okta-SCIM-11-SPEC-Test.json)
- 
-      You will use this file to import Okta's SCIM test suite into Runscope.)
-
- 2.  [Sign up for Runscope](//www.runscope.com/signup).
- 3.  You may see a tutorial after signing up for Runscope, if so, click
-    "Skip Tutorial".
- 4.  You should now see a screen that says "API Tests".
- 5.  In the lower left of your screen, click on the "Import Tests"
-    link.
- 6.  You should now see a title that starts with "Import Tests into
-    &#x2026;"
- 7.  Select "Runscope API Tests" as the format to import
- 8.  Click the "Choose File" button and select the JSON file that you saved in Step 1.
- 9.  Click the blue "Import API Test" button.
-10. After the import completes, click on the "All Tests" link on
-    the left hand side of your screen.
-
-Now that you've imported Okta's SCIM test suite into Runscope, your
-next step will be to customize the test suite for the SCIM
-integration that you are writing.
-
-## Customize the imported Runscope test for your SCIM integration
-
-After importing Okta's SCIM test suite into Runscope, you will need to
-configure the test for your SCIM integration. Here is how to do that:
-
-1.  You should be looking at the "API Tests" screen in Runscope, if
-    not, click on the "Tests" tab on the top of Runscope's user interface.
-2.  You should see a test named "Okta SCIM 2.0 Tests", if not,
-    follow the "Set up Runscope" steps above.
-3.  Move your mouse over the "Okta SCIM 2.0 Tests" test, then select
-    the "Edit" link on the lower left of the test.
-4.  In the "Environment" section of your test, you should see a
-    collapsed "Test Settings" section, click the arrow on the left
-    of "Test Settings" to expand this section.
-5.  "Initial Variables" should be selected, click the "Add Initial
-    Variable" link and add the following:
-
-    | Variable Name (Case Sensitive) | Example Values              | Notes                                                                                                                                                                                     |
-    |:-------------------------------|:----------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-    | SCIMBaseURL                    | https://example.com/scim/v2 | For example, if your SCIM integration is hosted on https://example.com and uses a prefix of /scim/v2 then the "SCIM Base URL" for your integration would be: https://example.com/scim/v2. |
-    | auth                           | Bearer abcxyz1234567890     | Basic/Oauth authorization values                                                                                                                                                          |
-
-6.  Add the [Initial Script Spec](SCIMFiles/Initial_Script_Spec.txt).
-
-    If you are developing your SCIM integration in a local
-    development environment, we suggest using the excellent tool
-    [ngrok](https://ngrok.com/) to expose your local development environment to Runscope
-8.  Click the "Save" button at the top of the test.
-
-## Running Okta's SCIM tests against your SCIM server
-
-Now that you have updated your SCIM test in Runscope for your SCIM
-server, it is time to run the test:
-
-1.  If you followed the steps above, you should now be seeing a "Run
-    Now" button at the top of your test.
-2.  Click the "Run Now" button.
-3.  On the left side of your screen, you will see a test show up in
-    the "Recent Test Results" section.
-4.  Click on the top test in the "Recent Test Results" section.
-5.  If the test is still running, you will see live updates of the
-    test in progress. Once the test is complete, you will see the
-    results of your test.
-6.  To see the details of tests, click on the little arrow next to
-    each test to expand the details of a particular test case.
-
-    Doing this will allow you to see the **Request** and **Response**
-    for each HTTP request that was made.
-7.  Since this test is running in your own Runscope instance, we
-    encourage you to update the tests to better fit your own
-    environment.
-8.  See [Required SCIM Capabilities](#required-scim-capabilities) for details
-    about your SCIM server needs to implement to pass all of
-    the tests.
-9.  Keep running this test suite until all the tests pass.
-    Here is an [example of a test suite where all tests pass](https://www.runscope.com/radar/qmovuxkrhtws/f95ac15f-3f22-46c3-8f1a-1001fbf8fb66/history/6a35fabf-5ce5-4e48-a13f-7292b1bd3cc5).
-
-## Sharing test results from Runscope
-
-As you are developing your SCIM server, you will likely want to
-share test results with teammates or with Okta.
-
-Here is how to share a test result from Runscope with someone else:
-
-1.  Open the test result that you want to share.
-2.  At the top of the test result, Change the "Private / Shareable"
-    toggle from "Private" to "Shareable".
-3.  Copy the URL for the test result, it will look something like
-    this:
-    `https://www.runscope.com/radar/abcdefghijkl/m01nopq2-3456-7r8s-9012-t34567uvw890/history/123ef4gh-i567-89j0-1k2l-3m4n5o678901`
-4.  Share that URL with the person that you want to share the test
-    result with. Here is an example test result from Runscope:
-    <https://www.runscope.com/radar/qmovuxkrhtws/f95ac15f-3f22-46c3-8f1a-1001fbf8fb66/history/6a35fabf-5ce5-4e48-a13f-7292b1bd3cc5>
-
-## Next steps
-
-Once you have a SCIM server that passes all of the Runscope tests,
-you will want to do the following things:
-
-1.  Consider using Runscope to monitor your SCIM server.
-
-    Once you have a test suite that passes, you should consider
-    having Runscope run your SCIM test suite on a schedule and alert
-    you if the test suite fails.
-2.  Follow the steps in the "Submitting to Okta" section of this
-    guide.
-
-    In particular, you will want make sure that the Profile
-    Attributes and Attribute Mappings in your Okta application show
-    only the attributes and mappings that your SCIM server supports.
-
-# Required SCIM Capabilities
+### Required SCIM Server Capabilities
 
 Okta supports provisioning to both SCIM 1.1 and SCIM 2.0 APIs.
 
@@ -210,7 +224,7 @@ Specifically, you do not need to implement the SCIM 2.0
 specification fully to work with Okta. At a minimum, Okta requires that
 your SCIM 2.0 API implement the features described below:
 
-## Base URL
+#### Base URL
 
 The API endpoint for your SCIM API **MUST** be secured via [TLS](https://tools.ietf.org/html/rfc5246)
 (`https://`), Okta *does not* connect to unsecured API endpoints.
@@ -221,7 +235,13 @@ as your Base URL; for example: `https://example.com/scim/v2` -
 however, you must support the URL structure described in the
 ["SCIM Endpoints and HTTP Methods" section of RFC7644](https://tools.ietf.org/html/rfc7644#section-3.2).
 
-## Authentication
+If you have multiple Okta orgs, you can use the same SCIM server for all of them. 
+Implement a subdomain for the SCIM server and each subdomain, for example: `https://subdomain.example.com/scim/v2`, where 
+`subdomain` represent one Okta org. Let's say you have three Okta orgs: company-a.okta.com, company-b.okta.com and company-c.okta.com. 
+From each org you can pass a base URL containing the name of the org: `https://company-a.example.com/scim/v2`, `https://company-b.example.com/scim/v2` or  `https://company-c.example.com/scim/v2`.
+In your SCIM server, you can read which subdomain the request is coming from and identify the org. 
+
+#### Authentication
 
 Your SCIM API **MUST** be secured against anonymous access. At the
 moment, Okta supports authentication against SCIM APIs with one of
@@ -233,7 +253,7 @@ the following methods:
 
 > Okta doesn't support OAuth 2.0 [Resource Owner Password Credentials grant flows](https://tools.ietf.org/html/rfc6749#section-1.3.3).
 
-## Basic User Schema
+#### Basic User Schema
 
 Your service must be capable of storing the following four user
 attributes:
@@ -278,21 +298,21 @@ user resource and should also support marking resources as "active"
 or "inactive."
 
 In the SCIM specification, the `id` attribute is used to uniquely
-identify resources. [Section 3.1](//tools.ietf.org/html/rfc7643#section-3.1) of [RFC 7643](https://tools.ietf.org/html/rfc7643) provides more details
+identify resources. [Section 3.1](https://tools.ietf.org/html/rfc7643#section-3.1) of [RFC 7643](https://tools.ietf.org/html/rfc7643) provides more details
 on the `id` attribute:
 
-> A unique identifier for a SCIM resource as defined by the service
+> "A unique identifier for a SCIM resource as defined by the service
 > provider.  Each representation of the resource MUST include a
 > non-empty "id" value.  This identifier MUST be unique across the
 > SCIM service provider's entire set of resources.  It MUST be a
-> stable, non-reassignable identifier that does not change when the
+> stable, identifier that can't be reassigned, that is, it doesn't change when the
 > same resource is returned in subsequent requests.  The value of
 > the "id" attribute is always issued by the service provider and
 > MUST NOT be specified by the client.  The string "bulkId" is a
 > reserved keyword and MUST NOT be used within any unique identifier
 > value.  The attribute characteristics are "caseExact" as "true", a
 > mutability of "readOnly", and a "returned" characteristic of
-> "always".
+> "always"."
 
 Our sample application defines `id` as a UUID, since
 [RFC 7643](https://tools.ietf.org/html/rfc7643) requires that "this identifier MUST be unique across the
@@ -313,13 +333,13 @@ In our sample application, each user resource has a Boolean
 
     active = db.Column(db.Boolean, default=False)
 
-## Functionality
+#### Functionality
 
 Your SCIM API must support the following SCIM API endpoints to work with Okta:
 
 <img src="/assets/img/scim_flowchart.png" alt="scim api endpoints required to work with Okta" width="640px" />
 
-## Create Account: POST /Users
+##### Create Account: POST /Users
 
 Your SCIM 2.0 API should allow the creation of a new user
 account.  The four basic attributes listed above must be supported, along
@@ -370,7 +390,7 @@ method expects `application/json`.
 For more information on user creation via the `/Users` SCIM
 endpoint, see [section 3.3](https://tools.ietf.org/html/rfc7644#section-3.3) of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
 
-## Read list of accounts with search: GET /Users
+##### Read list of accounts with search: GET /Users
 
 Your SCIM 2.0 API must support the ability for Okta to retrieve
 users (and entitlements like groups if available) from your
@@ -417,7 +437,7 @@ with support for filtering and pagination:
 For more details on the `/Users` SCIM endpoint, see [section 3.4.2](https://tools.ietf.org/html/rfc7644#section-3.4.2)
 of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
 
-## Read Account Details: GET /Users/{id}
+##### Read Account Details: GET /Users/{id}
 
 Your SCIM 2.0 API must support fetching of users by user id.
 
@@ -438,7 +458,7 @@ with SCIM error message.
 For more details on the `/Users/{id}` SCIM endpoint, see [section 3.4.1](https://tools.ietf.org/html/rfc7644#section-3.4.1)
 of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
 
-## Update Account Details: PUT /Users/{id}
+##### Update Account Details: PUT /Users/{id}
 
 When a profile attribute of a user assigned to your SCIM enabled
 application is changed, Okta will do the following:
@@ -471,7 +491,7 @@ Below is how the sample application handles account profile updates:
 For more details on updates to the `/Users/{id}` SCIM endpoint, see [section 3.5.1](https://tools.ietf.org/html/rfc7644#section-3.5.1)
 of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
 
-## Deactivate Account: PATCH /Users/{id}
+##### Deactivate Account: PATCH /Users/{id}
 
 Deprovisioning is perhaps the most important reason customers why
 customers ask that your application supports provisioning
@@ -520,7 +540,7 @@ Below is how the sample application handles account deactivation:
 For more details on user attribute updates to `/Users/{id}` SCIM endpoint, see [section 3.5.2](https://tools.ietf.org/html/rfc7644#section-3.5.2)
 of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
 
-## Filtering on `id`, `userName`, and `emails`
+##### Filtering on `id`, `userName`, and `emails`
 
 Being able to filter results by the `id`, `userName`, or `emails`
 attributes is a critical part of working with Okta.
@@ -540,9 +560,11 @@ system.
 Examples of filters that Okta might send to your SCIM API are as
 follows:
 
-> userName eq "jane.doe"
+~~~ 
+userName eq "jane.doe"
 
-> userName eq "jane.doe@example.com"
+userName eq "jane.doe@example.com"
+~~~
 
 At the moment, Okta only supports the `eq` filter operator. However, the
 [filtering capabilities](https://tools.ietf.org/html/rfc7644#section-3.4.2.2) described in the SCIM 2.0 Protocol Specification are
@@ -566,7 +588,7 @@ described in [table 3](https://tools.ietf.org/html/rfc7644#page-18) of the SCIM 
 For more details on filtering in SCIM 2.0, see [section 3.4.2.2](https://tools.ietf.org/html/rfc7644#section-3.4.2.2)
 of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
 
-## Filtering on `externalId`
+##### Filtering on externalId
 
 In addition to supporting filtering on `id`, `userName`, and
 `emails`, your application should also support filtering on
@@ -580,7 +602,9 @@ can change.
 Here is an example of an `externalId` filter that might be sent to
 your application:
 
-> externalId eq "00u1abcdefGHIJKLMNOP"
+~~~
+externalId eq "00u1abcdefGHIJKLMNOP"
+~~~
 
 Note: The sample application included in this project does not yet
 demonstrate how to implement storing and filtering by
@@ -589,7 +613,7 @@ implementation supports storing and filtering by `externalId`. For
 details on supporting `externalId`, see
 [section 3.1](https://tools.ietf.org/html/rfc7643#section-3.1) of [RFC 7643](https://tools.ietf.org/html/rfc7643). Quoted below:
 
-> [externalId is] A String that is an identifier for the resource
+> (externalId is) "A String that is an identifier for the resource
 > as defined by the provisioning client.  The "externalId" may
 > simplify identification of a resource between the provisioning
 > client and the service provider by allowing the client to use a
@@ -610,7 +634,7 @@ we suggest that you use OAuth2.0 for authentication and use the
 OAuth2.0 `client_id` to scope the `externalId` to the provisioning
 domain.
 
-## Resource Paging
+##### Resource Paging
 
 When returning large lists of resources, your SCIM implementation
 must support pagination using a *limit* (`count`) and *offset*
@@ -651,8 +675,8 @@ Below is an example of a `curl` command that makes a request to the
 > Note: When returning a paged resource, your API should return a
 > capitalized `Resources` JSON key ("Resources"), however Okta will also
 > support a lowercase string ("resources"). Okta will also accept
-> lowercased JSON strings for the keys of child nodes inside
-> `Resources` object ("startindex", "itemsperpage", "totalresults", etc)
+> lowercase JSON strings for the keys of child nodes inside
+> `Resources` object such as `startindex`, `itemsperpage`, or `totalresults`.
 
 One way to handle paged resources is to have your database do the
 paging for you. Here is how the sample application handles
@@ -672,7 +696,7 @@ the OFFSET statement is [0-indexed](http://www.postgresql.org/docs/8.0/static/qu
 For more details pagination on a SCIM 2.0 endpoint, see [section 3.4.2.4](https://tools.ietf.org/html/rfc7644#section-3.4.2.4)
 of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
 
-## Rate Limiting
+##### Rate Limiting
 
 Some customer actions, such as adding hundreds of users at once,
 causes large bursts of HTTP requests to your SCIM API. For
@@ -684,7 +708,7 @@ requests are made to your API.
 For more details on rate limiting requests using the HTTP 429
 status code, see [section 4](https://tools.ietf.org/html/rfc6585#section-4) of [RFC 6585](https://tools.ietf.org/html/rfc6585).
 
-##  GET /Groups API Endpoint
+#####  GET /Groups API Endpoint
 
 Okta currently supports the /Groups endpoint for GET /Groups of a SCIM API. This is usually done to check for groups data and is not mandatory for SCIM to work. The minimum check we require is for the resources to be of JSON. check example below.
 
@@ -722,11 +746,11 @@ Example:
 }
 ~~~
 
-## SCIM Features Not Implemented by Okta
+### SCIM Features Not Implemented by Okta
 
 The following features are currently not supported by Okta:
 
-### DELETE /Users/{id}
+#### DELETE /Users/{id}
 
 Deleting users via DELETE is covered in
 [section 3.6](https://tools.ietf.org/html/rfc7644#section-3.6) of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
@@ -736,7 +760,7 @@ instead. Because of this, Okta never makes an HTTP DELETE
 request to a user resource on your SCIM API. Instead, Okta makes
 an HTTP PATCH request to set the `active` setting to `false`.
 
-### Querying with POST
+#### Querying with POST
 
 The ability to query users with a POST request is described in
 [section 3.4.3](https://tools.ietf.org/html/rfc7644#section-3.4.3) of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
@@ -747,7 +771,7 @@ system logs if used query parameters with a GET request.
 
 Okta currently does not support this feature.
 
-### Bulk Operations
+#### Bulk Operations
 
 The ability to send a large collection of resource operations in a
 single request is covered in
@@ -756,7 +780,7 @@ single request is covered in
 Okta currently does not support this feature and makes
 one request per resource operation.
 
-### "/Me" Authenticated Subject Alias
+#### "/Me" Authenticated Subject Alias
 
 The `/Me` URI alias for the current authenticated subject is
 covered in
@@ -764,7 +788,7 @@ covered in
 
 Okta does not currently make SCIM requests with the `/Me` URI alias.
 
-### /Groups API endpoint
+#### /Groups API endpoint
 
 Okta currently does not support using the `/Groups` endpoint of a SCIM
 API, except for [`GET /Groups`](#get-groups-api-endpoint). When support is added for the `/Groups` endpoint, Okta plans
@@ -778,7 +802,7 @@ to use the following HTTP requests against the `/Groups` endpoint:
 
 -   Delete Group: DELETE /Groups/{id}
 
-### /Schemas API endpoint
+#### /Schemas API endpoint
 
 Okta does not currently make queries against the `/Schemas`
 endpoint, but this functionality is being planned.
@@ -793,13 +817,13 @@ Here is the specification for the `/Schemas` endpoint, from
 > definitions can be returned by appending the schema URI to the
 > /Schemas endpoint.  For example:
 >
-> /Schemas/urn:ietf:params:scim:schemas:core:2.0:User
+> `/Schemas/urn:ietf:params:scim:schemas:core:2.0:User`
 >
 > The contents of each schema returned are described in Section 7 of
 > RFC7643.  An example representation of SCIM schemas may be found
 > in Section 8.7 of RFC7643.
 
-### /ServiceProviderConfig API endpoint
+#### /ServiceProviderConfig API endpoint
 
 Okta does not currently make queries against the `/ServiceProviderConfig`
 endpoint, but this functionality is being planned.
@@ -811,12 +835,12 @@ Here is the specification for the `/ServiceProviderConfig` endpoint, from
 > describes the SCIM specification features available on a service
 > provider.  This endpoint SHALL return responses with a JSON object
 > using a "schemas" attribute of
-> "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig".
+> `urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig`.
 > The attributes returned in the JSON object are defined in
 > Section 5 of RFC7643.  An example representation of SCIM service
 > provider configuration may be found in Section 8.5 of RFC7643.
 
-### Filtering on `meta.lastModified`
+#### Filtering on meta.lastModified
 
 Okta does not currently make queries for resources using
 `meta.lastModified` as part of a filter expression.
@@ -828,19 +852,201 @@ that requests resources which were updated since the last update.
 This will likely be done using the `gt` filter operator. For
 example:
 
-> filter=meta.lastModified gt "2011-05-13T04:42:34Z"
+> `filter=meta.lastModified gt "2011-05-13T04:42:34Z"`
 
-# Submitting to Okta
+## Publishing Your SCIM-Based Provisioning Integration
 
-Once you have SCIM provisioning working in your Okta application,
-the last thing to do before submitting your
-application to Okta is the following:
+### Process
 
-1.  Check the Profile Attributes for your application.
-2.  Check the Attribute Mappings for your application.
-3.  Run the second set of Runscope tests: [Okta SCIM 2.0 CRUD Test](SCIMFiles/Okta-SCIM-CRUD-Test.json)
+In order to allow customers to use your SCIM provisioning integration with Okta, 
+you’ll need to get your app published in [the Okta Application Network](https://www.okta.com/resources/find-your-apps/).
 
-## Check the Profile Attributes for Your Application
+Follow the steps below to test and submit your application for Okta review: 
+
+1. Review Okta’s SCIM Docs & Prepare Your App
+2. Test Your SCIM Server
+3. Submit for Okta Review
+4. Test with Customers
+5. Publish to Okta Application Network (OAN)
+
+> Have questions? Need help? Email us at <developers@okta.com> or post your question on [Stack Overflow](http://stackoverflow.com/search?q=okta,scim).
+
+### Private App Option
+
+The OAN is for making an integration publicly discoverable and accessible to all Okta customers. 
+However, you can also just use the integration privately within a few named orgs. 
+This could be the case if you are a system integrator, customer, or Okta PS integrating to a custom app. 
+If this is the case, follow steps 1-3 and you will be able to indicate in step 3 that you don’t want to publish in OAN. 
+Okta will create the submitted integration per usual and assign it to Orgs that you specify as a private app. 
+Note that you cannot use the SCIM template app used for prototyping, as it has limitations that prevent it from being used in production. 
+
+#### Review Okta’s SCIM Docs & Prepare Your App
+
+The first step is to build a compliant SCIM server. 
+Even if you already support SCIM, it is important that you review [Okta’s SCIM docs](https://docs.google.com/document/d/1t4F4jsN-ODuNLXRgtljXezSvWrPcYVZt38xUdATsjmE/edit#bookmark=id.knexmp4f60z),
+especially the following sections, to understand the specifics of Okta’s support for the SCIM standard:
+
+* [Understanding User Provisioning in Okta](#understanding-user-provisioning-in-okta)
+* [Required SCIM Server Capabilities](#required-scim-server-capabilities)
+* [SCIM Features Not Implemented by Okta](#scim-features-not-implemented-by-okta)
+
+#### Test Your SCIM Server
+
+##### Testing your SCIM server with Runscope
+
+The easiest way for you to develop and verify your SCIM integration
+is to make use of an automated test suite that runs on Runscope.
+
+If you are already familiar with Runscope, then import the
+OKTA SCIM Spec Test JSON API test (for SCIM 1.1 or SCIM 2.0) and configure the `SCIM Base
+  URL` variable to point at the base URL for your SCIM server, for
+example: `https://example.com/scim/v2`.
+
+* [Okta SCIM 2.0 Spec Test JSON](SCIMFiles/Okta-SCIM-20-SPEC-Test.json)
+* [Okta SCIM 1.1 Spec Test JSON](SCIMFiles/Okta-SCIM-11-SPEC-Test.json)
+
+If you are not familiar with Runscope, follow the detailed
+instructions below to get started with using Runscope to test your
+SCIM server.
+
+##### Set up Runscope
+
+If you do not have a Runscope account already, we suggest starting
+with [Runscope's free trial plan for Okta](https://www.runscope.com/okta). Here is how to get started:
+
+ 1.  Download the Okta SCIM Spec Test for your version of SCIM:
+     * [Okta SCIM 2.0 Spec Test JSON](SCIMFiles/Okta-SCIM-20-SPEC-Test.json)
+     * [Okta SCIM 1.1 Spec Test JSON](SCIMFiles/Okta-SCIM-11-SPEC-Test.json)
+ 
+      You will use this file to import Okta's SCIM test suite into Runscope.)
+
+ 2.  [Sign up for Runscope](http://www.runscope.com/signup).
+ 3.  You may see a tutorial after signing up for Runscope, if so, click
+    "Skip Tutorial".
+ 4.  You should now see a screen that says "API Tests".
+ 5.  In the lower left of your screen, click on the "Import Tests"
+    link.
+ 6.  You should now see a title that starts with "Import Tests into
+    &#x2026;"
+ 7.  Select "Runscope API Tests" as the format to import
+ 8.  Click the "Choose File" button and select the JSON file that you saved in Step 1.
+ 9.  Click the blue "Import API Test" button.
+10. After the import completes, click on the "All Tests" link on
+    the left hand side of your screen.
+
+Now that you've imported Okta's SCIM test suite into Runscope, your
+next step will be to customize the test suite for the SCIM
+integration that you are writing.
+
+##### Customize the imported Runscope test for your SCIM integration
+
+After importing Okta's SCIM test suite into Runscope, you will need to
+configure the test for your SCIM integration. Here is how to do that:
+
+1.  You should be looking at the "API Tests" screen in Runscope, if
+    not, click on the "Tests" tab on the top of Runscope's user interface.
+2.  You should see a test named "Okta SCIM 2.0 Tests", if not,
+    follow the "Set up Runscope" steps above.
+3.  Move your mouse over the "Okta SCIM 2.0 Tests" test, then select
+    the "Edit" link on the lower left of the test.
+4.  In the "Environment" section of your test, you should see a
+    collapsed "Test Settings" section, click the arrow on the left
+    of "Test Settings" to expand this section.
+5.  "Initial Variables" should be selected, click the "Add Initial
+    Variable" link and add the following:
+
+    | Variable Name (Case Sensitive) | Example Values              | Notes                                                                                                                                                                                     |
+    |:-------------------------------|:----------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | SCIMBaseURL                    | https://example.com/scim/v2 | For example, if your SCIM integration is hosted on https://example.com and uses a prefix of /scim/v2 then the "SCIM Base URL" for your integration would be: https://example.com/scim/v2. |
+    | auth                           | Bearer abcxyz1234567890     | Basic/Oauth authorization values                                                                                                                                                          |
+
+6.  Add the [Initial Script Spec](SCIMFiles/Initial_Script_Spec.txt).
+
+    If you are developing your SCIM integration in a local
+    development environment, we suggest using the excellent tool
+    [ngrok](https://ngrok.com/) to expose your local development environment to Runscope.
+8.  Click the "Save" button at the top of the test.
+
+##### Running Okta's SCIM tests against your SCIM server
+
+Now that you have updated your SCIM test in Runscope for your SCIM
+server, it is time to run the test:
+
+1.  If you followed the steps above, you should now be seeing a "Run
+    Now" button at the top of your test.
+2.  Click the "Run Now" button.
+3.  On the left side of your screen, you will see a test show up in
+    the "Recent Test Results" section.
+4.  Click on the top test in the "Recent Test Results" section.
+5.  If the test is still running, you will see live updates of the
+    test in progress. Once the test is complete, you will see the
+    results of your test.
+6.  To see the details of tests, click on the little arrow next to
+    each test to expand the details of a particular test case.
+
+    Doing this will allow you to see the **Request** and **Response**
+    for each HTTP request that was made.
+7.  Since this test is running in your own Runscope instance, we
+    encourage you to update the tests to better fit your own
+    environment.
+8.  See [Required SCIM Server Capabilities](#required-scim-server-capabilities) for details
+    about your SCIM server needs to implement to pass all of
+    the tests.
+9.  Keep running this test suite until all the tests pass.
+    Here is an [example of a test suite where all tests pass](https://www.runscope.com/radar/qmovuxkrhtws/f95ac15f-3f22-46c3-8f1a-1001fbf8fb66/history/6a35fabf-5ce5-4e48-a13f-7292b1bd3cc5).
+
+##### Sharing test results from Runscope
+
+As you are developing your SCIM server, you will likely want to
+share test results with teammates or with Okta.
+
+Here is how to share a test result from Runscope with someone else:
+
+1.  Open the test result that you want to share.
+2.  At the top of the test result, Change the "Private / Shareable"
+    toggle from "Private" to "Shareable".
+3.  Copy the URL for the test result, it will look something like
+    this:
+    `https://www.runscope.com/radar/abcdefghijkl/m01nopq2-3456-7r8s-9012-t34567uvw890/history/123ef4gh-i567-89j0-1k2l-3m4n5o678901`
+4.  Share that URL with the person that you want to share the test
+    result with. Here is an example test result from Runscope:
+    <https://www.runscope.com/radar/qmovuxkrhtws/f95ac15f-3f22-46c3-8f1a-1001fbf8fb66/history/6a35fabf-5ce5-4e48-a13f-7292b1bd3cc5>
+
+#### Testing your SCIM server with Okta
+
+Once you have a SCIM server that passes all of the Runscope tests, 
+test your SCIM integration directly with Okta. To do so, you will first need to sign up for [an Okta developer account](https://www.okta.com/developer/signup/).
+
+Note: If you are using OAuth Authorization Code Grant flow as your authentication method 
+or need to support the Profile Master action, Okta will need to custom-configure a template app for you. 
+Please request this in your email to <developers@okta.com>. 
+
+1. Navigate to the admin interface in your Okta org by clicking **Admin**. 
+    ![Admin Button](/assets/img/scim-end-user-ui.png)
+
+2. Click **Applications**, then **Add Application**. 
+    ![Admin Button](/assets/img/scim-apps.png)
+
+3. Search for “SCIM”. You’ll see three different SCIM template applications for each SCIM version (1.1 and 2.0) based off of the various authentication methods you could choose to support (Header Auth, Basic Auth, or Bearer Token).
+    ![Admin Button](/assets/img/scim-templates.png)
+
+#### Submit for Okta Review
+
+Once you have a functioning SCIM integration in your Okta developer org, and have confirmed support for [Okta’s required SCIM server capabilities](#required-scim-server-capabilities), you are ready to formally submit your app for review by Okta.
+
+Your submission will provide Okta with all the metadata needed to create a customized app (includes default mappings, link to config docs) which will be used by joint customers and eventually published publicly in [the Okta Application Network](https://www.okta.com/resources/find-your-apps/?_ga=1.200024301.294942002.1477328324). Okta will review the submission, create the customized app, run it through our internal QA, and then make it available in your developer org for your own testing.
+
+We recommend completing a few actions before submitting your application to Okta:
+
+1. Check the Profile Attributes for your application.
+2. Check the Attribute Mappings for your application.
+3. Run the second set of Runscope tests: Okta SCIM 2.0 CRUD Test.
+4. Prepare the customer-facing configuration guide.
+
+After performing these four steps (instructions below), use [this form](https://docs.google.com/forms/d/e/1FAIpQLSfueMM9vbIt6zXCdcI9MdJ16lZc1FHwyIwMkHwNBWF7Kzdocg/viewform) to submit for Okta review.
+
+
+##### Check the Profile Attributes for your application
 
 Before submitting your application to Okta, you should check the
 User Attributes to make sure that the attributes are set to what
@@ -866,83 +1072,8 @@ Check your Profile Attributes as follows:
         clicking the "Delete" button located in right hand attribute details pane.
         Before removing, check the mapping between Okta and Application and
         **remove the mappings** for the attribute(s) to be deleted.
-    -   After you've removed all unsupported attributes from the
-        "Attributes" section, check the remaining
-        attributes and ensure that the following properties
-        for each attribute are what you expect them to be:
-        -   Display name -- Example: Family name
-        -   Variable name -- Example: isvapp.familyName
-        -   External name -- Example: name.familyName
-        -   External namespace -- Example: urn:ietf:params:scim:schemas:core:2.0:User
-        -   Data type -- Example: String
-        -   Attribute required
-            Only mark an attribute as required if one of the following is
-            true:
-            1.  The attribute **must** be set for your provisioning
-                integration to work.
-            2.  An Okta administrator must populate a value for
-                this attribute.
-        -   Scope -- Example: User personal
-    -   If the settings for any of your supported user attributes are
-        incorrect, contact Okta and request the correction for your
-        attribute.
-<img src="/assets/img/family_name.png" alt="Screen shot of Family name" width="640px" />
 
-    Click the blue "Back to profiles" link when you are done checking
-    the Profile Attributes for your application.
-
-## Custom Attributes
-
-If you need to add custom attributes apart from the attributes supported in the User core schema, 
-please add them under schemaExtensions under a custom external namespace. For example, your business
-rules might require the T-Shirt size for each user.
-
-| Attribute  | Example  | Description  |
-|:--|:--|:--|
-| Display Name  | Assistants  | The display name for this attribute  |
-| Variable Name  | assistants  | The name of this profile attribute  |
-| externalName  | assistants  | The name of the attribute in the third-party SCIM Server |
-| externalNamespace  | urn:<Application Name>:params:scim:schemas:1.0:User  | The custom namespace of the attribute in the third-party SCIM Server. The SCIM Spec requires that the namespace be a unique URI (Section 3.3).  |
-
-Example User Profile:
-
-~~~sh
-{
-  "schemas": [
-    "urn:ietf:params:scim:schemas:core:2.0:User",
-    "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User",
-    "urn:myapp:params:scim:schemas:1.0:User"
-  ],
-  "emails": [
-    {
-      "type": "work",
-      "value": "John.Doe@demoexample.com",
-      "primary": "true"
-    }
-  ],
-  "displayName": "John Doe",
-  "meta": {
-    "lastModified": "2016-05-10T01:50:06.324Z"
-  },
-  "name": {
-    "familyName": "Doe",
-    "givenName": "John"
-  },
-  "active": true,
-  "id": "40288086547842232328",
-  "userName": "johnDoe",
-  "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User": {
-    "manager": {}
-  },
-  "urn:myapp:params:scim:schemas:1.0:User": {
-    "assistants": [
-      "person"
-    ]
-  }
-}
-~~~
-
-## Check the Attribute Mappings for Your Application
+##### Check the Attribute Mappings for Your Application
 
 The last step for you to complete before submitting your
 application to Okta is to check the User Profile Mappings for your
@@ -958,11 +1089,11 @@ following:
 -   In the "Provisioning" tab, scroll to the bottom and click the
     "Edit Mappings" button in the "Attribute Mappings" section.
 -   Check that each mapping is what you would expect it to be. Be
-    sure to check both of the followign:
+    sure to check both of the following:
     1.  From your application to Okta.
     2.  From Okta to your application.
 
-## Running Okta SCIM 2.0 CRUD Test
+##### Run the Second Set of Runscope Tests: Okta SCIM 2.0 CRUD Test
 
 This is an important test that needs to be run in order to check if the Application 
 can handle the **CR**eate, **U**pdate and **D**eactivate (CRUD) users functionality from Okta.
@@ -982,50 +1113,167 @@ The test follows this pattern:
 10. Re assign the Application to the user.
 11. Validates the user creation/update in Application.
 
-Use the instructions in [Set Up Runscope](#set-up-runscope) to import 
-the [Okta SCIM CRUD Test](SCIMFiles/Okta-SCIM-CRUD-Test.json):
+##### Prepare the Customer-Facing Configuration Guide
 
-1. You should be looking at the "API Tests" screen in Runscope, if not, 
-click on the "Tests" tab on the top of Runscope's user interface.
-2. You should see a test named "Okta SCIM 2.0 CRUD Tests", if not, follow the "Set up Runscope" steps above.
-3. Move your mouse over the "Okta SCIM 2.0 Tests" test, then select the "Edit" link on the lower left of the test.
-4. In the "Environment" section of your test, you should see a collapsed "Test Settings" section, click the arrow on the left of "Test Settings" to expand this section.
-5. "Initial Variables" should be selected, click the "Add Initial Variable" link and add the following:
+We recommend preparing the customer-facing configuration guide before beginning to work through the submission document. 
+This guide will be exposed externally in Okta’s admin interface to end customers. 
+For more details, see the [configuration guide guidelines](http://saml-doc.okta.com/Provisioning_Docs/SCIM_Configuration_Guide_Instructions.pdf).
 
-Variables:
+Note: When you are ready, use [this form](https://docs.google.com/forms/d/e/1FAIpQLSfueMM9vbIt6zXCdcI9MdJ16lZc1FHwyIwMkHwNBWF7Kzdocg/viewform) to submit for Okta review.
 
-* `SCIMUrl`: The SCIM Server URL.<br />Example value: <https://example.com/scim/v2>
+#### Test with Customers
 
-* `SCIMAuth`: The Authorization for SCIM server: Basic, Oauth. <br />Example value: `Bearer abcxyz1234567890`
+We require that one joint customer successfully uses and validates the integration in production before making it publicly available in the Okta Application Network. 
 
-* `OktaOrgUrl`: The Okta organization URL which is used to add the SCIM application. <br/>Example value: <https://scimtestorg.oktapreview.com/> 
+Here’s the process for getting joint customers involved in testing the newly developed SCIM integration:
 
-* `OktaToken`: Token obtained using  [the getting started instructions](http://developer.okta.com/docs/api/getting_started/getting_a_token).<br />Example value: `qwerty12345`
+* Identify joint customers interested in piloting the integration. Here’s [a template email](https://docs.google.com/document/d/1UCvtjTj-nfKUVff4xMGwWz_hKlHBOZrCMbFkJHMkc-g/edit) to assist in outreach.
+* Once identified, an Okta admin from the joint customer will need to email <developers@okta.com> asking for this integration to be assigned to their Okta preview org (please have them specify org subdomain in their request). Okta will then assign the app.
+* Integration and configuration review with the joint customer. Partners are responsible for managing the customer identification and testing process, but Okta can support as needed. Please coordinate by emailing <developers@okta.com>.
 
-* `OktaAppId`: The App ID value which can be obtained by navigating to the SCIM App in the Okta org which results in URL value <https://scimtestorg-admin.oktapreview.com/admin/app/scim/instance/0oa41ccmx9CAzfvpP0h7/#tab-people>.<br />Example value: `0oa41ccmx9CAzfvpP0h`
+#### Publish to Okta Application Network
 
-Once the variables are set, run the tests and share the results. 
-Based on your implementation for CRUD, please check and submit the results from this test to <developers@okta.com>.
-The assertions are in place to indicate what OKTA expects for the provisioning connectors to work as intended. 
-Once completed with no issues, please proceed to the next step.
+In order for an app to be published in the Okta Application Network, it must meet the following criteria:
 
-## Contact Okta
+- [ ] ISV configuration guide explaining:
+    - [ ] The supported features
+    - [ ] Step-by-step instructions for setting up the integration
+- [ ] Gotchas & known issues
+- [ ] Support and Contact Info
+- [ ] ISV Support Contact
+- [ ] ISV Escalation Contact
+- [ ] Full, permanent test tenant provided to Okta
+- [ ] RunScope Test Suite
+- [ ] Final Full QA by Okta
+- [ ] Customer validation
 
-To submit your application, follow the instructions in the SCIM Developer Program section ["Submit for Okta Review."](scim_developer_program.html#submit-for-okta-review)
+## Provisioning FAQs
 
-# Appendix: Details on the example SCIM server
+### SCIM Technical Questions
 
-Included in this git repository is an example SCIM server written in
-Python.
+**What are the differences between SCIM 1.1 and 2.0?**
+
+| Section | SCIM 1.1 | SCIM 2.0 | Notes |
+| --- | --- | --- | --- |
+| Namespaces | `urn:scim:schemas:core:1.0 urn:scim:schemas:extension:enterprise:1.0`  |  `urn:ietf:params:scim:schemas:core:2.0:User urn:ietf:params:scim:schemas:extension:enterprise:2.0:User` | Namespaces are different therefore 2.0 is not backwards compatible with 1.1 |
+| Service Provider Config Endpoint | /ServiceProviderConfig<b>s</b> | /ServiceProviderConfig | Notice 2.0 does NOT have an 's' at the end |
+| Patch Protocol | [Section 3.3.2](http://www.simplecloud.info/specs/draft-scim-api-01.html#edit-resource-with-patch) | [Section 3.5.2: Uses JSON Patch](https://tools.ietf.org/html/rfc7644#section-3.5.2) | |
+| Error Response Schema | [Section 3.9](http://www.simplecloud.info/specs/draft-scim-api-01.html#anchor6) | [Section 3.12](https://tools.ietf.org/html/rfc7644#section-3.12) | |
+| Reference Type | N/A | Supports ref type pointing to the full url of another SCIM Resource | |
+| Query by POST /search | N/A | [Section 3.4.3](https://tools.ietf.org/html/rfc7644#section-3.4.3) | |
+
+**Our API is similar to SCIM, but is not 100% compliant. Can we still integrate with Okta?**
+
+Unfortunately, your app’s SCIM server API must be fully SCIM compliant in order to integrate with Okta. 
+Okta’s SCIM client endpoints are hard coded into a template which adhere directly to [the SCIM spec](http://www.simplecloud.info/). 
+Not all capabilities of the SCIM spec need to be supported (see [Required SCIM Server Capabilities](#required-scim-server-capabilities) in our SCIM Technical Reference) but the core schema and features do need to be supported.
+
+**SCIM is a new standard. How broadly is it being adopted by cloud app vendors and how confident can I be in the SCIM standard’s long-term viability?**
+
+Okta has seen significant SCIM momentum in the market amongst our network of app developers over the past year. 
+Hot new apps like [Slack](https://api.slack.com/scim) 
+and [Lucidchart](https://www.lucidchart.com/techblog/2016/08/04/an-implementers-overview-managing-cloud-identity-with-scim/) 
+are supporting SCIM as well established software companies 
+like [Huddle](https://github.com/Huddle/huddle-apis/wiki/Integrating%20with%20SCIM) 
+and [Citrix](https://developer.citrixonline.com/implementing-scim-apis). 
+Okta has doubled down on our investment in our SCIM server 
+and launched our own SCIM provisioning developer program.
+The SCIM standards is strong and is run by Salesforce, Google, and Sailpoint (Okta is also a contributor).
+
+**How should I be managing authentication to my SCIM API?**
+
+Okta recommends using the OAuth 2.0 Authorization Code Grant Flow (aka “three-legged OAuth). 
+Okta doesn't support the Client Credentials or Resource Owner Password Credentials Authorization grant flows. 
+The Authorization Code Grant Flow is more common in SaaS/cloud and is also more secure. 
+In addition to OAuth, Okta also supports basic auth and header token auth options.
+
+**I have a multi-tenant app how do I allow my customers to customize their specific tenant in Okta?**
+
+Use the three-legged OAuth (Authorization Grant flow), 
+so that you know exactly which token/key the customer is using. 
+Another option is by URL. When the customer configures your app in Okta, we can prompt them to add their unique subdomain for your app  (see Zscaler app below). 
+Okta can use part of this url in the SCIM endpoint for that customer, for example http://www.company.com/tenantA/scim or http://www.company.com/tenantB/scim). 
+This subdomain field can be configured with Okta after you submit your app for Okta review.
+
+![Example SCIM endpoint with subdomain](/assets/img/scim-scalar.png)
+
+**Why do I need to implement the type attribute for attributes such as emails/phoneNumbers/addresses?**
+
+The SCIM User Profile allows for an array of emails. The only way to differentiate between emails is to use the type sub-attribute. See section 2.4 of RFC 7643 for more details:
+When returning multi-valued attributes, service providers SHOULD canonicalize the value returned (e.g., by returning a value for the sub-attribute “type”, such as “home” or “work”) when appropriate (e.g., for email addresses and URLs).
+Service providers MAY return element objects with the same “value” sub-attribute more than once with a different “type” sub-attribute (e.g., the same email address may be used for work and home) but SHOULD NOT return the same (type, value) combination more than once per attribute, as this complicates processing by the client.
+When defining schema for multi-valued attributes, it is considered a good practice to provide a type attribute that MAY be used for the purpose of canonicalization of values. In the schema definition for an attribute, the service provider MAY define the recommended canonical values (see Section 7).
+
+**I only have one email/phone number/address in my user profile. Do I need to implement the array of emails/phone numbers/addresses?**
+
+Yes, the you must return these fields in an array, which is specified in the SCIM spec as a multi-valued attribute: [Section 2.4](https://tools.ietf.org/html/rfc7643#section-2.4).
+
+**Why doesn't Okta support DELETE /Users?**
+
+Okta users are never deleted for compliance and audit purposes; they are deactivated instead. Because of this, Okta never makes an HTTP DELETE request to a user resource on your SCIM API. Instead, Okta makes an HTTP PATCH request to set the active setting to false. You’ll need to support the concept of an “active” and “inactive” user in your app.
+
+**Will Okta be supporting the /Groups SCIM endpoint? When?**
+
+Yes, Okta will eventually support the /Groups endpoint of the SCIM API. We are targeting early 2017 for this feature. In the meantime, to support the setting licensing / entitlements in your app without groups, you can use custom attributes in Okta to manage this. For examples, Lucidchart was able to support this use case with a user attribute called "License Type". See the “Extensibility” section of Lucidchart’s blog post for more details.
+
+**How does data validation work with SCIM provisioning? For example, if my app requires phone number in a specific format, how do I ensure that Okta passes the attribute in that format? If a data validation error issue occurs how does error reporting work?**
+
+The SCIM spec specifies valid data formats for a given user profile attribute, however Okta does not rigorously validate that the customer has inputted values meeting those requirements to preserve flexibility.
+Therefore, data validation should be handled by your app’s SCIM Server. In other words, when Okta provisions user profile to your app, it should check that the data is valid per their special requirements. Error messages sent in the response from your app will be surfaced to Okta Admin via alerts and tasks in the Okta interface. You should also specify your data requirements in your config guide.
+
+**How much filtering support is needed?**
+
+The filtering capabilities in the SCIM protocol are pretty broad but the common filtering use case with Okta is quite narrow -- determine if a newly created Okta user already exists in your app based on a matching identifier . This means the eq (equals) operator is all you really need to support for now. We "might" eventually support other operators but don't right now. 
+Note that Okta only supports filtering via the eq operator on the SCIM userName attribute on the SCIM Server side. However, Okta can use any AppUser attribute on the Okta side for passing into the eq operator. Typically this would also be `appuser.userName`, but `appuser.email` or `appuser.randomAttribute` can also work.
+
+### Publishing Questions
+
+**If I submit my app with a set of attributes, and then I want to add attributes during the testing phase of the app, is this acceptable?**
+
+Yes. Add a new app instance in your dev org to test the new attributes and email <developers@okta.com>.
+
+**Once my app has been published, and I add additional attributes, how do I republish my app? Can I republish frequently?**
+
+Yes, you can republish your app, but we recommend you don’t do it frequently. Your app goes through Okta’s QA process every time you add additional attributes.
+
+### Dev Doc Examples
+
+Box - https://docs.box.com/docs/getting-started-box-integration
+Slack - https://api.slack.com/
+OneLogin - https://developers.onelogin.com/
+Zendesk - https://developer.zendesk.com/apps
+
+## Helpful Resources
+
+https://www.lucidchart.com/techblog/2016/08/04/an-implementers-overview-managing-cloud-identity-with-scim/
+
+
+https://support.okta.com/help/articles/Knowledge_Article/28352376-Overview-of-End-User-Management
+
+
+https://support.okta.com/help/articles/Knowledge_Article/Provisioning-Concepts-and-Methods
+
+
+https://developers.facebook.com/docs/facebook-at-work/provisioning/scim-api
+
+
+http://openidexplained.com/
+
+
+https://developers.onelogin.com/scim
+
+## Appendix: Using the Example SCIM Server
+
+Okta provides an [example SCIM Server](https://github.com/okta/okta-provisioning-sdk/tree/master/com/okta/scim/server/example) written in
+Python, with [documentation](http://developer.okta.com/docs/sdk/opp/javadoc/overview-summary.html).
 
 This example SCIM server demonstrates how to implement a basic SCIM
 server that can create, read, update, and deactivate Okta users.
 
-The "Required SCIM Capabilities" section has the sample code that
-handles the HTTP requests to this sample application, below we
-describe the rest of code used in the example.
+You can find the sample code to handle HTTP requests to this sample application in [Required SCIM Server Capabilities](#required-scim-server-capabilities) 
+Use the instructions that follow to set up and run the example SCIM server.
 
-## How to run
+### How to run
 
 This example code was written for **Python 2.7** and does not
 currently work with Python 3.
@@ -1038,10 +1286,10 @@ First, start by doing a `git checkout` of this repository, then
 1.  `cd` to the directory you just checked out:
 
         $ cd okta-scim-beta
-2.  Create an isolated Python environment named "venv" using [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/):
+2.  Create an isolated Python environment named `venv` using [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/):
 
         $ virtualenv venv
-3.  Next, activate the newly created virtualenv:
+3.  Next, activate the newly created virtual environment:
 
         $ source venv/bin/activate
 4.  Then, install the dependencies for the sample SCIM server using
@@ -1052,7 +1300,7 @@ First, start by doing a `git checkout` of this repository, then
 
         $ python scim-server.py
 
-## Introduction
+### Introduction
 
 Below are instructions for writing a SCIM server in Python, using
 Flask and SQLAlchemy.
@@ -1060,7 +1308,7 @@ Flask and SQLAlchemy.
 A completed version of this example server is available in this git
 repository in the file named `scim-server.py`.
 
-## Imports
+### Imports
 
 We start by importing the Python packages that the SCIM server will
 use:
@@ -1078,7 +1326,7 @@ use:
     from flask_sqlalchemy import SQLAlchemy
     import flask
 
-## Setup
+### Setup
 
 `re` adds support for regular expression parsing, `flask` adds the Flask
 web framework, `flask_socketio` and `flask_sqlalchemy` add a idiomatic support for
@@ -1092,7 +1340,7 @@ Next we initialize Flask, SQLAlchemy, and SocketIO:
     db = SQLAlchemy(app)
     socketio = SocketIO(app)
 
-## SQLAlchemy support for the "users" table:
+### SQLAlchemy support for the "users" table:
 
 Below is the class that SQLAlchemy uses to give us easy access to
 the "users" table.
@@ -1149,7 +1397,7 @@ a [SCIM "User" resource schema](https://tools.ietf.org/html/rfc7643#section-4.1)
             }
             return rv
 
-## Support for SCIM Query resources
+### Support for SCIM Query resources
 
 We also define a `ListResponse` class, which is used to return an
 array of SCIM resources into a
@@ -1177,7 +1425,7 @@ array of SCIM resources into a
             rv['Resources'] = resources
             return rv
 
-## Support for SCIM error messages
+### Support for SCIM error messages
 
 Given a `message` and HTTP `status_code`, this will return a Flask
 response with the appropriately formatted SCIM error message.
@@ -1196,7 +1444,7 @@ See [section 3.12](https://tools.ietf.org/html/rfc7644#section-3.12) of [RFC 764
         }
         return flask.jsonify(rv), status_code
 
-## Socket.IO support
+### Socket.IO support
 
 This sample application makes use of Socket.IO to give you a "real
 time" view of SCIM requests that Okta makes to this sample
@@ -1249,7 +1497,7 @@ The code described above is as follows:
     def test_disconnect():
         print('Client disconnected')
 
-## Socket.IO application
+### Socket.IO application
 
 Below is the JavaScript that powers the Socket.IO application
 described above. For the full contents of the HTML that this
@@ -1282,7 +1530,7 @@ directory of this project.
         });
     });
 
-## Support for running from the command line
+### Support for running from the command line
 
 This bit of code allows you to run the sample application by typing
 `python scim-server.py` from your command line.
@@ -1298,114 +1546,3 @@ only happen if the User table isn't defined.
             db.create_all()
         app.debug = True
         socketio.run(app)
-
-## Frequently Asked Questions (FAQ)
-
-This FAQ covers both app publication and technical questions.
-
-### App Publication Questions
-
-- If I submit my app with a set of attributes, and then I want to add attributes during the testing phase of the app, is this acceptable?
-
-    Yes. Do one of the following if you add attributes during the testing phase:
-
-     * Add a new app instance in your dev org to test the new attributes.
-     * Ask Support to upgrade their profile template.
-
-- Once my app has been published, and I add additional attributes, how do I republish my app? Can I republish frequently?
-
-    Yes, you can republish your app, but we recommend you don't do it frequently. Your app goes throught the QA process every time you add additional attributes.
-
-- How long does it take for my submission to be reviewed and published?
-
-    Review usually takes 48 hours, followed by QA which is usually another 48 hours.
-    We don't publish the app until one customer tests the app in their production environment and send us a email
-    saying that everything works and they recommend the integration.
-
-### SCIM Technical Questions
-
--   What are the differences between SCIM 1.1 and 2.0?
-
-    | Section | SCIM 1.1 | SCIM 2.0 | Notes |
-    | --- | --- | --- | --- |
-    | Namespaces | <ul><li>urn:scim:schemas:core:1.0</li><li>urn:scim:schemas:extension:enterprise:1.0</li><ul> | <ul><li>urn:ietf:params:scim:schemas:core:2.0:User</li><li>urn:ietf:params:scim:schemas:extension:enterprise:2.0:User</li><ul> | Namespaces are different therefore 2.0 is not backwards compatible with 1.1 |
-    | Service Provider Config Endpoint | /ServiceProviderConfig<b>s</b> | /ServiceProviderConfig | Notice 2.0 does NOT have an 's' at the end |
-    | Patch Protocol | [Section 3.3.2](http://www.simplecloud.info/specs/draft-scim-api-01.html#edit-resource-with-patch) | [Section 3.5.2: Uses JSON Patch](https://tools.ietf.org/html/rfc7644#section-3.5.2) | |
-    | Error Response Schema | [Section 3.9](http://www.simplecloud.info/specs/draft-scim-api-01.html#anchor6) | [Section 3.12](https://tools.ietf.org/html/rfc7644#section-3.12) | |
-    | Reference Type | N/A | Supports ref type pointing to the full url of another SCIM Resource | |
-    | Query by POST /search | N/A | [Section 3.4.3](https://tools.ietf.org/html/rfc7644#section-3.4.3) | |
--   What if the SCIM 1.1 spec isn't clear on a specific use case or
-    scenario?
-
-    Okta recommends looking at the SCIM 2.0 spec for more
-    clarification.  The SCIM 2.0 spec provides more guidelines and
-    examples for various scenario's.
-
--   Why do I need to implement the `type` attribute for attributes
-    such as emails/phoneNumbers/addresses?
-
-    The SCIM User Profile allows for an array of emails.  The only
-    way to differentiate between emails is to use the `type`
-    sub-attribute.  See [section 2.4](https://tools.ietf.org/html/rfc7643#section-2.4) of RFC 7643 for more details:
-
-    > When returning multi-valued attributes, service providers SHOULD
-    > canonicalize the value returned (e.g., by returning a value for the
-    > sub-attribute "type", such as "home" or "work") when appropriate
-    > (e.g., for email addresses and URLs).
-    >
-    > Service providers MAY return element objects with the same "value"
-    > sub-attribute more than once with a different "type" sub-attribute
-    > (e.g., the same email address may be used for work and home) but
-    > SHOULD NOT return the same (type, value) combination more than once
-    > per attribute, as this complicates processing by the client.
-    >
-    > When defining schema for multi-valued attributes, it is considered a
-    > good practice to provide a type attribute that MAY be used for the
-    > purpose of canonicalization of values.  In the schema definition for
-    > an attribute, the service provider MAY define the recommended
-    > canonical values (see Section 7).
--   I only have one email/phone number/address in my user profile.
-    Do I need to implement the array of emails/phone
-    numbers/addresses?
-
-    Yes, the you must return these fields in an array, which is
-    specified in the SCIM spec as a multi-valued attribute: [Section
-    2.4](https://tools.ietf.org/html/rfc7643#section-2.4)
-
-## Dependencies
-
-Here is a detailed list of the dependencies that this example SCIM
-server depends on, and what each dependency does.
-
-| Name | Version | Description | License |
-| ---- | --- | --- | --- |
-| [Flask](http://flask.pocoo.org) | 0.10.1 | A web framework built with a small core and easy-to-extend philosophy. | [BSD 3-Clause](http://flask.pocoo.org/docs/0.10/license/#flask-license) |
-| [Flask-SQLAlchemy](https://github.com/mitsuhiko/flask-sqlalchemy) | 2.1 | Adds SQLAlchemy support to Flask. | [BSD 3-Clause](https://github.com/mitsuhiko/flask-sqlalchemy/blob/master/LICENSE) |
-| [Flask-SocketIO](https://github.com/miguelgrinberg/Flask-SocketIO) | 2.1 | Socket.IO integration for Flask applications. | [MIT](https://github.com/miguelgrinberg/Flask-SocketIO/blob/master/LICENSE) |
-| [gunicorn](http://gunicorn.org/) | 19.4.5 | A pre-fork worker model HTTP server for WSGI. | [MIT](https://github.com/benoitc/gunicorn/blob/master/LICENSE) |
-| [Jinja2](http://jinja.pocoo.org/docs/dev) | 2.8 | A modern and designer-friendly templating language. | [BSD 3-Clause](https://github.com/pallets/jinja/blob/master/LICENSE) |
-| [MarkupSafe](http://www.pocoo.org/projects/markupsafe) | 0.23 | A library for Python that implements a unicode string. | [BSD 3-Clause](https://github.com/pallets/markupsafe/blob/master/LICENSE) |
-| [SQLAlchemy](https://pypi.python.org/pypi/SQLAlchemy) | 1.0.12 | SQL toolkit and Object Relational Mapper. | [MIT](https://github.com/zzzeek/sqlalchemy/blob/master/LICENSE) |
-| [Werkzeug](http://werkzeug.pocoo.org) | 0.11.4 | A WSGI utility library for Python. | [BSD 3-Clause](https://github.com/pallets/werkzeug/blob/master/LICENSE) |
-| [itsdangerous](http://pythonhosted.org/itsdangerous) | 0.24 | Used to send data to untrusted environments. | [BSD 3-Clause](https://github.com/pallets/itsdangerous/blob/master/LICENSE) |
-| [python-engineio](https://github.com/miguelgrinberg/python-engineio) | 0.8.8 | Implementation of the Engine.IO realtime server. | [MIT](https://github.com/miguelgrinberg/python-engineio/blob/master/LICENSE) |
-| [python-socketio](https://github.com/miguelgrinberg/python-socketio) | 1.0 | Implementation of the Socket.IO realtime server. | [MIT](https://github.com/miguelgrinberg/python-socketio/blob/master/LICENSE) |
-| [six](https://pypi.python.org/pypi/six) | 1.10.0 | Python 2 and 3 compatibility library. | [MIT](https://bitbucket.org/gutworth/six/src/2c12cd64ff0c7797bb30b0d466e902f7ecd6e562/LICENSE?at=default) |
-| [wsgiref](https://pypi.python.org/pypi/wsgiref) | 0.1.2 | Provides validation support for WSGI. | [PSF or ZPL](https://pypi.python.org/pypi/wsgiref) |
-| [psycopg2](http://initd.org/psycopg/) |  | Popular PostgreSQL adapter. | [LGPL or ZPL](http://initd.org/psycopg/license/) |
-
-# License information
-
-    Copyright © 2016, Okta, Inc.
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.

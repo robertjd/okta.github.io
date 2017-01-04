@@ -12,14 +12,14 @@ There are several use cases and Okta product features built on top of the OAuth 
 
 * Social Authentication -- {% api_lifecycle ea %}
 * OpenID Connect -- {% api_lifecycle ea %}
-* API Access Management -- {% api_lifecycle beta %}
+* API Access Management -- {% api_lifecycle ea %}
 
 It's important to understand which use case you are targeting and build your application according to the correct patterns for that use case. 
 The OAuth 2.0 APIs each have several different [query params](#authentication-request) which dictate which type of flow you are using and the mechanics of that flow.
 
 At the very basic level, the main API endpoints are:
 
-* [Authorize](#authentication-request) endpoint initiates an OAuth 2.0 or OpenID Connect request.
+* [Authorize](#authentication-request) endpoint initiates an OAuth 2.0 request.
 * [Token](#token-request) endpoint redeems an authorization grant (returned by the [Authorize](#authentication-request) endpoint) for an access token.
 
 ## Basic Flows
@@ -32,7 +32,7 @@ At the very basic level, the main API endpoints are:
     * Does not support refresh tokens
     * Assumes Resource Owner and Public Client are on the same device
 
-    ![Broswer/Single-Page Application](/assets/img/browser_spa_implicit_flow.png)
+    ![Browser/Single-Page Application](/assets/img/browser_spa_implicit_flow.png)
     
 2. Native Application
 
@@ -79,10 +79,7 @@ This authentication method produces a `sessionToken` which can be passed into th
 
 An Access Token is a [JSON web token (JWT)](https://tools.ietf.org/html/rfc7519) encoded in base64URL format that contains [a header](#jwt-header), [payload](#jwt-payload), and [signature](#jwt-signature). A resource server can authorize the client to access particular resources based on the [scopes and claims](#scopes-and-claims) in the Access Token.
 
-{% beta %}
 The lifetime of Access Token can be configured in the [Access Policies](#access-policies).
-{% endbeta %}
-
 
 ### JWT Header
 
@@ -127,17 +124,11 @@ This is a digital signature Okta generates using the public key identified by th
 
 ## Scopes and claims
 
-Access Tokens include reserved scopes and claims.
-
-{% beta %}
-
-Access Tokens can optionally include custom scopes and claims.
+Access Tokens include reserved scopes and claims, and can optionally include custom scopes and claims.
 
 Scopes are requested in the request parameter, and the authorization server uses the [Access Policies](#access-policies) to decide if they can be granted or not. If any of the requested scopes are rejected by the [Access Policies](#access-policies), the request will be rejected.
 
 Based on the granted scopes, claims are added into the Access Token returned from the request.
-
-{% endbeta %}
 
 ### Reserved scopes and claims
 
@@ -179,7 +170,7 @@ The payload includes the following reserved claims:
 | uid     | A unique identifier for the user. It will not be included in the Access Token if there is no user bound to it.  | String    | 	"00uk1u7AsAk6dZL3z0g3"     |
 | scp     | Array of scopes that are granted to this Access Token.   | Array    | [ "openid", "custom" ]     |
 
-{% beta %}
+
 ### Custom scopes and claims
 
 The admin can configure custom scopes and claims for the Authorization Server.
@@ -196,8 +187,6 @@ Custom claims are associated with scopes. If one of the associated scopes is gra
 
 >*Note:* For the custom claim with group filter, its value has a limit of 100. If more than 100 groups match the filter, then the request fails. Expect that this limit may change in the future.
 
-{% endbeta %}
-
 ## Validating Access Tokens
 
 Okta uses public key cryptography to sign tokens and verify that they are valid. 
@@ -211,12 +200,26 @@ An Access Token must be validated in the following manner:
 1. Verify that the `iss` (issuer) claim matches the identifier of your authorization server.
 2. Verify that the `aud` (audience) claim is the requested URL.
 3. Verify `cid` (client id) claim is your client id.
-4. Verify the signature according to [JWS](https://tools.ietf.org/html/rfc7515) using the algorithm specified in the JWT `alg` header parameter. Use the public keys provided by Okta via the [Get Keys endpoint](#get-keys).
+4. Verify the signature of the Access Token according to [JWS](https://tools.ietf.org/html/rfc7515) using the algorithm specified in the JWT *alg* header property. Use the public keys provided by Okta via the [Get Keys endpoint](#get-keys).
 5. Verify that the expiry time (from the `exp` claim) has not already passed.
 
-Step 4 uses the same signature verification method as [OIDC](oidc.html#validating-id-tokens).
+Step 4 involves downloading the public JWKS from Okta (specified by the *jwks_uri* property in the [authorization server metadata](#authorization-server-metadata). The result of this call is a [JSON Web Key](https://tools.ietf.org/html/rfc7517) set.
 
-The signing keys for the Access Token are rotated in the same way as [OIDC](oidc.html#validating-id-tokens).
+Each public key is identified by a *kid* attribute, which corresponds with the *kid* claim in the [Access Token header](#token-authentication-method).
+
+The Access Token is signed by an RSA private key, and we publish the future signing key well in advance.
+However, in an emergency situation you can still stay in sync with Okta's key rotation. Have your application check the `kid`, and if it has changed, 
+check the `jwks_uri` value in the [authorization server metadata](#authorization-server-metadata) for a new public key and `kid`.
+
+Please note the following:
+
+* For security purposes, Okta automatically rotates keys used to sign the token.
+* The current key rotation schedule is four times a year. This schedule can change without notice.
+* In case of an emergency, Okta can rotate keys as needed.
+* Okta always publishes keys to the JWKS.
+* To save the network round trip, your app can cache the JWKS response locally. The standard HTTP caching headers are used and should be respected.
+
+Keys used to sign tokens automatically rotate and should always be resolved dynamically against the published JWKS. Your app can fail if you hardcode public keys in your applications. Be sure to include key rollover in your implementation.
 
 ### Alternative Validation
 
@@ -227,7 +230,7 @@ You can use an [introspection endpoint](#introspection-request) for validation.
 A Refresh Token is an opaque string. It is a long-lived token that the client can use to obtain a new Access Token without re-obtaining authorization from the resource owner. The new Access Token must have the same or subset of the scopes associated with the Refresh Token.
 A Refresh Token will be returned if 'offline_access' scope is requested using authorization_code, password, or refresh_token grant type.
 
-{% beta %}
+
 The lifetime of a Refresh Token is configured in [Access Policies](#access-policies), the minimum value is 24 hours. The refresh token can also expire after a period if no clients redeem it for an Access Token. The period should be equal to or larger than 10 minutes. If the token's lifetime is set to unlimited, the Authorization Server will not check if clients use it or not.
 
 ## Id Token
@@ -268,18 +271,31 @@ The requests with client_credential grant type match "no user" condition, which 
 
 The actions in a Rule define which scopes can be granted to the requests, thus determines which claims will be added into the tokens. They also define the lifetime of the Access Token and Refresh Token.
 
-{% endbeta %}
+## Authorization Servers
+
+API Access Management allows you to build custom authorization servers in Okta which can be used to protect your own API endpoints. An authorization server defines your security boundary, for example “staging” or “production.” Within each authorization server you can define your own OAuth scopes, claims, and access policies. This allows your apps and your APIs to anchor to a central authorization point and leverage the rich identity features of Okta, such as Universal Directory for transforming attributes, adaptive MFA for end-users, analytics, and system log, and extend it out to the API economy.
+
+At its core, an authorization server is simply an OAuth 2.0 token minting engine. 
+Each authorization server has a unique issuer URI and its own signing key for tokens in order to keep proper boundary between security domains. 
+The authorization server also acts as an OpenID Connect Provider, which means you can request ID tokens in addition to access tokens from the authorization server endpoints.
+To configure an authorization server, log into your org and navigate to **Security** > **API** > **Add Authorization Server**.
+
+## OpenID Connect and Authorization Servers
+
+You can use OpenID Connect without the API Access Management feature, using the [OpenID Connect API](/docs/api/resources/oidc.html).
+However, you can also use OpenID Connect with an authorization server specified:
+
+* `/oauth2/v1/userinfo` for OpenID Connect without API Access Management
+* `/oauth2/:authorizationServerId/v1/userinfo` for OpenID Connect with API Access Management 
+
+You can't mix tokens between different authorization servers. By design, authorization servers don't have trust relationships with each other.
 
 ## Endpoints
 
 ### Authentication Request
 {:.api .api-operation}
 
-{% api_operation get /oauth2/v1/authorize %} {% api_lifecycle ea %}
-
-{% beta %}
-{% api_operation get /oauth2/:authorizationServerId/v1/authorize %} {% api_lifecycle beta %}
-{% endbeta %}
+{% api_operation get /oauth2/:authorizationServerId/v1/authorize %}
 
 This is a starting point for OAuth 2.0 flows such as implicit and authorization code flows. This request authenticates the user and returns tokens along with an authorization grant to the client application as a part of the response the client might have requested.
 
@@ -288,9 +304,9 @@ This is a starting point for OAuth 2.0 flows such as implicit and authorization 
 
 Parameter         | Description                                                                                        | Param Type | DataType  | Required | Default         |
 ----------------- | -------------------------------------------------------------------------------------------------- | ---------- | --------- | -------- | --------------- |
-[idp](idps.html)               | The Identity provider used to do the authentication. If omitted, use Okta as the identity provider. | Query      | String    | FALSE    | Okta is the IDP. |
+[idp](idps.html)  | The Identity provider used to do the authentication. If omitted, use Okta as the identity provider. | Query      | String    | FALSE    | Okta is the IDP. |
 sessionToken      | An Okta one-time sessionToken. This allows an API-based user login flow (rather than Okta login UI). Session tokens can be obtained via the [Authentication API](authn.html).   | Query | String    | FALSE | |             
-response_type     | Can be a combination of *code*, *token*, and *id_token*. The chosen combination determines which flow is used; see this reference from the [OIDC specification](http://openid.net/specs/openid-connect-core-1_0.html#Authentication). The code response type returns an authorization code which can be later exchanged for an Access Token or a Refresh Token. | Query        | String   |   TRUE   |  |
+response_type     | Can be a combination of *code*, *token*, and *id_token*. The chosen combination determines which flow is used; see this reference from the [OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-3.1.1). The code response type returns an authorization code which can be later exchanged for an Access Token or a Refresh Token. | Query        | String   |   TRUE   |  |
 client_id         | Obtained during either [UI client registration](../../guides/social_authentication.html) or [API client registration](oauth-clients.html). It is the identifier for the client and it must match what is preregistered in Okta. | Query        | String   | TRUE     | 
 redirect_uri      | Specifies the callback location where the authorization code should be sent and it must match what is preregistered in Okta as a part of client registration. | Query        | String   |  TRUE    | 
 display           | Specifies how to display the authentication and consent UI. Valid values: *page* or *popup*.  | Query        | String   | FALSE     |  |
@@ -352,7 +368,7 @@ Irrespective of the response type, the contents of the response is always one of
 Parameter         | Description                                                                                        | DataType  | 
 ----------------- | -------------------------------------------------------------------------------------------------- | ----------| 
 id_token          | The ID Token JWT contains the details of the authentication event and the claims corresponding to the requested scopes. This is returned if the *response_type* includes *id_token*.| String    | 
-access_token      | The *access_token* that is used to access the [`/oauth2/v1/userinfo`](/docs/api/resources/oidc.html#get-user-information) endpoint. This is returned if the *response_type* included a token. Unlike the ID Token JWT, the *access_token* structure is specific to Okta, and is subject to change.| String  |
+access_token      | The *access_token* that is used to access the resource. This is returned if the *response_type* included a token. | String  |
 token_type        | The token type is always `Bearer` and is returned only when *token* is specified as a *response_type*. | String |
 code              | An opaque value that can be used to redeem tokens from [token endpoint](#token-request).| String    | 
 expires_in        | The number of seconds until the *access_token* expires. This is only returned if the response included an *access_token*. | String |
@@ -421,10 +437,7 @@ http://www.example.com/#error=invalid_scope&error_description=The+requested+scop
 ### Token Request
 {:.api .api-operation}
 
-{% api_operation post /oauth2/v1/token %} {% api_lifecycle ea %}
-{% beta %}
-{% api_operation post /oauth2/:authorizationServerId/v1/token %} {% api_lifecycle beta %}
-{% endbeta %}
+{% api_operation post /oauth2/:authorizationServerId/v1/token %}
 
 The API takes a grant type of either *authorization_code*, *password*, *refresh_token*, or *client_credentials* {% api_lifecycle beta %} and the corresponding credentials and returns back an Access Token. A Refresh Token will be returned if *offline_access* scope is requested using authorization_code, password, or refresh_token grant type. Additionally, using the authorization_code grant type will return an ID Token if the *openid* scope is requested.
 
@@ -442,16 +455,18 @@ refresh_token      | Expected if the grant_type specified *refresh_token*. The v
 username           | Expected if the grant_type specified *password*. | String |
 password           | Expected if the grant_type specified *password*. | String |
 scope              | Optional if *refresh_token*, or *password* is specified as the grant type. This is a list of scopes that the client wants to be included in the Access Token. For the *refresh_token* grant type, these scopes have to be subset of the scopes used to generate the Refresh Token in the first place. | String |
-redirect_uri       | Expected if grant_type is *authorization_code*. Specifies the callback location where the authorization was sent; must match what is preregistered in Okta for this client. | String |
-code_verifier      | The code verifier of [PKCE](#parameter-details). Okta uses it to recompute the code_challenge and verify if it matches the original code_challenge in the authorization request. | String |
+redirect_uri       | Expected if grant_type specified *authorization_code*. Specifies the callback location where the authorization was sent; must match what is preregistered in Okta for this client. | String |
+code_verifier      | Expected if grant_type specified *authorization_code* for native applications. The code verifier of [PKCE](#parameter-details). Okta uses it to recompute the code_challenge and verify if it matches the original code_challenge in the authorization request. | String |
+client_id          | Expected if *code_verifier* is included or client credentials are not provided in the Authorization header. This is used in conjunction with the client_secret parameter to authenticate the client application. | String |
+client_secret      | Expected if *code_verifier* is not included and client credentials are not provided in the Authorization header. This is used in conjunction with the client_id parameter to authenticate the client application. | String |
 
-> The [Client Credentials](https://tools.ietf.org/html/rfc6749#section-4.4) flow (if `grant_types` is `client_credentials`) is currently **Beta**.
+> The [Client Credentials](https://tools.ietf.org/html/rfc6749#section-4.4) flow (if `grant_types` is `client_credentials`) is currently {% api_lifecycle beta %}.
 
 
 ##### Token Authentication Method
 
-The client can authenticate by providing the [`client_id`](oidc.html#request-parameters) 
-and [`client_secret`](https://support.okta.com/help/articles/Knowledge_Article/Using-OpenID-Connect) as an Authorization header in the Basic auth scheme (basic authentication).
+For clients authenticating by client credentials, provide the [`client_id`](oidc.html#request-parameters) 
+and [`client_secret`](https://support.okta.com/help/articles/Knowledge_Article/Using-OpenID-Connect) either as an Authorization header in the Basic auth scheme (basic authentication) or as additional parameters to the POST body. Including credentials in both the headers and the POST body is not allowed.
 
 For authentication with Basic auth, an HTTP header with the following format must be provided with the POST request.
 
@@ -475,7 +490,7 @@ client_credentials | Access Token                          |
 
 For web and native application types, an additional process is required:
 
-1. Use the Okta Administration UI and check the <b>Refresh Token</b> checkbox under <b>Allowed Grant Types</b> on the client application page.
+1. Use the Okta Administration UI and check the **Refresh Token** checkbox under **Allowed Grant Types** on the client application page.
 2. Pass the *offline_access* scope to your authorize request.
 
 #### List of Errors 
@@ -529,10 +544,8 @@ Content-Type: application/json;charset=UTF-8
 ### Introspection Request
 {:.api .api-operation}
 
-{% api_operation post /oauth2/v1/introspect %} {% api_lifecycle ea %}
-{% beta %}
-{% api_operation post /oauth2/:authorizationServerId/v1/introspect %} {% api_lifecycle beta %}
-{% endbeta %}
+
+{% api_operation post /oauth2/:authorizationServerId/v1/introspect %}
 
 The API takes an Access Token or Refresh Token, and returns a boolean indicating whether it is active or not. 
 If the token is active, additional data about the token is also returned. If the token is invalid, expired, or revoked, it is considered inactive. 
@@ -647,10 +660,7 @@ Content-Type: application/json;charset=UTF-8
 ### Revocation Request
 {:.api .api-operation}
 
-{% api_operation post /oauth2/v1/revoke %} {% api_lifecycle ea %}
-{% beta %}
-{% api_operation post /oauth2/:authorizationServerId/v1/revoke %} {% api_lifecycle beta %}
-{% endbeta %}
+{% api_operation post /oauth2/:authorizationServerId/v1/revoke %}
 
 The API takes an Access Token or Refresh Token and revokes it. Revoked tokens are considered inactive at the introspection endpoint. A client may only revoke its own tokens.
 
@@ -709,13 +719,10 @@ Content-Type: application/json;charset=UTF-8
 }
 ~~~
 
-
-{% beta %}
-
 ### Get Keys
 {:.api .api-operation}
 
-{% api_operation get /oauth2/:authorizationServerId/v1/keys %} {% api_lifecycle beta %}
+{% api_operation get /oauth2/:authorizationServerId/v1/keys %}
 
 #### Response Example
 {:.api .api-response .api-response-example}
@@ -770,7 +777,7 @@ Standard open-source libraries are available for every major language to perform
 ### Authorization Server Metadata
 {:.api .api-operation}
 
-{% api_operation get /oauth2/:authorizationServerId/.well-known/oauth-authorization-server %} {% api_lifecycle beta %}
+{% api_operation get /oauth2/:authorizationServerId/.well-known/oauth-authorization-server %}
 
 This API endpoint returns metadata related to an Authorization Server that can be used by clients to programmatically configure their interactions with Okta.
 This API doesn't require any authentication and returns a JSON object with the following structure.
@@ -843,7 +850,7 @@ This API doesn't require any authentication and returns a JSON object with the f
 ### Authorization Server OpenID Connect Metadata
 {:.api .api-operation}
 
-{% api_operation get /oauth2/:authorizationServerId/.well-known/openid-configuration %} {% api_lifecycle beta %}
+{% api_operation get /oauth2/:authorizationServerId/.well-known/openid-configuration %}
 
 This API endpoint returns OpenID Connect metadata related to an Authorization Server that can be used by clients to programmatically configure their interactions with Okta.
 This API doesn't require any authentication and returns a JSON object with the following structure.
@@ -944,4 +951,3 @@ This API doesn't require any authentication and returns a JSON object with the f
     ]
 }
 ~~~
-{% endbeta %}

@@ -79,7 +79,7 @@ Advantages of using Okta Social Authentication include:
     log in to your Okta org or custom application using their social credentials.
 
     **Note:** This URL will look similar to this one:
-    `https://example.okta.com/oauth2/v1/authorize?idp=0oa0bcde12fghiJkl3m4`
+    `https://example.okta.com/oauth2/v1/authorize?idp=0oa0bcde12fghiJkl3m4&client_id={clientId}&response_type={responseType}&response_mode={responseMode}&scope={scopes}&redirect_uri={redirectUri}&state={state}&nonce={nonce}`
 
 6.  Register an OAuth client using the App Integration Wizard.
 

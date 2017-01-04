@@ -4,7 +4,7 @@ title: Platform Release Notes
 excerpt: Summary of changes to the Okta Platform since Release 2016.37
 ---
 
-## Release 2016.39
+# Release 2016.39
 
 ### Feature Enhancement: Sharing Certificates Between App Instances
 

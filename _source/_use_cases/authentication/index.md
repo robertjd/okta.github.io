@@ -5,6 +5,8 @@ title: Authentication
 excerpt: Overview of the various ways Okta can be used to authenticate users depending on your needs.
 ---
 
+# Introduction
+
 Authentication is a crucial part of any application development.  Whether you are developing an internal IT app for your employees – or building a portal for your partners – or exposing a set of APIs for developers building apps around your resources, Okta Platform can provide the right support for your projects.
 
 ## Building apps supporting Single Sign-On
@@ -23,7 +25,7 @@ implementation of single sign-on.
 Okta is a [Certified OpenID Connect provider](http://openid.net/certification/).
 Building on top of OAuth 2.0 framework, OpenID Connect is a modern
 implementation to support authentication and single sign-on.  If you
-are an Okta customer, OpenID Connect is a great way to support SSO and
+are an Okta customer, our [OpenID Connect endopints](/docs/api/resources/oidc.html) are a great way to support SSO and
 is a simpler alternative to SAML.
 
 For ISVs that are looking at providing SSO for their customers, both
@@ -49,7 +51,7 @@ can all be configured easily in the Okta administration console in the Okta dash
 
 ## Sign-in Widget
 
-The [Okta Sign-in Widget](/docs/api/resources/okta_signin_widget.html)
+The [Okta Sign-in Widget](/code/javascript/okta_sign-in_widget.html)
 provides an embeddable Javascript sign-in implementation that can
 easily be embedded into your customized login page.  The Sign-in
 widget carries the same feature set in the standard Okta sign-in page
@@ -75,19 +77,17 @@ and authorization needs.
 ## Authentication APIs – REST APIs for any client
 
 The underlying foundation for the sign-in widget and Auth SDK is a
-comprehensive set of authentication APIs covering all aspects of
+comprehensive set of [authentication APIs](/docs/api/resources/authn.html) covering all aspects of
 authentication exposed through the Okta Platform.  It can be used as a
 standalone API to provide the identity layer on top of your existing
 application and authentication logic, or it can be integrated with the
-Okta Sessions API to obtain an Okta session cookie and access apps
-within Okta to provide a single sign-on experience across custom and
-Okta-managed apps.
+Okta [Sessions API](/docs/api/resources/sessions.html) to obtain an Okta [session cookie](/use_cases/authentication/session_cookie) and access apps within Okta to provide a single sign-on experience across custom and Okta-managed apps.
 
 ## Social Authentication
 
 For many consumer-facing applications, authentication and registration
 are increasingly relying on social identity providers such as
-Facebook, LinkedIn and Google.  Okta has built-in support for these
+Facebook, LinkedIn and Google. Okta has [built-in support](docs/api/resources/social_authentication.html) for these
 social identity providers to support new user registration,
 authentication and profile updates based on OAuth scopes from the
 social providers.  For applications that have existing accounts, Okta

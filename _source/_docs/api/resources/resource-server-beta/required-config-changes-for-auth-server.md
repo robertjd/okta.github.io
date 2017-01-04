@@ -3,7 +3,7 @@ layout: docs_page
 title: Configuration Changes Required for API Access Management Beta Update
 ---
 
-## Configuration Changes Required for API Access Management Beta Update
+# Configuration Changes Required for API Access Management Beta Update
 
 > API Access Management is {% api_lifecycle beta %}.
 

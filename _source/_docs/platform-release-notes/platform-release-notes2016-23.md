@@ -3,7 +3,7 @@ layout: docs_page
 title: Platform Release Notes June 8, 2016
 ---
 
-Release 2016.23
+# Release 2016.23
 
 ### Looking for Product New Features?
 

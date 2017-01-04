@@ -8,7 +8,7 @@ redirect_from:
     - "/docs/api/getting_started/okta_expression_lang.html"
 ---
 
-## Overview
+# Overview
 
 Expressions allow you to reference, transform and combine attributes before you store them on a user profile or before passing them to an application for authentication or provisioning.  For example, you might use a custom expression to create a username by stripping @company.com from an email address.  Or you might combine `firstName` and `lastName` attributes into a single `displayName` attribute.
 

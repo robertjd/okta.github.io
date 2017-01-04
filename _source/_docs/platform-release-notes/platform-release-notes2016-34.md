@@ -4,7 +4,7 @@ title: Platform Release Notes
 excerpt: Summary of changes to the Okta Platform since Release 2016.34
 ---
 
-## Release 2016.34
+# Release 2016.34
 
 ## Feature Enhancement: HAL Links For Sessions API Are CORS-Enabled
 <!-- OKTA-98961 -->

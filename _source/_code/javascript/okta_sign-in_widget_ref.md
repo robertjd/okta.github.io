@@ -7,7 +7,7 @@ redirect_from:
     - "/docs/api/resources/okta_signin_widget.html"
 ---
 
-## Overview
+# Overview
 
 This page contains detailed reference information you can use to customize your Okta sign-in widget.
 Basic instructions for creating a sign-in widget are available in [Okta Sign-In Widget](./okta_sign-in_widget.html).
@@ -251,11 +251,17 @@ oktaSignIn.renderEl({
 
  Property       | Description                              |  Type    |  Required    | Default
 --------------  | ---------------------------------------  | ------   | -----------  | -------
- `clientId`     | [Client Id](oauth-clients) pre-registered with Okta for OIDC authentication flow. | String | Yes | None
+ `clientId`     | [Client Id](/docs/api/resources/oauth-clients.html#client-application-properties) pre-registered with Okta for OIDC authentication flow. | String | Yes | None
  `redirectUri`  | Callback location to send the authorization code to. This must be pre-registered as part of client registration. | String | Yes | `window.location.href`
  `oAuthTimeout` | Timeout for OIDC authentication flow requests. | Number | No | `120000`
  `authParams`   | Authentication parameters for OIDC. [List](#authParams-parameters) |See [List](#authParams-parameters) |See [List](#authParams-parameters) | See [List](#authParams-parameters)
 
+Reminder: You can find the client ID and redirect URI for an app in the Okta Admin user interface:
+ 
+1. From the top navigation bar, select **Applications** > **Applications**:
+2. Select an application and choose **General**.
+3. The client ID is listed in the **Client Credentials** pane; the redirect URI is listed in the **General Settings** pane.
+ 
 ##### authParams parameters
 
 You can use any of the following parameters for `authParams`.

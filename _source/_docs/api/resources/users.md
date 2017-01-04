@@ -1979,7 +1979,7 @@ id        | `id` of user | URL        | String   | TRUE     |
 ##### Response Parameters
 {:.api .api-response .api-response-params}
 
-Returns an empty object. 
+Returns an empty object.
 
 Passing an invalid `id` returns a `404 Not Found` status code with error code `E0000007`.
 Passing an `id` that is not in the `SUSPENDED` state returns a `400 Bad Request` status code with error code `E0000001`.
@@ -2025,7 +2025,7 @@ id        | `id` of user | URL        | String   | TRUE     |
 ##### Response Parameters
 {:.api .api-response .api-response-params}
 
-Returns an empty object. 
+Returns an empty object.
 
 Passing an invalid `id` returns a `404 Not Found` status code with error code `E0000007`.
 
@@ -2156,7 +2156,7 @@ curl -v -X POST \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -H "Authorization: SSWS ${api_token}" \
-"https://${org}.okta.com/api/v1/users/00ub0oNGTSWTBKOLGLNR/lifecycle/reset_password?provider=FEDERATION&sendEmail=false"
+"https://${org}.okta.com/api/v1/users/00ub0oNGTSWTBKOLGLNR/lifecycle/reset_password?provider=FEDERATED&sendEmail=false"
 ~~~
 
 ##### Response Example
@@ -2300,6 +2300,47 @@ curl -v -X POST \
 ~~~http
 HTTP/1.1 200 OK
 Content-Type: application/json
+~~~
+
+## User Sessions
+
+### Clear User Sessions
+{:.api .api-operation}
+
+<span class="api-uri-template api-uri-delete"><span class="api-label">DELETE</span> /api/v1/users/*:uid*/sessions
+
+Removes all active identity provider sessions. This will force the user to authenticate on the next operation.
+
+**Note:** This will not clear the sessions created for web sign-in or native applications.
+
+#### Request Parameters
+{:.api .api-request .api-request-params}
+
+Parameter    | Description                                         | Param Type | DataType | Required | Default
+------------ | --------------------------------------------------- | ---------- | -------- | -------- | -------
+uid          | `id` of user                                        | URL        | String   | TRUE     |
+
+#### Response Parameters
+{:.api .api-response .api-response-params}
+
+`204 No Content`
+
+#### Request Example
+{:.api .api-request .api-request-example}
+
+~~~sh
+curl -v -X DELETE \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: SSWS ${api_token}" \
+"https://${org}.okta.com/api/v1/users/${userId}/sessions"
+~~~
+
+#### Response Example
+{:.api .api-response .api-response-example}
+
+~~~http
+`204 No Content`
 ~~~
 
 ## Credential Operations

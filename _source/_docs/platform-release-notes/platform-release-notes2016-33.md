@@ -4,7 +4,7 @@ title: Platform Release Notes
 excerpt: Summary of changes to the Okta Platform since Release 2016.31
 ---
 
-Release 2016.33
+# Release 2016.33
 
 ## Bugs Fixed
 

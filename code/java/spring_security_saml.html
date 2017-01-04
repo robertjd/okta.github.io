@@ -128,6 +128,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <li><a href="/use_cases/mfa">Multi-Factor Authentication</a></li>
             
             
+            <li><a href="/use_cases/api_security">API Access Management</a></li>
+            
+            
             <li><a href="/use_cases/integrate_with_okta">Integrate with Okta</a></li>
             
         </ul>
@@ -224,7 +227,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <!-- END Fixed sidebar -->
       <!-- START Page Content -->
       <div class="PageContent-main" id="docs-body">
-      <h2 id="overview">Overview</h2>
+        <a id="edit-link" href="https://github.com/okta/okta.github.io/edit/master/_source/_code/java/spring_security_saml.md">Edit Page</a>
+      <h1 id="overview">Overview</h1>
 
 <p>This guide describes how to use Spring Security SAML to add support
 for Okta (via SAML) to Java applications that use the Spring framework.
@@ -239,13 +243,15 @@ using the command line, and running Tomcat, Maven or Gradle.</p>
 the section titled “Configuring Spring Security SAML to work with Okta”.</p>
 
 <ul class="list-unstyled toc" id="markdown-toc">
-  <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
-  <li><a href="#requirements" id="markdown-toc-requirements">Requirements</a></li>
-  <li><a href="#installation" id="markdown-toc-installation">Installation</a></li>
-  <li><a href="#configuring-okta-to-work-with-spring-security-saml" id="markdown-toc-configuring-okta-to-work-with-spring-security-saml">Configuring Okta to work with Spring Security SAML</a></li>
-  <li><a href="#configuring-spring-security-saml-to-work-with-okta" id="markdown-toc-configuring-spring-security-saml-to-work-with-okta">Configuring Spring Security SAML to work with Okta</a></li>
-  <li><a href="#test-the-saml-integration" id="markdown-toc-test-the-saml-integration">Test the SAML integration</a></li>
-  <li><a href="#next-steps" id="markdown-toc-next-steps">Next Steps</a></li>
+  <li><a href="#overview" id="markdown-toc-overview">Overview</a>    <ul>
+      <li><a href="#requirements" id="markdown-toc-requirements">Requirements</a></li>
+      <li><a href="#installation" id="markdown-toc-installation">Installation</a></li>
+      <li><a href="#configuring-okta-to-work-with-spring-security-saml" id="markdown-toc-configuring-okta-to-work-with-spring-security-saml">Configuring Okta to work with Spring Security SAML</a></li>
+      <li><a href="#configuring-spring-security-saml-to-work-with-okta" id="markdown-toc-configuring-spring-security-saml-to-work-with-okta">Configuring Spring Security SAML to work with Okta</a></li>
+      <li><a href="#test-the-saml-integration" id="markdown-toc-test-the-saml-integration">Test the SAML integration</a></li>
+      <li><a href="#next-steps" id="markdown-toc-next-steps">Next Steps</a></li>
+    </ul>
+  </li>
 </ul>
 
 <h2 id="requirements">Requirements</h2>

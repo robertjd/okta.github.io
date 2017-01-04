@@ -5,7 +5,7 @@ excerpt: Guidance on how to SAML-enable your application using open source Sprin
 redirect_from: "/docs/examples/spring_security_saml.html"
 ---
 
-## Overview
+# Overview
 
 This guide describes how to use Spring Security SAML to add support
 for Okta (via SAML) to Java applications that use the Spring framework.

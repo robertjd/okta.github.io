@@ -4,7 +4,7 @@ title: Platform Release Notes
 excerpt: Summary of changes to the Okta Platform since Release 2016.41
 ---
 
-## Release 2016.43
+# Release 2016.43
 
 <!-- ### Feature Enhancement: New Version of Okta Sign-In Widget
 

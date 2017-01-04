@@ -839,6 +839,25 @@
 			"description": "",
 			"collectionId": "59081abb-bd74-7c67-a8d9-ef999536c95e",
 			"rawModeData": ""
+		},
+		{
+			"id": "16d30f37-2ae3-08ec-1fec-b464e88b4eab",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: SSWS {{apikey}}\n",
+			"url": "{{url}}/api/v1/users/{{userId}}/sessions",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Status code is 204\"] = responseCode.code === 204;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1482032694199,
+			"name": "Clear User Sessions",
+			"description": "",
+			"collectionId": "59081abb-bd74-7c67-a8d9-ef999536c95e",
+			"responses": []
 		}
 	]
 }

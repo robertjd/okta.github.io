@@ -5,7 +5,7 @@ excerpt: How to use SimpleSAMLphp to add support for Okta via SAML.
 support_email: developers@okta.com
 ---
 
-## Overview
+# Overview
 
 This guide describes how to use
 [SimpleSAMLphp](https://simplesamlphp.org/)

@@ -4,7 +4,7 @@ title: Platform Release Notes for Release 2016.31
 excerpt: Summary of changes to Okta Platform since Release 2016.30
 ---
 
-## Feature Enhancements
+# Feature Enhancements
 
 ### Version 1.4.0 of okta-auth-js Available
 

@@ -96,9 +96,7 @@ curl -v -X POST \
 -H "Content-Type: application/json" \
 -H "Authorization: SSWS ${api_token}" \
 -d '{
-  {
       "type": "SUPER_ADMIN"
-  }
 }' "https://${org}.okta.com/api/v1/users/00u6fud33CXDPBXULRNG/roles"
 ~~~
 

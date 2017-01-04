@@ -9,7 +9,7 @@ redirect_from:
     - "/docs/guides/saml_guidance.html"
 ---
 
-## Introduction
+# Introduction
 
 Traditionally, enterprise applications are deployed and run within the company network.  To obtain information about users such as user profile and group information, many of these applications are built to integrate with corporate directories such as Microsoft Active Directory.  More importantly, a user’s credentials are typically stored and validated using the directory.  For example, if you use SharePoint and Exchange that are running on premises, your login credentials are your Active Directory credentials.
 

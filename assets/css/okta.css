@@ -2787,6 +2787,8 @@ body {
   position: relative;
   width: 100%;
   z-index: 10; }
+  .PageContent h1 {
+    margin-top: 0px; }
   .PageContent.has-tableOfContents {
     padding-right: 240px; }
   .PageContent.has-tableOfContents .PageContent-main {
@@ -3574,6 +3576,10 @@ ol.list--numbered {
     position: relative;
     top: -2px;
     vertical-align: middle; }
+
+#edit-link {
+  float: right;
+  margin-top: 20px; }
 
 .Sidebar {
   padding: 60px 40px;

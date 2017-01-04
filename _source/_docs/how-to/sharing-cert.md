@@ -4,7 +4,7 @@ title: How To Share Application Key Credentials
 excerpt: How to share application key credentials between apps
 ---
 
-## Share Application Key Credentials Between Apps
+# Share Application Key Credentials Between Apps
 
 [Application key credential objects](http://developer.okta.com/docs/api/resources/apps.html#application-key-credential-model) 
 contain an opaque key ID (`kid`) and corresponding certificate.

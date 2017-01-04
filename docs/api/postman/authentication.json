@@ -326,6 +326,26 @@
 			"rawModeData": "{\n  \"stateToken\": \"{{stateToken}}\"\n}"
 		},
 		{
+			"id": "aad66581-a251-c87b-395c-ca8e47892a66",
+			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"url": "{{url}}/api/v1/authn/factors/{{factorId}}/lifecycle/activate/poll",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1481758444646,
+			"name": "Poll for Factor enrollment",
+			"description": "",
+			"collectionId": "2100a81e-0e91-ead1-f440-8db8fed2f315",
+			"responses": [],
+			"rawModeData": "{\n  \"stateToken\": \"{{stateToken}}\",\n  \"factorType\": \"push\",\n  \"provider\": \"OKTA\"\n}"
+		},
+		{
 			"id": "3f281b85-6201-710d-8c40-03c537c060cd",
 			"folder": "9304d459-4db6-272b-d9f6-db216b464c9f",
 			"name": "Unlock Account with  Trusted Application",

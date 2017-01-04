@@ -14,7 +14,7 @@ github_repo_name: okta-pysaml2-example
 redirect_from: "/docs/examples/pysaml2.html"
 ---
 
-## Overview
+# Overview
 
 This guide describes how to use [{{ page.saml_library }}]({{ page.saml_library_url }}) to add support
 for Okta (via SAML) to applications written in {{ page.programming_language }}. Please note that while the example in this guide uses

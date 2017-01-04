@@ -8,7 +8,7 @@ redirect_from:
     - "/docs/api/getting_started/error_codes.html"
 ---
 
-## Overview
+# Overview
 
 This document provides further information about the errors that the Okta API returns. The first table is listed by error code, and the second table is listed by HTTP return code.
 

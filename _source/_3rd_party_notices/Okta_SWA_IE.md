@@ -1,10 +1,10 @@
 ---
 layout: plain
-title: Okta S product
+title: Okta SWA IE product
 ---
 
 This document contains third party open source licenses and notices for
-the Okta S product. Certain licenses and notices may appear in other
+the Okta SWA IE product. Certain licenses and notices may appear in other
 parts of the product in accordance with the applicable license
 requirements.
 
@@ -18,7 +18,7 @@ _Apache Ant Contrib_
 
   |VERSION (IF ANY):|     1.0b3|
   |-
-  0BRIEF DESCRIPTION:   A home for additional useful tasks and types for Ant.
+  |BRIEF DESCRIPTION:|   A home for additional useful tasks and types for Ant.
   |LICENSE:|              Apache 2.0|
 
 Copyright (c) 2004 Ant-Contrib project. All rights reserved.

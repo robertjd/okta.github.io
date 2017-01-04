@@ -5,7 +5,7 @@ title: Multi-Factor Authentication
 excerpt: Using Okta's Multi-Factor Authentication API to add MFA to an existing application.
 ---
 
-## Introduction
+# Introduction
 
 Application developers and organizations are increasingly
 implementing multi-factor authentication to add an extra layer of
@@ -45,7 +45,7 @@ To follow along with this guide, you will need to have your own Okta Developer E
     Edition org, follow the
     [instructions on the Okta Developer Documentation page for setting up Postman](http://developer.okta.com/docs/getting_started/api_test_client.html).
 
-## Overview of API calls used for multi-factor authentication
+# Overview of API calls used for multi-factor authentication
 
 Below is an introduction to using Okta's Multi-Factor Authentication (MFA)
 API to add MFA to an existing application.
@@ -69,7 +69,7 @@ things in the Admin interface to your Okta org.
 1.  Enable support for MFA.
 2.  Create an API token.
 
-#### Enabling MFA in your Okta org
+### Enabling MFA in your Okta org
 
 You must enable MFA from the Admin
 interface of your Okta org before you can use it from the
@@ -86,7 +86,9 @@ your Okta org:
     Authentication".
 8.  Click the green "Save" button.
 
-#### Creating an API token for your Okta org
+For more information about MFA and the Okta org, see the [MFA](https://help.okta.com/en/prod/Content/Topics/Security/MFA.htm) and [Security Policies](https://help.okta.com/en/prod/Content/Topics/Security/Security_Policies.htm) help topics.
+
+### Creating an API token for your Okta org
 
 Requests made to the Okta API are authenticated via an API
 token. Here is how to create an API token for your Okta
@@ -101,12 +103,12 @@ org:
 7.  Click the green "Create Token" button.
 8.  Configure Postman to use the Token you just created.
 
-#### Set up Postman
+### Set up Postman
 
 If you haven't set up Postman already, you will need to do that
 now. Here are [instructions for setting up Postman to work with Okta](http://developer.okta.com/docs/getting_started/api_test_client.html).
 
-#### Test Postman
+### Test Postman
 
 Before you get started, you will want to make sure your Postman
 setup is configured correctly, a "[Hello World](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program)" of sorts. Test your
@@ -121,7 +123,7 @@ Postman setup as follows:
 
 You'll know it is working if you get back JSON containing one or more user objects.
 
-#### Create a test user
+### Create a test user
 
 The first step in adding MFA to an existing
 application is to create a user account in Okta. Among other
@@ -168,7 +170,7 @@ similar for all factors an works as follows:
 
 Once the factor has been enrolled, you can verify it as needed.
 
-#### Adding a factor to a user account
+### Adding a factor to a user account
 
 Using the User ID that you created earlier, add a Google
 Authenticator factor to that user as follows:
@@ -186,7 +188,7 @@ Authenticator factor to that user as follows:
     response in Postman. Open this URL in a new tab of your
     favorite browser.
 
-#### Enroll the factor
+### Enroll the factor
 
 After adding a factor to an Okta user, the next step is to have
 the user setup their factor and then prove that they have done
@@ -207,7 +209,7 @@ Continuing on from the steps above:
     passcode shown on Google Authenticator.
 9.  Click the blue "Send" button.
 
-#### Verifying the factor
+### Verifying the factor
 
 Now that you've verified the factor, you are ready to start
 verifying MFA tokens! Here is how to do that using Postman:

@@ -8,6 +8,10 @@
 	width: 100%;
 	z-index: 10;
 
+	h1 {
+		margin-top: 0px;
+	}
+
 	&.has-tableOfContents {
 		padding-right: 240px;
 	}

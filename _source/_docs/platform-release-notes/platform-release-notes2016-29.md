@@ -3,7 +3,7 @@ layout: docs_page
 title: Platform Release Notes July 20, 2016
 ---
 
-Release 2016.29
+# Release 2016.29
 
 ## Feature Enhancements
  

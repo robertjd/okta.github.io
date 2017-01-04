@@ -3,9 +3,9 @@ layout: docs_page
 title: Platform Release Notes June 29, 2016
 ---
 
-Release 2016.26
+# Release 2016.26
 
-Releases are rolled out to organizations in a staggered fashion: first to preview orgs, then to production orgs. 
+# Releases are rolled out to organizations in a staggered fashion: first to preview orgs, then to production orgs. 
 Check the [Current Release Status](https://support.okta.com/help/articles/Knowledge_Article/Current-Release-Status) to verify whether the changes in this document have rolled out to your org yet.
  
 ## New Feature: API for Custom SMS Template

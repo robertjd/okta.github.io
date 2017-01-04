@@ -5,43 +5,42 @@ title: Getting Started With the Okta APIs
 redirect_from: "/docs/getting_started/api_test_client.html"
 ---
 
-# Getting Started With the Okta API
+# Overview
 
 A great way to learn an API is to issue requests and inspect the responses. You can easily access our Postman collections and Example environment to do just that.
 
-![Postman and an Okta Collection](/assets/img/postman.png)
+![Postman and an Okta Collection](/assets/img/okta_postman_logo.png)
 
 To use these collections, you'll need to set up your environment, import the collections, send a test request, and verify the results.
 
 ## Set Up Your Environment
 
-1. [Sign up for an Okta Developer org](https://www.okta.com/platform-signup/)
-2. Log into your Okta Developer org and [create an API key](getting_a_token.html).
-3. [Install the Postman App](http://getpostman.com).
-4. Launch Postman and import the Okta Example environment for Postman by copying this link: <http://developer.okta.com/docs/api/postman/example.okta.com.environment>.
+1. [Create an API token](getting_a_token.html){:target="_blank"}.
+2. [Install the Postman App](https://www.getpostman.com/apps){:target="_blank"}.
+3. Launch Postman and click the 'import button'. Select import from link, and paste this link into the textbox: `http://developer.okta.com/docs/api/postman/example.oktapreview.com.environment`
     ![Importing the Okta Example Environment](/assets/img/import_enviro.png)
 
-5. Make sure the `example.okta.com` environment is selected.
+4. Once you have clicked import, make sure the `example.oktapreview.com` environment is selected.
     ![Postman app with collections](/assets/img/postman_example_start.png)
 
-6. Click the eye icon next to `example.okta.com` and select **Edit** to replace or add these values:
-    * `url`: Replace the example value with your org's URL, for example **https://myOrg.okta.com**. This becomes the new name of your environment.
-    * `apikey`: Enter the API Key you created in your org, for example **00LzMWxMq_0sdErHy9Jf1sijEGexYZlsdGr9a4QjkS**.
+5. Click the eye icon next to `example.oktapreview.com` and select **Edit** to replace or add these values:
+    * Rename your environment to something you'll recognize, for example **myOrg**.
+    * `url`: Replace the example value with your org's URL, for example **https://myOrg.oktapreview.com**. This becomes the new name of your environment. Do **not** include '-admin' in the subdomain.
+    * `apikey`: Enter the API token you created in your org, for example **00LzMWxMq_0sdErHy9Jf1sijEGexYZlsdGr9a4QjkS**.
     * `email-suffix`: Enter the email suffix for your domain, for example **myOrg.com**.
-    * `subdomain`: Enter the subdomain, for example **myOrg**.
-    * `username`, `password`: Enter the username and password for the API user that sends your requests.
+    * `subdomain`: Enter the subdomain, for example **myOrg**. Do **not** include '-admin' in the subdomain.
 
-7. Save your changes by selecting **Update**. Now your environment looks similar to this example:
+6. Save your changes by selecting **Update**. Now your environment looks similar to this example:
     ![Example.okta.com environment with required values](/assets/img/postman_example_enviro.png)
 
 ## Import a Collection
 
 Import the collection for the Users API: 
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/78060451b3ba309f5bcf)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/78060451b3ba309f5bcf){:target="_blank"}
 
 > Note: You can import and work with the rest of the Okta API using the link at the top of each API reference page, 
-or use the [Collection Quick Reference](#collections-quick-reference). This tutorial only requires the Users collection import.
+or use the [Collections Quick Reference](#collections-quick-reference). This tutorial only requires the Users collection import.
 
 ## Send a Request
 
@@ -72,7 +71,7 @@ Import any Okta API collection for Postman from the following list:
 | Custom SMS Templates | [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d71f7946d8d56ccdaa06) | 
 | Users  | [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/78060451b3ba309f5bcf) | 
 
-These buttons are also available at the top of each API reference page in [developer.okta.com](/docs/api/resources/auth.html).
+These buttons are also available at the top of each API reference page in [developer.okta.com](/docs/api/resources/apps.html).
 
 ## Tips
 
