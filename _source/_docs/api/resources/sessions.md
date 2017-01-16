@@ -33,9 +33,11 @@ Explore the Sessions API: [![Run in Postman](https://run.pstmn.io/button.svg)](h
 ### Create Session with Session Token
 {:.api .api-operation}
 
-{% api_operation post /sessions %}
+{% api_operation post /api/v1/sessions %}
 
-Creates a new session for a user with a valid session token. Only use this operation if you need the session `id`, otherwise you should use one of the following flows to obtain a SSO session with a `sessionToken`:
+Creates a new session for a user with a valid session token. Use this API if, for example, you want to set the session cookie yourself instead of allowing Okta to set it, or want to hold the session ID in order to delete a session via the API instead of visiting the logout URL.
+
+> Don't use this API unless you need a session `id`. Instead, use one of the following flows to obtain a SSO session with a `sessionToken`:
 
 - [Retrieving a session cookie by visiting the OpenID Connect Authorization Endpoint](/docs/examples/session_cookie.html#retrieving-a-session-cookie-via-openid-connect-authorization-endpoint)
 - [Retrieving a session cookie by visiting a session redirect link](/docs/examples/session_cookie.html#retrieving-a-session-cookie-by-visiting-a-session-redirect-link)
@@ -50,8 +52,6 @@ Parameter        | Description                                                  
 ---------------- | ------------------------------------------------------------- | ---------- | ------------------------------- | -------- | -------
 additionalFields | Optional [session properties](#optional-session-properties)   | Query      | String (comma separated values) | FALSE    |
 sessionToken     | Session token obtained via [Authentication API](./authn.html) | Body       | String                          | TRUE     |
-
-> Creating a session with `username` and `password` has been deprecated.  Use the [Authentication API](./authn.html) to obtain a `sessionToken`.
 
 ##### Response Parameters
 {:.api .api-response .api-response-params}
@@ -127,7 +127,7 @@ curl -v -X POST \
 #### Get Session
 {:.api .api-operation}
 
-{% api_operation get /sessions/*:id* %}
+{% api_operation get /api/v1/sessions/*:id* %}
 
 Get session information for a given session id.
 
@@ -203,7 +203,7 @@ If the session is invalid, a `404 Not Found` response will be returned.
 ### Extend Session
 {:.api .api-operation}
 
-{% api_operation put /sessions/*:id* %} {% api_lifecycle deprecated %}
+{% api_operation put /api/v1/sessions/*:id* %} {% api_lifecycle deprecated %}
 
 Extends the lifetime of a user's session.
 
@@ -294,7 +294,7 @@ Refresh an existing session using the `id` for that session. (This is equivalent
 
 > Note this is an admin operation and requires an API token.
 
-{% api_operation post /sessions/*:id*/lifecycle/refresh %}
+{% api_operation post /api/v1/sessions/*:id*/lifecycle/refresh %}
 
 ##### Request Parameters
 {:.api .api-request .api-request-params}
@@ -375,7 +375,7 @@ curl -v -X POST \
 ### Close Session
 {:.api .api-operation}
 
-{% api_operation delete /sessions/*:id* %}
+{% api_operation delete /api/v1/sessions/*:id* %}
 
 Closes a user's session (logout).
 
@@ -416,7 +416,7 @@ HTTP/1.1 204 No Content
 ### Get Current Session
 {:.api .api-operation}
 
-{% api_operation get /sessions/me %} {% api_cors %}
+{% api_operation get /api/v1/sessions/me %} {% api_cors %}
 
 Get session information for the current user. Use this method in a browser based application to determine if the user is logged in.
 
@@ -495,7 +495,7 @@ Refresh the session for the current user.
 
 > This operation requires a session cookie for the user. API token is not allowed for this operation.
 
-{% api_operation post /sessions/me/lifecycle/refresh %} {% api_cors %}
+{% api_operation post /api/v1/sessions/me/lifecycle/refresh %} {% api_cors %}
 
 ##### Request Example
 {:.api .api-request .api-request-example}
@@ -571,7 +571,7 @@ Close the session for the currently logged in user. Use this method in a browser
 
 > This operation requires a session cookie for the user. API token is not allowed for this operation.
 
-{% api_operation delete /sessions/me %} {% api_cors %}
+{% api_operation delete /api/v1/sessions/me %} {% api_cors %}
 
 ##### Response Example
 {:.api .api-response .api-response-example}

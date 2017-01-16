@@ -5,39 +5,23 @@
 <!--[if IE 9 ]>    <html class="ie9 no-flexbox"> <![endif]-->
 <!--[if IE 10 ]>    <html class="ie10 no-flexbox"> <![endif]-->
 <!--[if (gt IE 10)|!(IE)]><!--> <html class="modern"> <!--<![endif]-->
-<head>
-
-	{% include head.html %}
-
-
-{% if include.body_id %}
-  {% assign body_id = include.body_id %}
-{% else %}
-  {% assign active_page_name  = page.url | split: "/" | last | remove: ".html" %}
-  {% assign split_url         = page.url | split: "/" %}
-  {% assign body_id           = split_url[1] %}
-{% endif %}
-<body id="{{ body_id }}">
-
+  <head>{%
+    include head.html %}{% if include.body_id %}{% assign body_id = include.body_id %}{% else %}{% assign active_page_name  = page.url | split: "/" | last | remove: ".html" %}{% assign split_url         = page.url | split: "/" %}{% assign body_id           = split_url[1] %}{% endif %}
+    <body id="{{ body_id }}">
 	{% include header.html %}
-
-	<div class="page-content">
-
-		{% if page.valprop %}
+	<div class="page-content">{%
+      if page.valprop %}
 		<section id="valprop" class="section--full-width bg--light-blue">
 			<div class="wrap">
-				<header>
-					{% if page.valprop.title %}<h1>{{ page.valprop.title }}</h1>{% endif %}
-					{% if page.valprop.description %}<p class="text--large">{{ page.valprop.description }}</p>{% endif %}
-				</header>
-
-				{% if page.valprop.show_cta %}<a href="{% if page.valprop.cta_link %}{{ page.valprop.cta_link }}{% else %}https://www.okta.com/developer/signup/{% endif %}" class="button--large"><span>{% if page.valprop.cta_label %}{{ page.valprop.cta_label }}{% else %}Get a Free Developer Account{% endif %}</span></a>{% endif %}
+			  <header>{%
+                if page.valprop.title %}<h1>{{ page.valprop.title }}</h1>{% endif %}{%
+                if page.valprop.description %}<p class="text--large">{{ page.valprop.description }}</p>{% endif %}
+			  </header>{%
+              if page.valprop.show_cta %}<a href="{% if page.valprop.cta_link %}{{ page.valprop.cta_link }}{% else %}https://www.okta.com/developer/signup/{% endif %}" class="button--large"><span>{% if page.valprop.cta_label %}{{ page.valprop.cta_label }}{% else %}Get a Free Developer Account{% endif %}</span></a>{% endif %}
 			</div>
-		</section>
-		{% endif %}
-
+		</section>{%
+        endif %}
 		{{ content }}
-
 		{% if page.show_bottom_cta %}
 		<section id="bottom-cta" class="section--full-width text-align--center">
 			<div class="wrap">
@@ -47,14 +31,9 @@
 				</header>
 				<a href="https://www.okta.com/developer/signup/" class="button--large"><span>Get a Free Developer Account</span></a>
 			</div>
-		</section>
-		{% endif %}
-
-	</div>
-
-	{% unless page.hide_footer %}
-		{% include footer.html %}
-	{% endunless %}
+		</section>{%
+        endif %}
+	</div>{% unless
+    page.hide_footer %}{% include footer.html %}{% endunless %}
 </body>
-
 </html>

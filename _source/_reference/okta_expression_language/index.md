@@ -116,6 +116,7 @@ Function  | Return Type | Example | Output
  |  | `Arrays.size(NULL)` | 0
 `Arrays.isEmpty(array)` | Boolean | `Arrays.isEmpty({10, 20})` | false
  |  | `Arrays.isEmpty(NULL)` | true
+`Arrays.toCsvString(array)` | String | `Arrays.toCsvString({"This", "is", " a ", "test"})` | This,is, a ,test
 
 
 ### Conversion Functions
