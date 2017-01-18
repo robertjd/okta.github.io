@@ -1,12 +1,13 @@
 ---
 layout: docs_page
 title: Platform Release Notes Index
-excerpt: List of changes to the Okta Platform for 2016
+excerpt: List of changes to the Okta Platform
 ---
 
-## Index of Platform Release Notes for 2016
+## Index of Platform Release Notes
 
 * [Platform Release Notes for Current Preview Release](platform-release-notes.html)
+* [Platform Release Notes for Release 2017.2](platform-release-notes2017-02.html)
 * [Platform Release Notes for Release 2016.52](platform-release-notes2016-52.html)
 * [Platform Release Notes for Release 2016.51](platform-release-notes2016-51.html)
 * [Platform Release Notes for Release 2016.50](platform-release-notes2016-50.html)

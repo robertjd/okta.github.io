@@ -1,36 +1,65 @@
 ---
 layout: docs_page
 title: Platform Release Notes
-excerpt: Summary of changes to the Okta Platform since Release 2016.51
+excerpt: Summary of changes to the Okta Platform since Release 2017.02
 ---
 
-## Release 2017.02
+## Release 2017.03
 
-<!-- ### Advance Notice: API Rate Limit Improvements
+### Advance Notice: API Rate Limit Improvements
 
-In the coming months, Okta will improve how API rate limits are reported, and how they are enforced.
+We are making rate limits more granular and will roll the changes out over the next few months:
 
-* Shortly after February 8, 2017, we'll provide system log alerts to let you know that you exceeded an API rate limit. At this time, we'll change some rate limits.
-* Shortly after March 8, 2017, rate limits will be enforced.
+1. Shortly after February 8, 2017, we'll provide system log alerts to let you know that you would have exceeded any of these new API rate limits. 
+2. Sometime in February, 2017, we’ll treat authenticated end-user interactions on a per-user basis. Interactions like SSO after login won't apply to your org-wide API rate limits.
+3. Shortly after March 8, 2017, the new, more granular rate limits will be enforced. At that point, the warnings in the System Log will change to error notifications.
 
-Of course, as each change is released, we'll announced here.
+Of course, as each change is released, we'll announced the change here.
 
-For more details, see [API Rate Limit Improvements](https://support.okta.com/help/articles/Knowledge_Article/API-Rate-Limit-Improvements). --> <!-- OKTA-110472 -->
+For a full description of the rate limit changes, see [API Rate Limit Improvements](https://support.okta.com/help/articles/Knowledge_Article/API-Rate-Limit-Improvements).<!-- OKTA-110472 -->
 
-### Feature Improvements: New Expression Language Function
+### Feature Improvements
 
-The new [expression language](/reference/okta_expression_language) function `Arrays.toCsvString(array)` converts an array to a comma-delimited string. For example:
+#### Search for Authorization Servers by Name or Resource URI
 
-`Arrays.toCsvString({"This", "is", " a ", "test"})` returns `This,is, a ,test` <!-- OKTA-51976 -->
+You can now search (exact match) for an authorization server name or resource URI:
+To see the new search box, log into your Okta org, and from the Admin Dashboard, visit **Security > API > Authorization Servers**.
+<!-- OKTA-97833 -->
+
+![Search box for authorization servers](/assets/img/release_notes/rn-search-as.png)
+
+#### Manual Key Rotation (Key Pinning)
+
+In the Okta Admin user interface, you can set an authorization server to manually rotate keys.
+Keys are rotated automatically by default. 
+
+>Important: Automatic key rotation is more secure than manual key rotation. Use manual key rotation only if you can't use automatic key rotation.
+
+To change an authorization server configuration to use manual key rotation:
+ 
+1. Log into the Okta org.
+2. Choose **Admin**.
+3. Choose **Security** > **API**.
+4. Open an authorization server for editing.
+5. Change the value of **Signing Key Rotation** to Manual and save.
+6. In the authorization server Settings tab, click the **Rotate Signing Keys** button to rotate the keys manually. This button doesn’t display when **Signing Key Rotation** is set to Automatic.
+<!-- OKTA-110682 -->
 
 ### Platform Bugs Fixed
 
-* Introspection behavior for OpenID Connect and API Access Management was inconsistent across all token types when users were not in the ACTIVE state. (OKTA-110445)
-* Incorrect text in the Okta user interface, related to authorization (OpenID Connect and API Access Management), was corrected: 
-    * **Password** became **Resource Owner Password** in **Apps** > **General Settings** > **Allowed Grant Types**.
-    * **Resource Owner Credential** became **Resource Owner Password** in the Edit Rule page of the authorization server configuration dialog
-        (**Security** > **API** > **Authorization Servers**). (OKTA-110749)   
-* In some orgs, the links for `self` and `next` were returned with incorrect values. (OKTA-111350)
+* When authentication fails because of the user's sign-on policy, the HTTP code returned was 403
+but is now 401. (OKTA-111888)
+* The one-time `sessionToken` in the response from the POST `/api/v1/authn` request with username
+and password was valid for two hours after issuance. It is now valid for 5 minutes for added security. (OKTA-109907)
+* Trying to modify the rule conditions of a default rule or default policy that affects
+evaluation didn't return a read-only attribute error. Now it does.
+If you modified one of these read-only attributes and need to change the attribute back to its initial value,
+contact Okta Technical Support. (OKTA-110155)
+* Requesting an authorization code with `response_mode` set to `okta_post_message` failed to return
+the error message ("The authorization server does not support the requested response mode") in the
+response. Instead it redirected the error response to the URI specified in `redirect_uri`. (OKTA-103437)
+* Searching for a user with GET on `/api/v1/users` when the user is federated returned an incorrect
+value for `provider`. (OKTA-110929)
 
 ### Does Your Org Have This Change Yet?
 
@@ -40,6 +69,6 @@ To verify the current release for an org, click the **Admin** button and check t
 
 ### Looking for Something Else?
 
-* [Platform Release Note Index for 2016](platform-release-notes2016-index.html)
+* [Platform Release Note Index](platform-release-notes2016-index.html)
 * For changes outside the Okta platform, see the [Release Notes Knowledge Hub](http://support.okta.com/help/articles/Knowledge_Article/Release-Notes-Knowledge-Hub).
 
