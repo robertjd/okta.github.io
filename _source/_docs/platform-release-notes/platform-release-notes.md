@@ -47,19 +47,19 @@ To change an authorization server configuration to use manual key rotation:
 
 ### Platform Bugs Fixed
 
-* When authentication fails because of the user's sign-on policy, the HTTP code returned was 403
-but is now 401. (OKTA-111888)
-* The one-time `sessionToken` in the response from the POST `/api/v1/authn` request with username
-and password was valid for two hours after issuance. It is now valid for 5 minutes for added security. (OKTA-109907)
-* Trying to modify the rule conditions of a default rule or default policy that affects
-evaluation didn't return a read-only attribute error. Now it does.
-If you modified one of these read-only attributes and need to change the attribute back to its initial value,
-contact Okta Technical Support. (OKTA-110155)
 * Requesting an authorization code with `response_mode` set to `okta_post_message` failed to return
 the error message ("The authorization server does not support the requested response mode") in the
 response. Instead it redirected the error response to the URI specified in `redirect_uri`. (OKTA-103437)
-* Searching for a user with GET on `/api/v1/users` when the user is federated returned an incorrect
+* The one-time `sessionToken` in the response from the POST `/api/v1/authn` request with username
+and password was valid for two hours after issuance. It is now valid for 5 minutes for added security. (OKTA-109907)
+* Modifying the rule conditions (attributes) of a default rule that affects policy
+evaluation didn't return a read-only attribute error.
+If you modified one of these read-only attributes previously, and need to change the attribute back to its initial value,
+contact Okta Technical Support. (OKTA-110155)
+* Using the `search` parameter with GET `/api/v1/users` when the user is federated returned an incorrect
 value for `provider`. (OKTA-110929)
+* When authentication fails because of the user's sign-on policy, the HTTP code returned was 403
+but is now 401. (OKTA-111888)
 
 ### Does Your Org Have This Change Yet?
 
