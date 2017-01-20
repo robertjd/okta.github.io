@@ -208,8 +208,7 @@ Step 4 involves downloading the public JWKS from Okta (specified by the *jwks_ur
 Each public key is identified by a *kid* attribute, which corresponds with the *kid* claim in the [Access Token header](#token-authentication-method).
 
 The Access Token is signed by an RSA private key, and we publish the future signing key well in advance.
-However, in an emergency situation you can still stay in sync with Okta's key rotation. Have your application check the `kid`, and if it has changed, 
-check the `jwks_uri` value in the [authorization server metadata](#authorization-server-metadata) for a new public key and `kid`.
+However, in an emergency situation you can still stay in sync with Okta's key rotation. Have your application check the `kid`, and if it has changed and the key is missing from the local cache, check the `jwks_uri` value in the [authorization server metadata](#authorization-server-metadata) and you can go back to the [jwks uri](#get-keys) to get keys again from Okta
 
 Please note the following:
 
@@ -218,6 +217,9 @@ Please note the following:
 * In case of an emergency, Okta can rotate keys as needed.
 * Okta always publishes keys to the JWKS.
 * To save the network round trip, your app can cache the JWKS response locally. The standard HTTP caching headers are used and should be respected.
+{% beta %}
+* The administrator can switch the authorization server key rotation mode to `MANUAL` by [updating the authorization server](#update-authorization-server) and then control when to [rotate the keys](#rotate-authorization-server-keys).
+{% endbeta %}
 
 Keys used to sign tokens automatically rotate and should always be resolved dynamically against the published JWKS. Your app can fail if you hardcode public keys in your applications. Be sure to include key rollover in your implementation.
 
@@ -768,7 +770,8 @@ Content-Type: application/json;charset=UTF-8
 ~~~
 
 >Okta strongly recommends retrieving keys dynamically with the JWKS published in the discovery document.
-It is safe to cache or persist downloaded keys for performance.
+It is safe to cache keys for performance. 
+
 
 Any of the keys listed are used to sign tokens. The order of keys in the result doesn't indicate which keys are used.
 
@@ -951,3 +954,490 @@ This API doesn't require any authentication and returns a JSON object with the f
     ]
 }
 ~~~
+
+
+
+{% beta %}
+
+
+## Authorization Server Operations
+
+
+### Create Authorization Server
+
+Creates a new Authorization server with key rotation mode as `AUTO`.
+
+#### Request Parameters
+
+Parameter          | Description                                                                                         | Type       | Required       |
+-------------------+-----------------------------------------------------------------------------------------------------+------------+----------------|
+name        | The name of the authorization server | String   | true
+description        | The description of the authorization server | String   | false
+defaultResourceUri        | The url of the resource being secured by this authorization server | String   | true
+
+{:.api .api-operation}
+
+{% api_operation post /api/v1/as %} {% api_lifecycle beta %}
+
+~~~sh
+curl -v -X POST \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: SSWS ${api_token}" \
+-d '{ "name": "Test AuthServer",
+  "description": "Test description",
+  "defaultResourceUri": "http://test.com"
+}' "https://${org}.okta.com/api/v1/as"
+~~~
+
+#### Response Example
+{:.api .api-response .api-response-example}
+
+~~~json
+{
+  "id": "ausnsopoM6vBRB3PD0g3",
+  "name": "Test AuthServer",
+  "description": "Test description",
+  "defaultResourceUri": "http://test.com",
+  "issuer": "{org}/oauth2/ausnsopoM6vBRB3PD0g3",
+  "status": "ACTIVE",
+  "created": "2016-12-20T03:26:07.000Z",
+  "lastUpdated": "2016-12-20T03:26:07.000Z",
+  "credentials": {
+    "signing": {
+      "rotationMode": "AUTO",
+      "lastRotated": "2016-12-20T03:26:07.000Z",
+      "nextRotation": "2017-03-20T03:26:07.000Z",
+      "kid": "U2aAKIGrlGWffBKMwuED1XHNwQm_kTaPecJY6PB8io8"
+    }
+  },
+  "_links": {
+    "resources": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3/resources",
+      "hints": {
+        "allow": [
+          "GET"
+        ]
+      }
+    },
+    "keys": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3/credentials/keys",
+      "hints": {
+        "allow": [
+          "GET"
+        ]
+      }
+    },
+    "self": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3",
+      "hints": {
+        "allow": [
+          "GET",
+          "DELETE",
+          "PUT"
+        ]
+      }
+    },
+    "metadata": {
+      "href": "${org}/oauth2/ausnsopoM6vBRB3PD0g3/.well-known/oauth-authorization-server",
+      "hints": {
+        "allow": [
+          "GET"
+        ]
+      }
+    },
+    "rotateKey": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3/credentials/lifecycle/keyRotate",
+      "hints": {
+        "allow": [
+          "POST"
+        ]
+      }
+    }
+  }
+}
+~~~
+
+### Update Authorization Server
+
+Updates authorization server identified by authorizationServerId.
+
+>Switching between rotation modes will not change the active signing key.
+
+#### Request Parameters
+
+Parameter          | Description                                                                                         | Type       | Required       |
+-------------------+-----------------------------------------------------------------------------------------------------+------------+----------------|
+name        | The name of the authorization server | String   | true
+description        | The description of the authorization server | String   | false
+defaultResourceUri        | The url of the resource being secured by this authorization server | String   | true
+credentials |  The credentials signing object with the `rotationMode` of the authorization server |  [Authorization server credentials object](oauth2.html#authorization-server-credentials-signing-object) | FALSE
+
+{:.api .api-operation}
+
+{% api_operation post /api/v1/as/:authorizationServerId %} {% api_lifecycle beta %}
+
+~~~sh
+curl -v -X POST \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: SSWS ${api_token}" \
+-d '{ "name": "Test AuthServer",
+  "description": "Test description",
+  "defaultResourceUri": "http://test.com",
+  "credentials" : {
+   "signing" : {
+	"rotationMode" : "MANUAL"
+	}
+   }
+}' "https://${org}.okta.com/api/v1/as/ausnsopoM6vBRB3PD0g3"
+~~~
+
+#### Response Example
+{:.api .api-response .api-response-example}
+
+~~~json
+{
+  "id": "ausnsopoM6vBRB3PD0g3",
+  "name": "Test AuthServer",
+  "description": "Test description",
+  "defaultResourceUri": "http://test.com",
+  "issuer": "{org}/oauth2/ausnsopoM6vBRB3PD0g3",
+  "status": "ACTIVE",
+  "created": "2016-12-20T03:26:07.000Z",
+  "lastUpdated": "2016-12-31T01:20:27.000Z",
+  "credentials": {
+    "signing": {
+      "rotationMode": "MANUAL",
+      "lastRotated": "2017-01-04T18:30:46.000Z",
+      "kid": "U2aAKIGrlGWffBKMwuED1XHNwQm_kTaPecJY6PB8io8"
+    }
+  },
+  "_links": {
+    "resources": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3/resources",
+      "hints": {
+        "allow": [
+          "GET"
+        ]
+      }
+    },
+    "keys": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3/credentials/keys",
+      "hints": {
+        "allow": [
+          "GET"
+        ]
+      }
+    },
+    "self": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3",
+      "hints": {
+        "allow": [
+          "GET",
+          "DELETE",
+          "PUT"
+        ]
+      }
+    },
+    "metadata": {
+      "href": "${org}/oauth2/ausnsopoM6vBRB3PD0g3/.well-known/oauth-authorization-server",
+      "hints": {
+        "allow": [
+          "GET"
+        ]
+      }
+    },
+    "rotateKey": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3/credentials/lifecycle/keyRotate",
+      "hints": {
+        "allow": [
+          "POST"
+        ]
+      }
+    }
+  }
+}
+~~~
+
+### Get Authorization Server
+
+Returns authorization server identified by authorizationServerId.
+
+{:.api .api-operation}
+
+{% api_operation get /api/v1/as/:authorizationServerId %} {% api_lifecycle beta %}
+
+#### Request Example
+
+~~~sh
+curl -v -X GET \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: SSWS ${api_token}" \
+"https://${org}.okta.com/api/v1/as/ausnsopoM6vBRB3PD0g3"
+~~~
+
+#### Response Example
+{:.api .api-response .api-response-example}
+
+~~~json
+{
+  "id": "ausnsopoM6vBRB3PD0g3",
+  "name": "Test AS",
+  "description": "Test description",
+  "defaultResourceUri": "http://test.com",
+  "issuer": "{org}/oauth2/ausnsopoM6vBRB3PD0g3",
+  "status": "ACTIVE",
+  "created": "2016-12-20T03:26:07.000Z",
+  "lastUpdated": "2016-12-31T01:20:27.000Z",
+  "credentials": {
+    "signing": {
+      "rotationMode": "MANUAL",
+      "lastRotated": "2016-12-30T23:02:43.000Z",
+      "kid": "medybdhzSyo16NqF2tcnZbduaetquXPi6ZQNgEbpmHM"
+    }
+  },
+  "_links": {
+    "resources": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3/resources",
+      "hints": {
+        "allow": [
+          "GET"
+        ]
+      }
+    },
+    "keys": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3/credentials/keys",
+      "hints": {
+        "allow": [
+          "GET"
+        ]
+      }
+    },
+    "self": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3",
+      "hints": {
+        "allow": [
+          "GET",
+          "DELETE",
+          "PUT"
+        ]
+      }
+    },
+    "metadata": {
+      "href": "${org}/oauth2/ausnsopoM6vBRB3PD0g3/.well-known/oauth-authorization-server",
+      "hints": {
+        "allow": [
+          "GET"
+        ]
+      }
+    },
+    "rotateKey": {
+      "href": "${org}/api/v1/as/ausnsopoM6vBRB3PD0g3/credentials/lifecycle/keyRotate",
+      "hints": {
+        "allow": [
+          "POST"
+        ]
+      }
+    }
+  }
+}
+~~~
+
+### Authorization Server Credentials Signing Object
+
+|------------+---------------------------------------------------------------------------------------------+----------------------------------+----------+----------|
+| Property   | Description                                                                                 | DataType                         | Required | Updatable|
+| ---------- | ------------------------------------------------------------------------------------------- | -------------------------------- | -------- | -------- |
+| kid        | The kid of the key used for signing tokens issued by the authorization server   | String                           | FALSE    |       FALSE
+| lastRotated        | The timestamp when the authorization server started to use the `kid` for signing tokens.  | String                           | FALSE    |   FALSE
+| nextRotation        |  The timestamp when authorization server will change key for signing tokens. Only returned when `rotationMode` is `AUTO`  | String                           | FALSE    |   FALSE
+| rotationMode        | The key rotation mode for the authorization server. Can be `AUTO` or `MANUAL`    | String                           | FALSE    |       TRUE
+|------------+---------------------------------------------------------------------------------------------+----------------------------------+----------|
+
+~~~json
+
+"credentials":  {
+    "signing": {
+      "rotationMode": "AUTO",
+      "lastRotated": "2017-01-04T18:33:11.000Z",
+      "nextRotation": "2017-04-04T18:33:11.000Z",
+      "kid": "8akSvL3DHDHxQJSAHOJbyFk1qMedE5Dcn2pXWabuZ4Y"
+    }
+  }
+~~~
+
+
+## Authorization Server Key Store Operations
+
+
+### Get Authorization Server Keys
+
+Returns the current keys in rotation for the authorization server.
+
+{:.api .api-operation}
+
+{% api_operation get /api/v1/as/:authorizationServerId/credentials/keys %} {% api_lifecycle beta %}
+
+#### Request Example
+
+~~~sh
+curl -v -X GET \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: SSWS ${api_token}" \
+"https://${org}.okta.com/api/v1/as/ausnsopoM6vBRB3PD0g3/credentials/keys"
+~~~
+
+#### Response Example
+{:.api .api-response .api-response-example}
+
+~~~json
+{
+  "keys": [
+    {
+      "alg": "RS256",
+      "status": "ACTIVE",
+      "e": "AQAB",
+      "n": "iKqiD4cr7FZKm6f05K4r-GQOvjRqjOeFmOho9V7SAXYwCyJluaGBLVvDWO1XlduPLOrsG_Wgs67SOG5qeLPR8T1zDK4bfJAo1Tvbw
+            YeTwVSfd_0mzRq8WaVc_2JtEK7J-4Z0MdVm_dJmcMHVfDziCRohSZthN__WM2NwGnbewWnla0wpEsU3QMZ05_OxvbBdQZaDUsNSx4
+            6is29eCdYwhkAfFd_cFRq3DixLEYUsRwmOqwABwwDjBTNvgZOomrtD8BRFWSTlwsbrNZtJMYU33wuLO9ynFkZnY6qRKVHr3YToIrq
+            NBXw0RWCheTouQ-snfAB6wcE2WDN3N5z760ejqQ",
+      "kid": "U5R8cHbGw445Qbq8zVO1PcCpXL8yG6IcovVa3laCoxM",
+      "kty": "RSA",
+      "use": "sig"
+    },
+    {
+      "alg": "RS256",
+      "e": "AQAB",
+      "status": "NEXT",
+      "n": "l1hZ_g2sgBE3oHvu34T-5XP18FYJWgtul_nRNg-5xra5ySkaXEOJUDRERUG0HrR42uqf9jYrUTwg9fp-SqqNIdHRaN8EwRSDRsKAwK
+            3HIJ2NJfgmrrO2ABkeyUq6rzHxAumiKv1iLFpSawSIiTEBJERtUCDcjbbqyHVFuivIFgH8L37-XDIDb0XG-R8DOoOHLJPTpsgH-rJe
+            M5w96VIRZInsGC5OGWkFdtgk6OkbvVd7_TXcxLCpWeg1vlbmX-0TmG5yjSj7ek05txcpxIqYu-7FIGT0KKvXge_BOSEUlJpBhLKU28
+            OtsOnmc3NLIGXB-GeDiUZiBYQdPR-myB4ZoQ",
+      "kid": "Y3vBOdYT-l-I0j-gRQ26XjutSX00TeWiSguuDhW3ngo",
+      "kty": "RSA",
+      "use": "sig"
+    },
+    {
+      "alg": "RS256",
+      "e": "AQAB",
+      "status": "EXPIRED",
+      "n": "lC4ehVB6W0OCtNPnz8udYH9Ao83B6EKnHA5eTcMOap_lQZ-nKtS1lZwBj4wXRVc1XmS0d2OQFA1VMQ-dHLDE3CiGfsGqWbaiZFdW7U
+            GLO1nAwfDdH6xp3xwpKOMewDXbAHJlXdYYAe2ap-CE9c5WLTUBU6JROuWcorHCNJisj1aExyiY5t3JQQVGpBz2oUIHo7NRzQoKimvp
+            dMvMzcYnTlk1dhlG11b1GTkBclprm1BmOP7Ltjd7aEumOJWS67nKcAZzl48Zyg5KtV11V9F9dkGt25qHauqFKL7w3wu-DYhT0hmyFc
+            wn-tXS6e6HQbfHhR_MQxysLtDGOk2ViWv8AQ",
+      "kid": "h5Sr3LXcpQiQlAUVPdhrdLFoIvkhRTAVs_h39bQnxlU",
+      "kty": "RSA",
+      "use": "sig"
+    }
+  ]
+}
+~~~
+
+
+
+* The listed ACTIVE key is used to sign tokens issued by the authorization server.
+* The listed NEXT key is the next key that the authorization server will use to sign tokens when keys are rotated. The NEXT key might not be listed if it has not been generated yet.
+* The listed EXPIRED key is the previous key that the authorization server used to sign tokens. The EXPIRED key might not be listed if no key has expired or the expired key has been deleted.
+
+### Rotate Authorization Server Keys
+
+Rotates the current keys for the authorization server. If you rotate keys, the "ACTIVE" key will become the "EXPIRED" key, the "NEXT" key will become the "ACTIVE" key, and this authorization server will immediately begin issuing tokens signed with the new "ACTIVE" key.
+
+>Authorization server keys can be rotated in both *MANUAL* and *AUTO* mode, however, it is recommended to rotate keys manually only when the authorization server is in *MANUAL* mode.
+>If keys are rotated manually, any intermediate cache should be invalidated and keys should be fetched again using the [get keys](oauth2.html#get-keys) endpoint.
+
+
+#### Request Parameters
+
+Parameter          | Description                                                                                         | Type       | Required       |
+-------------------+-----------------------------------------------------------------------------------------------------+------------+----------------|
+use        | Can be only *sig*. Determines the type of keys being rotated for this authorization server. | String   | true
+
+
+{:.api .api-operation}
+
+{% api_operation post /api/v1/as/:authorizationServerId/credentials/lifecycle/keyRotate %} {% api_lifecycle beta %}
+
+
+##### Request Example
+{:.api .api-request .api-request-example}
+
+~~~sh
+curl -v -X POST \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: SSWS ${api_token}" \
+-d '{
+  "use": "sig"
+}' "https://${org}.okta.com/api/v1/as/ausnsopoM6vBRB3PD0g3/credentials/lifecycle/keyRotate"
+~~~
+
+
+#### Response Example
+{:.api .api-response .api-response-example}
+
+~~~json
+{
+  "keys": [
+    {
+      "alg": "RS256",
+      "status": "ACTIVE",
+      "e": "AQAB",
+      "n": "iKqiD4cr7FZKm6f05K4r-GQOvjRqjOeFmOho9V7SAXYwCyJluaGBLVvDWO1XlduPLOrsG_Wgs67SOG5qeLPR8T1zDK4bfJAo1Tvbw
+            YeTwVSfd_0mzRq8WaVc_2JtEK7J-4Z0MdVm_dJmcMHVfDziCRohSZthN__WM2NwGnbewWnla0wpEsU3QMZ05_OxvbBdQZaDUsNSx4
+            6is29eCdYwhkAfFd_cFRq3DixLEYUsRwmOqwABwwDjBTNvgZOomrtD8BRFWSTlwsbrNZtJMYU33wuLO9ynFkZnY6qRKVHr3YToIrq
+            NBXw0RWCheTouQ-snfAB6wcE2WDN3N5z760ejqQ",
+      "kid": "U5R8cHbGw445Qbq8zVO1PcCpXL8yG6IcovVa3laCoxM",
+      "kty": "RSA",
+      "use": "sig"
+    },
+    {
+      "alg": "RS256",
+      "e": "AQAB",
+      "status": "NEXT",
+      "n": "l1hZ_g2sgBE3oHvu34T-5XP18FYJWgtul_nRNg-5xra5ySkaXEOJUDRERUG0HrR42uqf9jYrUTwg9fp-SqqNIdHRaN8EwRSDRsKAwK
+            3HIJ2NJfgmrrO2ABkeyUq6rzHxAumiKv1iLFpSawSIiTEBJERtUCDcjbbqyHVFuivIFgH8L37-XDIDb0XG-R8DOoOHLJPTpsgH-rJe
+            M5w96VIRZInsGC5OGWkFdtgk6OkbvVd7_TXcxLCpWeg1vlbmX-0TmG5yjSj7ek05txcpxIqYu-7FIGT0KKvXge_BOSEUlJpBhLKU28
+            OtsOnmc3NLIGXB-GeDiUZiBYQdPR-myB4ZoQ",
+      "kid": "Y3vBOdYT-l-I0j-gRQ26XjutSX00TeWiSguuDhW3ngo",
+      "kty": "RSA",
+      "use": "sig"
+    },
+    {
+      "alg": "RS256",
+      "e": "AQAB",
+      "status": "EXPIRED",
+      "n": "lC4ehVB6W0OCtNPnz8udYH9Ao83B6EKnHA5eTcMOap_lQZ-nKtS1lZwBj4wXRVc1XmS0d2OQFA1VMQ-dHLDE3CiGfsGqWbaiZFdW7U
+            GLO1nAwfDdH6xp3xwpKOMewDXbAHJlXdYYAe2ap-CE9c5WLTUBU6JROuWcorHCNJisj1aExyiY5t3JQQVGpBz2oUIHo7NRzQoKimvp
+            dMvMzcYnTlk1dhlG11b1GTkBclprm1BmOP7Ltjd7aEumOJWS67nKcAZzl48Zyg5KtV11V9F9dkGt25qHauqFKL7w3wu-DYhT0hmyFc
+            wn-tXS6e6HQbfHhR_MQxysLtDGOk2ViWv8AQ",
+      "kid": "h5Sr3LXcpQiQlAUVPdhrdLFoIvkhRTAVs_h39bQnxlU",
+      "kty": "RSA",
+      "use": "sig"
+    }
+  ]
+}
+~~~
+
+
+#### Response Example (Error)
+{:.api .api-response .api-response-example}
+
+~~~json
+{
+  "errorCode": "E0000001",
+  "errorSummary": "Api validation failed: rotateKeys",
+  "errorLink": "E0000001",
+  "errorId": "oaeprak9qKHRlaWiclJ4oPJRQ",
+  "errorCauses": [
+    {
+      "errorSummary": "Invalid value specified for key 'use' parameter."
+    }
+  ]
+}
+~~~
+{% endbeta %}
+
