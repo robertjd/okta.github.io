@@ -83,3 +83,5 @@ defaults:
       collection: reference
     values:
       layout: documentation
+
+signup_error_email_address: "BD-ISV@okta.com"

@@ -31,9 +31,8 @@ js: signup
 
             <div class="FormColumn Column--3 ColumnOffset--2 Column--large-4 ColumnOffset--large-1 Column--medium-5 Column--small-12 ColumnOffset--small-0">
 
-                <h3>Start building on Okta</h3>
-
-                <form id="developer_signup" data-type="short_developer" class="OccForm">
+                <form id="developer_signup" class="OccForm">
+                    <h3>Start building on Okta</h3>
                     <div class="global-error"></div>
                     <div>
                         <div>
@@ -59,12 +58,13 @@ js: signup
                         <div class="OccForm-terms"><p>By clicking the button you agree to the <a href="https://www.okta.com/occ-terms.html" target="_blank">terms &amp; conditions</a>.<span class="form-required" title="This field is required."> *</span></p></div>
 
                         <div class="casl-inputs" style="display:none;">
+                            <p class="OccForm--error">Please select your communication preferences.</p>
                             <p>
                                 Would you like to receive email updates from Okta, Inc. about our products, events, and news? You can unsubscribe at any time by emailing <a href="mailto:unsubscribe@okta.com">unsubscribe@okta.com</a>.
                             </p>
-                            <span class="options">
-                                Yes <input type="radio" name="casl_optin" value="yes" checked="checked"><br>
-                                No <input type="radio" name="casl_optin" value="no">
+                            <span class="options casl_optin">
+                                Yes <input type="radio" name="casl_optin" value="yes" class="required valid-radio"><br>
+                                No <input type="radio" name="casl_optin" value="no" class="required valid-radio">
                             </span>
                             <p>Okta, Inc. | 301 Brannan Street | San Francisco, CA 94107, USA</p>
                         </div>
@@ -73,29 +73,26 @@ js: signup
                             <input type="submit" id="edit-submit-button" name="op" value="Get Started" class="form-submit">
                         </div>
                     </div>
-                    <input id="CASL_Time_Stamp__c" type="hidden" name="CASL_Time_Stamp__c" value="">
-
-                    <input id="Country" type="hidden" name="country" value="">
-                    <input id="State" type="hidden" name="state" value="">
-                    <input id="Province" type="hidden" name="province" value="">
-
+                    <input type="hidden" id="Country" name="Country" value="">
+                    <input type="hidden" id="State" name="State" value="">
+                    <input type="hidden" id="Province" name="Province" value="">
                     <input type="hidden" name="ip_address" value="" class="request_ip">
                     <input type="hidden" name="opt_in_ip__c" value="" class="request_ip">
                     <input type="hidden" name="00NF000000DZwsR" value="" class="request_ip">
-
-
-<input type="hidden" name="campaign_id" value="701F0000000mDmx">
-<input id="Communication_Opt_in__c" type="hidden" name="Communication_Opt_in__c" value="">
-<input id="Communication_Opt_out__c" type="hidden" name="Communication_Opt_out__c" value="">
-<input id="CASL_Source__c" type="hidden" name="CASL_Source__c" value="">
-<input id="Opt_In_Url__c" type="hidden" name="Opt_In_Url__c" value="">
-
-
-<input type="hidden" name="cpreferrer" value="http://developer.okta.com.dev/">
-<input type="hidden" name="cpreferrer__c" value="http://developer.okta.com.dev/">
-<input type="hidden" name="cpreferer" value="http://developer.okta.com.dev/">
-<input type="hidden" name="cpreferer__c" value="http://developer.okta.com.dev/">
+                    <input type="hidden" name="campaign_id" value="701F0000000mDmx">
+                    <input type="hidden" id="Communication_Opt_in__c" name="Communication_Opt_in__c" value="">
+                    <input type="hidden" id="Communication_Opt_out__c" name="Communication_Opt_out__c" value="">
+                    <input type="hidden" id="CASL_Time_Stamp__c" name="CASL_Time_Stamp__c" value="">
+                    <input type="hidden" id="CASL_Source__c" name="CASL_Source__c" value="" class="request_source">
+                    <input type="hidden" id="Opt_In_Url__c" name="Opt_In_Url__c" value="" class="request_source">
                 </form>
+
+                <div id="developer_error">
+                    <h3>There was a problem with your submission</h3>
+                    <p>
+                        Please contact us by email at <a href="mailto:{{ site.signup_error_email_address }}">{{ site.signup_error_email_address }}</a> for further assistance.
+                    </p>
+                </div>
 
             </div>
 

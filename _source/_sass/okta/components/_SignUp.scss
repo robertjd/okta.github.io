@@ -7,7 +7,15 @@
   background-repeat: no-repeat;
   background-position: left bottom;
   position: relative;
+}
 
+.SignupSection,
+[class^='SignupSection--'],
+[class*=' SignupSection--'] {
+  @extend %SignupSection;
+}
+
+.SignupSection {
   .Wrap {
     @include color(default);
     font-weight: 100;
@@ -287,20 +295,22 @@
 
   }
 
-  @include media('<small') {
-    .FormColumn {
+  .FormColumn {
+
+    @include media('<small') {
       @include padding(medium medium !important);
       background: get-color('white');
     }
 
+    #developer_error {
+      display: none;
+
+      p {
+        font-size: 1.1rem;
+        line-height: 1.5rem;
+      }
+    }
   }
-
-}
-
-.SignupSection,
-[class^='SignupSection--'],
-[class*=' SignupSection--'] {
-  @extend %SignupSection;
 }
 
 .SignupSection--ThankYou {
