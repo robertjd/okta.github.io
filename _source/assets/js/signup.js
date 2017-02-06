@@ -16,21 +16,13 @@ $(function () {
         var geo_success = function(geoipResponse) {
             localStorage.setItem('okta_dev_country', geoipResponse.country.names.en);
             localStorage.setItem('okta_dev_region', geoipResponse.subdivisions[0].names.en);
+
+            update_form_location();
         };
         geoip2.city(geo_success, geo_error);
     }
-
-    if (localStorage.getItem('okta_dev_country') != null) {
-        $(signup_form + ' #Country').val(localStorage.getItem('okta_dev_country'));
-    }
-
-    if (localStorage.getItem('okta_dev_region') != null) {
-        $(signup_form + ' #State').val(localStorage.getItem('okta_dev_region'));
-        $(signup_form + ' #Province').val(localStorage.getItem('okta_dev_region'));
-    }
-
-    if (localStorage.getItem('okta_dev_country') == 'Canada') {
-        $(signup_form + ' .casl-inputs').show();
+    else {
+        update_form_location();
     }
 
     $(signup_form + ' .request_source').val(window.location.href);
@@ -42,11 +34,12 @@ $(function () {
         })
         .done(function(resp) {
             localStorage.setItem('okta_dev_ip', resp.ip_address.toString());
+
+            update_form_ip();
         });
     }
-
-    if (localStorage.getItem('okta_dev_ip') != null) {
-        $(signup_form + ' .request_ip').val(localStorage.getItem('okta_dev_ip'));
+    else {
+        update_form_ip();
     }
 
     $(signup_form).submit(function(e){
@@ -209,7 +202,36 @@ $(function () {
         }
     }
 
-    // thank you page output
+    /**
+     * Update form values with saved location data
+     */
+    function update_form_location() {
+        if (localStorage.getItem('okta_dev_country') != null) {
+            $(signup_form + ' #Country').val(localStorage.getItem('okta_dev_country'));
+        }
+
+        if (localStorage.getItem('okta_dev_region') != null) {
+            $(signup_form + ' #State').val(localStorage.getItem('okta_dev_region'));
+            $(signup_form + ' #Province').val(localStorage.getItem('okta_dev_region'));
+        }
+
+        if (localStorage.getItem('okta_dev_country') == 'Canada') {
+            $(signup_form + ' .casl-inputs').show();
+        }
+    }
+
+    /**
+     * Update form value with saved ip data
+     */
+    function update_form_ip() {
+        if (localStorage.getItem('okta_dev_ip') != null) {
+            $(signup_form + ' .request_ip').val(localStorage.getItem('okta_dev_ip'));
+        }
+    }
+
+    /**
+     * Thank you page url output
+     */
     var generated_domain = localStorage.getItem('okta_dev_domain');
     if (generated_domain != null) {
         $('#domain_link').html('<p>Access your new developer account now by visiting <a href="https://' + generated_domain + '.okta.com">' + generated_domain + '.okta.com</a></p>');
