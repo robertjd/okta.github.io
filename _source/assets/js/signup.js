@@ -9,39 +9,46 @@ $(function () {
         signup_form = '#developer_signup',
         api_url = 'https://oktastg.prod.acquia-sites.com/developerapi';
 
-    // Update form location information
-    if (typeof geoip2 != 'undefined'){
+    if ((localStorage.getItem('okta_dev_country') == null || localStorage.getItem('okta_dev_region') == null) && typeof geoip2 != 'undefined'){
         var geo_error = function(error) {
             return;
         };
         var geo_success = function(geoipResponse) {
-            $(signup_form + ' #Country').val(geoipResponse.country.names.en);
-            if (geoipResponse.subdivisions[0] != '') {
-                $(signup_form + ' #State').val(geoipResponse.subdivisions[0].names.en);
-                $(signup_form + ' #Province').val(geoipResponse.subdivisions[0].names.en);
-            }
-
-            // show opt-in for non US registrations
-            if (geoipResponse.country.names.en == 'Canada') {
-                $(signup_form + ' .casl-inputs').show();
-            }
+            localStorage.setItem('okta_dev_country', geoipResponse.country.names.en);
+            localStorage.setItem('okta_dev_region', geoipResponse.subdivisions[0].names.en);
         };
         geoip2.city(geo_success, geo_error);
     }
 
-    // Update form source
+    if (localStorage.getItem('okta_dev_country') != null) {
+        $(signup_form + ' #Country').val(localStorage.getItem('okta_dev_country'));
+    }
+
+    if (localStorage.getItem('okta_dev_region') != null) {
+        $(signup_form + ' #State').val(localStorage.getItem('okta_dev_region'));
+        $(signup_form + ' #Province').val(localStorage.getItem('okta_dev_region'));
+    }
+
+    if (localStorage.getItem('okta_dev_country') == 'Canada') {
+        $(signup_form + ' .casl-inputs').show();
+    }
+
     $(signup_form + ' .request_source').val(window.location.href);
 
-    // Update form ip address
-    $.ajax({
-        url: api_url + '/ip_address/',
-        method: 'get'
-    })
-    .done(function(resp) {
-        $(signup_form + ' .request_ip').val(resp.ip_address.toString());
-    });
+    if (localStorage.getItem('okta_dev_ip') == null) {
+        $.ajax({
+            url: api_url + '/ip_address/',
+            method: 'get'
+        })
+        .done(function(resp) {
+            localStorage.setItem('okta_dev_ip', resp.ip_address.toString());
+        });
+    }
 
-    // process form submission
+    if (localStorage.getItem('okta_dev_ip') != null) {
+        $(signup_form + ' .request_ip').val(localStorage.getItem('okta_dev_ip'));
+    }
+
     $(signup_form).submit(function(e){
         e.preventDefault;
         has_tried = true;
@@ -91,19 +98,17 @@ $(function () {
                                 thank_you_url = thank_you_url.concat(window.location.hash.toString());
                             }
 
-                            localStorage.setItem('generated_domain',resp.responseJSON.org_domain);
+                            localStorage.setItem('okta_dev_domain',resp.org_domain);
                             window.location.href = thank_you_url;
                         })
                         .fail(function(resp) {
-                            // if response has error message display it
-                            if (resp.responseJSON.error_message != 'undefined') {
-                                $(signup_form + ' .global-error').html(resp.responseJSON.error_message.toString()).show();
+                            if ($.trim(resp.error_message)) {
+                                $(signup_form + ' .global-error').html(resp.error_message.toString()).show();
                             }
 
-                            // if response has invalid inputs highlight them
-                            if (resp.responseJSON.invalid_inputs != 'undefined') {
+                            if (count(resp.invalid_inputs) > 0) {
                                 $(signup_form + ' :input').each(function(){
-                                    if ($.inArray($(this).attr('name'), resp.responseJSON.invalid_inputs) >= 0) {
+                                    if ($.inArray($(this).attr('name'), resp.invalid_inputs) >= 0) {
                                         $(this).parent('div').removeClass('is-valid')
                                         $(this).parent('div').addClass('is-invalid')
                                     }
@@ -205,7 +210,7 @@ $(function () {
     }
 
     // thank you page output
-    var generated_domain = localStorage.getItem('generated_domain');
+    var generated_domain = localStorage.getItem('okta_dev_domain');
     if (generated_domain != null) {
         $('#domain_link').html('<p>Access your new developer account now by visiting <a href="https://' + generated_domain + '.okta.com">' + generated_domain + '.okta.com</a></p>');
     }
