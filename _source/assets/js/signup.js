@@ -234,6 +234,6 @@ $(function () {
      */
     var generated_domain = localStorage.getItem('okta_dev_domain');
     if (generated_domain != null) {
-        $('#domain_link').html('<p>Access your new developer account now by visiting <a href="https://' + generated_domain + '.okta.com">' + generated_domain + '.okta.com</a></p>');
+        $('#domain_link').html('<p>Access your new developer account now by visiting <a href="https://' + generated_domain + '.oktapreview.com">' + generated_domain + '.oktapreview.com</a></p>');
     }
 });
