@@ -22,8 +22,3 @@ The Okta Music Store builds on top of the MVC Music Store and shows you how to u
 - Adding Single-sign on to your web application.
 
 Get started by [visiting the GitHub repository for the Okta Music Store](https://github.com/okta/okta-music-store).
-
-<br/>
-<br/>
-
-[![Screenshot of the MVC Music Store](/assets/img/mvc_music_store.png "The front page of the MVC Music Store")](https://github.com/okta/okta-music-store)
