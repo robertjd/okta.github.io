@@ -248,15 +248,28 @@ A Refresh Token will be returned if 'offline_access' scope is requested using au
 
 The lifetime of a Refresh Token is configured in [Access Policies](#access-policies), the minimum value is 24 hours. The refresh token can also expire after a period if no clients redeem it for an Access Token. The period should be equal to or larger than 10 minutes. If the token's lifetime is set to unlimited, the Authorization Server will not check if clients use it or not.
 
+### Refresh Token Revocation
+
+Refresh Tokens can be revoked explicitly by making a [Revocation Request](#revocation-request). Additionally, all Refresh Tokens associated with an entity are revoked when the entity is deactivated, deleted, or otherwise modified in a way that invalidates the associated Refresh Tokens. Such ways includes:
+
+* The User is Suspended or Deactivated
+* The Client App is Deactivated or Deleted
+* The Authorization Server's Resource URI is modified, or the Authorization Server is deleted.
+
+No other modifications affect existing tokens.
+
 ## ID Token
-An authorization server can also issue an Id Token to the client, just like [OIDC](oidc#id-token). The differences are 1) 'groups' is not a reserved scope or claim. To get a claim with group information, the administrators have to define a custom claim with a group filter and associate it with a scope. 2) the custom properties in the app user profile will not be put in the Id Token by default even if profile scope is granted. To get a claim for a custom property, the administrators have to define a custom claim with an Okta EL expression and associate it with a scope.
+An Authorization Server can also issue an ID Token to the client, as in [OIDC](oidc#id-token), but with the following differences:
+but with the following differences:
+
+* The ID Token cannot contain a reserved scope or claim called 'groups'. To obtain a claim with group information, administrators must define a custom claim with a group filter and associate it with a scope.
+* The custom properties in the app user profile are not included in the Id Token by default, even if profile scope is granted. To obtain a claim for a custom property, administrators must define a custom claim with an Okta Expression Language expression and associate it with a scope.
 
 The lifetime of an Id Token is 1 hour. If the client that issued the token is deactivated, the token is
 immediately and permanently invalidated. Reactivating the client does not make the token valid again.
 
 The same validation steps for [OIDC](oidc.html#validating-id-tokens) can also be applied to Id Token for
 OAuth2, except the public keys should be retrieved via the [Get Keys endpoint](#get-keys).
-
 
 ## Access Policies
 
