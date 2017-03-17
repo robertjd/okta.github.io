@@ -107,7 +107,7 @@ Client applications have the following properties:
 > The `client_secret` is only shown on the initial creation of a client application (and only if the `token_endpoint_auth_method` is one that requires a client secret).
   It is never returned in a GET call. If a `client_secret` is not provided on creation and the `token_endpoint_auth_method` requires one Okta will generate a random `client_secret` for the client application.
 
-> The `client_id` and `client_secret` must consist of printable characters. The precise set of permissible characters is defined in [Appendix A of the OAuth 2.0 Spec](https://tools.ietf.org/html/rfc6749#appendix-A). Both values may contain at most 100 characters, and the `client_secret` must contain at least 14 characters.
+> The `client_id` must consist of alphanumeric characters, the following special characters `$-_.+!*'(),` and must contain between 6 and 100 characters, inclusive. The `client_secret` must consist of printable characters, which are defined in [the OAuth 2.0 Spec](https://tools.ietf.org/html/rfc6749#appendix-A), and must contain between 14 and 100 characters, inclusive.
 
 > The `service` application type and `client_credentials` grant type [are {% api_lifecycle beta%} features](/docs/api/getting_started/releases-at-okta.html).
 
