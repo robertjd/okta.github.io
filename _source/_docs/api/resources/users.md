@@ -2308,16 +2308,17 @@ Content-Type: application/json
 
 <span class="api-uri-template api-uri-delete"><span class="api-label">DELETE</span> /api/v1/users/*:uid*/sessions
 
-Removes all active identity provider sessions. This will force the user to authenticate on the next operation.
+Removes all active identity provider sessions. This forces the user to authenticate on the next operation. Optionally revokes OpenID Connect and OAuth refresh and access tokens issued to the user.
 
-**Note:** This will not clear the sessions created for web sign-in or native applications.
+**Note:** This does not clear the sessions created for web sign-in or native applications.
 
 #### Request Parameters
 {:.api .api-request .api-request-params}
 
-Parameter    | Description                                         | Param Type | DataType | Required | Default
------------- | --------------------------------------------------- | ---------- | -------- | -------- | -------
-uid          | `id` of user                                        | URL        | String   | TRUE     |
+Parameter    | Description                                                      | Param Type | DataType | Required | Default
+------------ | ---------------------------------------------------------------- | ---------- | -------- | -------- | -------
+uid          | `id` of user                                                     | URL        | String   | TRUE     |
+oauthTokens  | Revoke issued OpenID Connect and OAuth refresh and access tokens | Query      | Boolean  | FALSE    | FALSE
 
 #### Response Parameters
 {:.api .api-response .api-response-params}
