@@ -12,11 +12,11 @@ All API documentation submissions are welcome. To submit a change, fork this rep
 
 Most of the content of the developer site is written in a format called
 [kramdown](http://kramdown.gettalong.org/syntax.html) which is a flavor of Markdown with some enhanced features like the
-ability to do footnote notations. We use Kramdown because the markup is both human readable and convertable in to fully
+ability to do footnote notations. We use Kramdown because the markup is both human readable and convertible in to fully
 fledged HTML. If there's some functionality you can't implement in Kramdown you can always drop down into HTML as a
 last resort.
 
-Though kramdown gives us benefits of readbilty it comes at the cost of requiring a build step to preview the changes to
+Though kramdown gives us benefits of readability it comes at the cost of requiring a build step to preview the changes to
 the site. Jekyll, handles this nicely by detecting changes to the file system and refreshing automatically. To setup
 Jekyll to be able to build and view the site, follow the steps below: 
 
@@ -24,10 +24,10 @@ Jekyll to be able to build and view the site, follow the steps below:
    rvm installed properly run `rvm list` and ensure that there is a version marked as 'current'.
 2. Clone repository `git clone git@github.com:okta/okta.github.io.git`
 3. Go into project directory `cd okta.github.io`
-4. You maybe told that the version of ruby needed by this project isn't installed, follow the given instruction to
-   install the correct verion of ruby for RVM. If you did have to install a new version of ruby re-enter the directory
-   you're in. `cd ..;cd okta.github.io` then verify that the current gemset you're using is called "okta.github.io" by
-   running `rvm gemset list`. This project sepcifies a gemset so that the build of this project isn't affected by global
+4. You may be told that the version of ruby needed by this project isn't installed, follow the given instruction to
+   install the correct version of ruby for RVM. If you did have to install a new version of ruby re-enter the directory
+   you're in: `cd ..;cd okta.github.io` then verify that the current gemset you're using is called "okta.github.io" by
+   running `rvm gemset list`. This project specifies a gemset so that the build of this project isn't affected by global
    gems on your system.
 5. Now install gems needed by this project into the projects gemset with `gem install bundler` and then `bundle install`.
    This will essentially read the Gemfile in the root directory and install all packages required to run the site.
@@ -37,14 +37,14 @@ Jekyll to be able to build and view the site, follow the steps below:
 
 ## Publishing Changes (the build process)
 
-Though github pages do support an automatic build process, we use a custom toolbar gem which requires that we build the
+Though Github Pages do support an automatic build process, we use a custom toolbar gem which requires that we build the
 site ourselves. This means that this git repo contains both the source files of the site and the compiled site files. As
 we edit the site we should only make changes to the source files and then rely on the following build process to compile
 and generate the final site content.
 
 ### Important Directories
 
-* **_source** this is where the source files live. If you're editing content, or adding assets like images or css, they
+* **_source** this is where the source files live. If you're editing content, or adding assets like images or CSS, they
   belong in here
 * **docs** The output HTML files live in this directory. Don't edit this content, it'll be overwritten with every build.
 * **_site** this directory is ignored in github. It contains the local version of each of the built files in the site
