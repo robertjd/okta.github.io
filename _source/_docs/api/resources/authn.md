@@ -24,7 +24,7 @@ The behavior of the Okta Authentication API varies depending on the type of your
 
 ### Public Application
 
-A public applications is an application that anonymously starts an authentication or recovery transaction without an API token, such as the [Okta Sign-In Widget](/docs/guides/okta_sign-in_widget.html).  Public applications are aggressively rate-limited to prevent abuse and require primary authentication to be successfully completed before releasing any metadata about a user.
+A public application is an application that anonymously starts an authentication or recovery transaction without an API token, such as the [Okta Sign-In Widget](/docs/guides/okta_sign-in_widget.html).  Public applications are aggressively rate-limited to prevent abuse and require primary authentication to be successfully completed before releasing any metadata about a user.
 
 ### Trusted Application
 
