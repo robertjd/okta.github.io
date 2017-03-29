@@ -255,7 +255,7 @@ The following three headers are set in each response:
 
 `X-Rate-Limit-Remaining` - the number of requests left for the current rate-limit window.
 
-`X-Rate-Limit-Reset` - the remaining time in the current rate-limit window before the rate limit resets, in UTC epoch seconds.
+`X-Rate-Limit-Reset` - the time at which the rate limit will reset, specified in UTC epoch time.
 
 ~~~ http
 HTTP/1.1 200 OK
