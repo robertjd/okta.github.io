@@ -688,7 +688,6 @@ curl -v -X POST \
 }
 ~~~
 
-
 ##### Response Example (Success - User with Password and Configured MFA)
 {:.api .api-response .api-response-example}
 
@@ -829,7 +828,6 @@ curl -v -X POST \
 }
 ~~~
 
-
 ##### Response Example (Success - User Without Password)
 {:.api .api-response .api-response-example}
 
@@ -903,8 +901,6 @@ Content-Type: application/json
   "errorCauses": []
 }
 ~~~
-
-
 
 #### Primary Authentication with Password Expiration Warning
 

@@ -1526,7 +1526,6 @@ curl -v -X POST \
 }
 ~~~
 
-
 #### Set Password
 {:.api .api-operation}
 
@@ -1846,7 +1845,7 @@ sendEmail | Sends an activation email to the user if `true` | Query      | Boole
 ##### Response Parameters
 {:.api .api-response .api-response-params}
 
-Returns empty object by default. When `sendEmail` is `false`, returns an activation link for the user to set up their account. The activation token can be used to create custom activation link.
+Returns empty object by default. When `sendEmail` is `false`, returns an activation link for the user to set up their account. The activation token can be used to create a custom activation link.
 
 ~~~json
 {
@@ -1855,7 +1854,7 @@ Returns empty object by default. When `sendEmail` is `false`, returns an activat
 }
 ~~~
 
-> If a password was set before the user was activated, then user must login with with their password or the activationToken and not the activation link 
+> If a password was set before the user was activated, then user must login with with their password or the activationToken and not the activation link. 
 
 ##### Request Example
 {:.api .api-request .api-request-example}
@@ -1883,7 +1882,7 @@ curl -v -X POST \
 
 <span class="api-uri-template api-uri-post"><span class="api-label">POST</span> /api/v1/users/*:id*/lifecycle/reactivate</span>
 
-Reactivates a user.  This operation can only be performed on users with a `PROVISIONED` status.  This operation will allow to activate the user using activationToken if for some reason the user activation was not completed when using the activationToken from [Activate User](#activate-user). 
+Reactivates a user.  This operation can only be performed on users with a `PROVISIONED` status.  This operation restarts the activation workflow if for some reason the user activation was not completed when using the activationToken from [Activate User](#activate-user). 
 
 > Users that do not have a password must complete the flow by completing [Reset Password](#reset-password) and MFA enrollment steps to transition the user to `ACTIVE` status.
 
@@ -1898,7 +1897,7 @@ sendEmail | Sends an activation email to the user if `true` | Query      | Boole
 ##### Response Parameters
 {:.api .api-response .api-response-params}
 
-Returns empty object by default. When `sendEmail` is `false`, returns an activation link for the user to set up their account. The activation token can be used to create custom activation link.
+Returns empty object by default. When `sendEmail` is `false`, returns an activation link for the user to set up their account. The activation token can be used to create a custom activation link.
 
 ~~~json
 {
@@ -1943,7 +1942,6 @@ Content-Type: application/json
   "errorCauses": []
 }
 ~~~
-
 
 ### Deactivate User
 {:.api .api-operation}
