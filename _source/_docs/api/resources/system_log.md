@@ -74,7 +74,7 @@ Fetch a list of events from your Okta organization system log.
 | Parameter | Description                                                                         | Param Type | DataType | Required | Minimum  | Maximum |
 | --------- | ----------------------------------------------------------------------------------- | ---------- | -------- | -------- | -------- | --------|
 | limit     | Specifies the number of results to return per page                                  | Query      | Number   | FALSE    |       0  |     100 |
-| since     | Specifies the datetime, inclusive and in ISO8601 format, to list events after                     | Query      | DateTime | TRUE     |          |         |
+| since     | Specifies the datetime, inclusive and in ISO8601 format, to list events after; defaults to 7 days prior to the "until" parameter | Query      | DateTime | FALSE |          |         |
 | filter    | [SCIM Filter expression](/docs/api/getting_started/design_principles.html#filtering) for events | Query | String | FALSE |        |         |
 | q         | Search String fields for matching phrase                                            | Query      | String   | FALSE    |          |         |
 | until     | Specifies the first datetime, inclusive and in ISO8601 format, after which results aren't returned, can be empty which denotes no end date | Query       | DateTime | FALSE   |          |          |
