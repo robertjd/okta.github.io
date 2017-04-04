@@ -322,7 +322,7 @@ with no <code class="highlighter-rouge">body</code> param, be sure to set the <c
 <p>See <a href="error_codes.html">Error Codes</a> for a list of API error codes.</p>
 
 <blockquote>
-  <p>Only the <code class="highlighter-rouge">errorCode</code> property is supported for runtime error flow control.  The <code class="highlighter-rouge">errorSummary</code> property is only to intended for troubleshooting and may change over time</p>
+  <p>Only the <code class="highlighter-rouge">errorCode</code> property is supported for runtime error flow control.  The <code class="highlighter-rouge">errorSummary</code> property is only intended for troubleshooting and may change over time.</p>
 </blockquote>
 
 <h2 id="authentication">Authentication</h2>
@@ -583,7 +583,7 @@ filter=firstName eq "john"
 
 <p><code class="highlighter-rouge">X-Rate-Limit-Remaining</code> - the number of requests left for the current rate-limit window.</p>
 
-<p><code class="highlighter-rouge">X-Rate-Limit-Reset</code> - the remaining time in the current rate-limit window before the rate limit resets, in UTC epoch seconds.</p>
+<p><code class="highlighter-rouge">X-Rate-Limit-Reset</code> - the time at which the rate limit will reset, specified in UTC epoch time.</p>
 
 <div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">X-Rate-Limit-Limit</span><span class="p">:</span> <span class="s">20</span>
@@ -613,10 +613,10 @@ filter=firstName eq "john"
 
 <p><a href="http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing">Cross-Origin Resource Sharing (CORS)</a> is a mechanism that allows a web page to make an AJAX call using <a href="http://en.wikipedia.org/wiki/XMLHttpRequest">XMLHttpRequest (XHR)</a> to a domain that is  different from the one from where the script was loaded.  Such “cross-domain” requests would otherwise be forbidden by web browsers, per the <a href="http://en.wikipedia.org/wiki/Same_origin_policy">same origin security policy</a>.  CORS defines a <a href="http://www.w3.org/TR/cors/">standardized</a> way in which the browser and the server can interact to determine whether or not to allow the cross-origin request.</p>
 
-<p>In Okta, CORS allows JavaScript hosted on your websites to make an XHR to the Okta API with the Okta session cookie. Every website orgin must be explictly permitted via the Okta Admin Dashboard for CORS.  See <a href="./enabling_cors.html">Enabling CORS</a> for details on how to allow your website to make cross-orgin requests.</p>
+<p>In Okta, CORS allows JavaScript hosted on your websites to make an XHR to the Okta API with the Okta session cookie. Every website origin must be explicitly permitted via the Okta Admin Dashboard for CORS.  See <a href="./enabling_cors.html">Enabling CORS</a> for details on how to allow your website to make cross-origin requests.</p>
 
 <blockquote>
-  <p><strong>Caution:</strong> Only grant access to specific orgins (websites) that you control and trust to access the Okta API.</p>
+  <p><strong>Caution:</strong> Only grant access to specific origins (websites) that you control and trust to access the Okta API.</p>
 </blockquote>
 
 <h3 id="api-support">API Support</h3>

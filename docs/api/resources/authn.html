@@ -221,7 +221,7 @@
 
 <h3 id="public-application">Public Application</h3>
 
-<p>Public applications are any application that anonymously start an authentication or recovery transaction without an API token such as the <a href="/docs/guides/okta_sign-in_widget.html">Okta Sign-In Widget</a>.  Public applications are aggressively rate-limited to prevent abuse and require primary authentication to be successfully completed before releasing any metadata about a user.</p>
+<p>A public application is an application that anonymously starts an authentication or recovery transaction without an API token, such as the <a href="/docs/guides/okta_sign-in_widget.html">Okta Sign-In Widget</a>.  Public applications are aggressively rate-limited to prevent abuse and require primary authentication to be successfully completed before releasing any metadata about a user.</p>
 
 <h3 id="trusted-application">Trusted Application</h3>
 
@@ -400,7 +400,7 @@
   <p>You must always pass the same <code class="highlighter-rouge">deviceToken</code> for a user’s device with every authentication request for <strong>per-device</strong> or <strong>per-session</strong> Sign-On Policy factor challenges.  If the <code class="highlighter-rouge">deviceToken</code> is absent or does not match the previous <code class="highlighter-rouge">deviceToken</code>, the user will be challenged every-time instead of <strong>per-device</strong> or <strong>per-session</strong>.</p>
 </blockquote>
 
-<p>It is recommend that you generate a UUID or GUID for each client and persist the <code class="highlighter-rouge">deviceToken</code> as a persistent cookie or HTML5 localStorage item scoped to your web application’s origin.</p>
+<p>It is recommended that you generate a UUID or GUID for each client and persist the <code class="highlighter-rouge">deviceToken</code> as a persistent cookie or HTML5 localStorage item scoped to your web application’s origin.</p>
 
 <h4 class="api api-response api-response-params" id="response-parameters">Response Parameters</h4>
 
@@ -4498,7 +4498,7 @@ See the Response Example in this section for details.</li>
 
 <h4 id="forgot-password-with-sms-factor">Forgot Password with SMS Factor</h4>
 
-<p>Starts a new password recovery transaction with a user identifier (<code class="highlighter-rouge">username</code>) and asynchronously sends a SMS OTP (challenge) to the user’s mobile phone.  This operation will transition the recovery transaction to the <code class="highlighter-rouge">RECOVERY_CHALLENGE</code> state and wait for user to <a href="#verify-sms-recovery-factor">verify the OTP</a>.</p>
+<p>Starts a new password recovery transaction with a user identifier (<code class="highlighter-rouge">username</code>) and asynchronously sends a SMS OTP (challenge) to the user’s mobile phone.  This operation will transition the recovery transaction to the <code class="highlighter-rouge">RECOVERY_CHALLENGE</code> state and wait for the user to <a href="#verify-sms-recovery-factor">verify the OTP</a>.</p>
 
 <blockquote>
   <p>Primary authentication of a user’s recovery credential (e.g email or SMS) has not yet completed.
@@ -6427,8 +6427,8 @@ to skip the other factors.</p>
 
 <ul>
   <li>The <code class="highlighter-rouge">stateToken</code> must be passed with every request except when verifying a <code class="highlighter-rouge">recoveryToken</code> that was distributed out-of-band</li>
-  <li>The <code class="highlighter-rouge">stateToken</code> is only intended to be used between the web application performing end-user authentication and the Okta API. It should never distributed to the end-user via email or other out-of-band mechanism.</li>
-  <li>The lifetime of the <code class="highlighter-rouge">stateToken</code> uses a sliding scale expiration algorithm that extends with every request.  Always introspect the <code class="highlighter-rouge">expiresAt</code> property for the transaction when making decisions based on lifetime.</li>
+  <li>The <code class="highlighter-rouge">stateToken</code> is only intended to be used between the web application performing end-user authentication and the Okta API. It should never be distributed to the end-user via email or other out-of-band mechanisms.</li>
+  <li>The lifetime of the <code class="highlighter-rouge">stateToken</code> uses a sliding scale expiration algorithm that extends with every request.  Always inspect the <code class="highlighter-rouge">expiresAt</code> property for the transaction when making decisions based on lifetime.</li>
 </ul>
 
 <blockquote>
@@ -6537,7 +6537,7 @@ to skip the other factors.</p>
 
 <h3 id="links-object">Links Object</h3>
 
-<p>Specifies link relations (See <a href="http://tools.ietf.org/html/rfc5988">Web Linking</a>) available for the current <a href="#transaction-state">transaction state</a> using the <a href="http://tools.ietf.org/html/draft-kelly-json-hal-06">JSON Hypertext Application Language</a> specification.  These links are used to transition the <a href="#transaction-state">state machine</a> of the authentication or recovery transaction.</p>
+<p>Specifies link relations (See <a href="http://tools.ietf.org/html/rfc5988">Web Linking</a>) available for the current <a href="#transaction-state">transaction state</a> using the <a href="https://tools.ietf.org/html/rfc7159">JSON</a> specification.  These links are used to transition the <a href="#transaction-state">state machine</a> of the authentication or recovery transaction.</p>
 
 <table>
   <thead>
@@ -7178,49 +7178,6 @@ to skip the other factors.</p>
       <td>phoneNumber</td>
       <td>masked phone number</td>
       <td>String</td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-    </tr>
-  </tbody>
-</table>
-
-<h5 id="phone-object-1">Phone Object</h5>
-
-<p>The phone object describes previously enrolled phone numbers for the <code class="highlighter-rouge">sms</code> factor.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Property</th>
-      <th>Description</th>
-      <th>DataType</th>
-      <th>Nullable</th>
-      <th>Unique</th>
-      <th>Readonly</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>id</td>
-      <td>unique key for phone</td>
-      <td>String</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-      <td>TRUE</td>
-    </tr>
-    <tr>
-      <td>profile</td>
-      <td>profile of phone</td>
-      <td><a href="#phone-profile-object">Phone Profile Object</a></td>
-      <td>FALSE</td>
-      <td>FALSE</td>
-      <td>TRUE</td>
-    </tr>
-    <tr>
-      <td>status</td>
-      <td>status of phone</td>
-      <td><code class="highlighter-rouge">ACTIVE</code> or <code class="highlighter-rouge">INACTIVE</code></td>
       <td>FALSE</td>
       <td>FALSE</td>
       <td>TRUE</td>
