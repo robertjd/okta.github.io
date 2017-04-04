@@ -2540,7 +2540,7 @@ Location: https://${org}.okta.com/api/v1/idps/credentials/keys/74bb2164-e0c8-445
      i5VPwaDtqduKkzwW9lUfn4xIMkTiVvCpe0X2HneD2Bpuao3/U8Rk0uiPfq6TooWaoW3kjsmErhEAs9bA7xuqo1KKY9CdHcFhk
      SsMhoeaZylZHtzbnoipUlQKSLMdJQiiYZQ0bYL83/Ta9fulr1EERICMFt3GUmtYaZZKHpWSfdJp9"
   ],
-  "x5t": "noocvK-9pzU-n35eimPK16zYEYk"
+  "x5t#S256": "wzPVobIrveR1x-PCbjsFGNV-6zn7Rm9KuOWOG4Rk6jE"
 }
 ~~~
 
@@ -2605,7 +2605,7 @@ curl -v -X GET \
      i5VPwaDtqduKkzwW9lUfn4xIMkTiVvCpe0X2HneD2Bpuao3/U8Rk0uiPfq6TooWaoW3kjsmErhEAs9bA7xuqo1KKY9CdHcFhk
      SsMhoeaZylZHtzbnoipUlQKSLMdJQiiYZQ0bYL83/Ta9fulr1EERICMFt3GUmtYaZZKHpWSfdJp9"
   ],
-  "x5t": "noocvK-9pzU-n35eimPK16zYEYk"
+  "x5t#S256": "wzPVobIrveR1x-PCbjsFGNV-6zn7Rm9KuOWOG4Rk6jE"
 }
 ~~~
 
@@ -2672,7 +2672,7 @@ curl -v -X GET \
        Dt+XlMTv/2qi5VPwaDtqduKkzwW9lUfn4xIMkTiVvCpe0X2HneD2Bpuao3/U8Rk0uiPfq6TooWaoW3kjsmErhEAs9bA7xuqo
        1KKY9CdHcFhkSsMhoeaZylZHtzbnoipUlQKSLMdJQiiYZQ0bYL83/Ta9fulr1EERICMFt3GUmtYaZZKHpWSfdJp9"
     ],
-    "x5t": "noocvK-9pzU-n35eimPK16zYEYk"
+    "x5t#S256": "wzPVobIrveR1x-PCbjsFGNV-6zn7Rm9KuOWOG4Rk6jE"
   }
 ]
 ~~~
@@ -4270,7 +4270,7 @@ The IdP key credential model defines a [JSON Web Key](https://tools.ietf.org/htm
      Dt+XlMTv/2qi5VPwaDtqduKkzwW9lUfn4xIMkTiVvCpe0X2HneD2Bpuao3/U8Rk0uiPfq6TooWaoW3kjsmErhEAs9bA7xuqo
      1KKY9CdHcFhkSsMhoeaZylZHtzbnoipUlQKSLMdJQiiYZQ0bYL83/Ta9fulr1EERICMFt3GUmtYaZZKHpWSfdJp9"
   ],
-  "x5t": "noocvK-9pzU-n35eimPK16zYEYk"
+  "x5t#S256": "wzPVobIrveR1x-PCbjsFGNV-6zn7Rm9KuOWOG4Rk6jE"
 }
 ~~~
 
@@ -4278,19 +4278,19 @@ The IdP key credential model defines a [JSON Web Key](https://tools.ietf.org/htm
 
 IdP credential keys have the following properties:
 
-|------------------+--------------------------------------------------------------------------------+-----------------------------------------------------------------------------|----------|--------|----------|-----------|-----------+------------|
-| Property         | Description                                                                    | DataType                                                                    | Nullable | Unique | Readonly | MinLength | MaxLength | Validation |
-| ---------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | -------- | ------ | -------- | --------- | --------- | ---------- |
-| kid              | unique identifier for the key                                                  | String                                                                      | FALSE    | TRUE   | TRUE     |           |           |            |
-| created          | timestamp when key was added to the key store                                  | Date                                                                        | FALSE    | FALSE  | TRUE     |           |           |            |
-| lastUpdated      | timestamp when key was last updated                                            | Date                                                                        | FALSE    | FALSE  | TRUE     |           |           |            |
-| x5c              | base64-encoded X.509 certificate chain with DER encoding                       | Array                                                                       | FALSE    | TRUE   | FALSE    |           |           |            |
-| x5t              | base64url-encoded SHA-1 thumbprint of the DER encoding of an X.509 certificate | String                                                                      | FALSE    | TRUE   | TRUE     |           |           |            |
-| kty              | identifies the cryptographic algorithm family used with the key                | `RSA`                                                                       | FALSE    | FALSE  | TRUE     |           |           |            |
-| use              | intended use of the public key                                                 | `sig`                                                                       | FALSE    | FALSE  | TRUE     |           |           |            |
-| e                | the exponent value for the RSA public key                                      | String                                                                      | FALSE    | TRUE   | TRUE     |           |           |            |
-| n                | the modulus value for the RSA public key                                       | String                                                                      | FALSE    | TRUE   | TRUE     |           |           |            |
-|------------------+--------------------------------------------------------------------------------+-----------------------------------------------------------------------------|----------|--------|----------|-----------|-----------+------------|
+|------------------+----------------------------------------------------------------------------------+-----------------------------------------------------------------------------|----------|--------|----------|-----------|-----------+------------|
+| Property         | Description                                                                      | DataType                                                                    | Nullable | Unique | Readonly | MinLength | MaxLength | Validation |
+| ---------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | -------- | ------ | -------- | --------- | --------- | ---------- |
+| kid              | unique identifier for the key                                                    | String                                                                      | FALSE    | TRUE   | TRUE     |           |           |            |
+| created          | timestamp when key was added to the key store                                    | Date                                                                        | FALSE    | FALSE  | TRUE     |           |           |            |
+| lastUpdated      | timestamp when key was last updated                                              | Date                                                                        | FALSE    | FALSE  | TRUE     |           |           |            |
+| x5c              | base64-encoded X.509 certificate chain with DER encoding                         | Array                                                                       | FALSE    | TRUE   | FALSE    |           |           |            |
+| x5t#S256         | base64url-encoded SHA-256 thumbprint of the DER encoding of an X.509 certificate | String                                                                      | FALSE    | TRUE   | TRUE     |           |           |            |
+| kty              | identifies the cryptographic algorithm family used with the key                  | `RSA`                                                                       | FALSE    | FALSE  | TRUE     |           |           |            |
+| use              | intended use of the public key                                                   | `sig`                                                                       | FALSE    | FALSE  | TRUE     |           |           |            |
+| e                | the exponent value for the RSA public key                                        | String                                                                      | FALSE    | TRUE   | TRUE     |           |           |            |
+| n                | the modulus value for the RSA public key                                         | String                                                                      | FALSE    | TRUE   | TRUE     |           |           |            |
+|------------------+----------------------------------------------------------------------------------+-----------------------------------------------------------------------------|----------|--------|----------|-----------|-----------+------------|
 
 > Note that IdP signing keys are read-only
 
