@@ -1,10 +1,10 @@
 ---
 layout: docs_page
 title: Platform Release Notes
-excerpt: Summary of changes to the Okta Platform since Release 2017.12
+excerpt: Summary of changes to the Okta Platform since Release 2017.11
 ---
 
-## Release 2017.14
+## Release 2017.12
 
 ### Advance Notice: API Rate Limit Improvements
 
@@ -14,10 +14,9 @@ another. Treating authenticated end-user interactions separately will lessen the
 impacting another. We’re also providing a transition period so you can see what these changes will
 look like in your Okta system log before enforcing them:
 
-1. By approximately Friday, 4/7/2017, you'll see system log alerts that let you know if you
-would have exceeded any of the new API rate limits. We're making this feature available over the next few days to all preview orgs,
-and the feature will remain in preview for at least two weeks.
-2. Starting later in April, 2017, we’ll treat authenticated end-user interactions on a per-user basis.
+1. Starting in early April, 2017, we'll provide system log alerts to let you know that you
+would have exceeded any of these new API rate limits.
+2. Starting in early April, 2017, we’ll treat authenticated end-user interactions on a per-user basis.
 Interactions like SSO after login won't apply to your org-wide API rate limits.
 3. Early in May, 2017, we will enforce the new, more granular rate limits. At that
 point, the warnings in the System Log will change to error notifications.
@@ -32,9 +31,15 @@ For a full description of the rate limit changes, see [API Rate Limit Improvemen
 -->
 <!-- (OKTA-114417) -->
 
-<!-- ### Platform Bugs Fixed
- * description (OKTA-number)
- -->
+### Platform Bugs Fixed
+ * The `/api/v1/apps` API sometimes incorrectly returned `null` for the `realm` or `groupName`
+ attribute for a Template WS-Fed application. (OKTA-117274)
+ * PUT to the `/api/v1/idps/{idpId}` API sometimes incorrectly returned an HTTP response code of 500
+ rather than 400. (OKTA-117691)
+ * The `/api/v1/idps` API improperly allowed social identity providers to be created
+ when the admin did not have sufficient permissions. Those providers could not be used. (OKTA-118067)
+ * The `/api/v1/apps` API returned an incorrect number of app instances when pagination and permissions
+ filtering were both in effect. (OKTA-113411)
 
 ### Does Your Org Have This Change Yet?
 
@@ -45,5 +50,5 @@ To verify the current release for an org, click the **Admin** button and check t
 ### Looking for Something Else?
 
 * [Platform Release Note Index](platform-release-notes2016-index.html)
-* For changes outside the Okta platform, see the [Product Release Notes](https://help.okta.com/en/prev/Content/Topics/ReleaseNotes/preview.htm).
+* For changes outside the Okta platform, see the [Release Notes Knowledge Hub](http://support.okta.com/help/articles/Knowledge_Article/Release-Notes-Knowledge-Hub).
 
