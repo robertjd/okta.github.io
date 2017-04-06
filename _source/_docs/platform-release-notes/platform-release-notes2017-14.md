@@ -26,37 +26,15 @@ Of course, as each change is released, we'll announce the change here.
 
 For a full description of the rate limit changes, see [API Rate Limit Improvements](https://support.okta.com/help/articles/Knowledge_Article/API-Rate-Limit-Improvements).<!-- OKTA-110472 -->
 
-### Platform Feature Improvements
+<!--
+### Feature Improvements
+ * xxx
+-->
+<!-- (OKTA-114417) -->
 
-#### Revoke Access Tokens and Refresh Tokens
-
-Use the `oauthTokens` parameter when clearing user sessions to revoke all OpenID Connect and OAuth Access Tokens and Refresh Tokens
-issued to the user. For more information, see [the Users API](/docs/api/resources/users.html#clear-user-sessions).<!-- OKTA-116904 -->
-
-#### Token Requests with Grant Type password
-
-Token requests with `password` grant type (`grant_type`) and `openid` scope now returns an ID Token.
-Previously only the appropriate Access Token or Refresh Token was returned. <!-- OKTA-117288 -->
-
-#### Authentication That Overrides Client Request Context
-
-You can now authenticate a user via a trusted application or proxy that overrides the client request context.
-For more information, see [Authentication API[(/docs/api/resources/authn.html#primary-authentication-with-activation-token). <!-- OKTA-119692 -->
-
-#### HAL Link for User in Provisioned State
-
-A [HAL link](https://tools.ietf.org/html/draft-kelly-json-hal-06) to `/api/v1/users/:uid/lifecycle/reactivate` is now provided
-for requests when the user is in a PROVISIONED state but doesn't have a password. <JV: needs "for more info" link>. <!-- OKTA-119221 -->
-
-#### New Developer Org Banner
-
-A new banner displays when you log into your developer org. It provides links to common onboarding tasks.
-Once you dismiss the banner, it can't be displayed again. <!-- OKTA-121055 -->
-
-### Platform Bugs Fixed
-
- * Request to `/api/v1/users` while the user was still activating failed to return an HTTP 409 error. (OKTA-120458)
- * REACT samples contained errors. (OKTA-120530) <JV: Not yet merged, so double check this one>
+<!-- ### Platform Bugs Fixed
+ * description (OKTA-number)
+ -->
 
 ### Does Your Org Have This Change Yet?
 
