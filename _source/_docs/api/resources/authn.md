@@ -5568,16 +5568,17 @@ Specifies the password requirements related to password age and history
 
 A subset of [factor properties](factors.html#factor-model) published in an authentication transaction during `MFA_ENROLL`, `MFA_REQUIRED`, or `MFA_CHALLENGE` states
 
-|----------------+-------------------------------------------------------------------------------+----------------------------------------------------------------+----------+--------+----------|
-| Property       | Description                                                                   | DataType                                                       | Nullable | Unique | Readonly |
-| -------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------- | -------- | ------ | ---------|
-| id             | unique key for factor                                                         | String                                                         | TRUE     | TRUE   | TRUE     |
-| factorType     | type of factor                                                                | [Factor Type](factors.html#factor-type)                        | FALSE    | TRUE   | TRUE     |
-| provider       | factor provider                                                               | [Provider Type](factors.html#provider-type)                    | FALSE    | TRUE   | TRUE     |
-| profile        | profile of a [supported factor](factors.html#supported-factors-for-providers) | [Factor Profile Object](factors.html#factor-profile-object)    | TRUE     | FALSE  | TRUE     |
-| _embedded      | [embedded resources](#factor-embedded-resources) related to the factor        | [JSON HAL](http://tools.ietf.org/html/draft-kelly-json-hal-06) | TRUE     | FALSE  | TRUE     |
-| _links         | [discoverable resources](#factor-links-object) for the factor                 | [JSON HAL](http://tools.ietf.org/html/draft-kelly-json-hal-06) | TRUE     | FALSE  | TRUE     |
-|----------------+-------------------------------------------------------------------------------+----------------------------------------------------------------+----------+--------+----------|
+|----------------+------------------------------------------------------------------------------------------+----------------------------------------------------------------+----------+--------+----------|
+| Property       | Description                                                                              | DataType                                                       | Nullable | Unique | Readonly |
+| -------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------- | -------- | ------ | ---------|
+| id             | unique key for factor                                                                    | String                                                         | TRUE     | TRUE   | TRUE     |
+| factorType     | type of factor                                                                           | [Factor Type](factors.html#factor-type)                        | FALSE    | TRUE   | TRUE     |
+| provider       | factor provider                                                                          | [Provider Type](factors.html#provider-type)                    | FALSE    | TRUE   | TRUE     |
+| vendorName     | factor Vendor Name (Same as provider but for On Prem MFA it depends on Admin Settings)   | [Provider Type](factors.html#vendor-name)                      | FALSE    | TRUE   | TRUE     |
+| profile        | profile of a [supported factor](factors.html#supported-factors-for-providers)            | [Factor Profile Object](factors.html#factor-profile-object)    | TRUE     | FALSE  | TRUE     |
+| _embedded      | [embedded resources](#factor-embedded-resources) related to the factor                   | [JSON HAL](http://tools.ietf.org/html/draft-kelly-json-hal-06) | TRUE     | FALSE  | TRUE     |
+| _links         | [discoverable resources](#factor-links-object) for the factor                            | [JSON HAL](http://tools.ietf.org/html/draft-kelly-json-hal-06) | TRUE     | FALSE  | TRUE     |
+|----------------+------------------------------------------------------------------------------------------+----------------------------------------------------------------+----------+--------+----------|
 
 ~~~json
 {
