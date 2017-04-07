@@ -40,7 +40,7 @@ Previously only the appropriate Access Token or Refresh Token was returned. <!--
 
 #### Authentication That Overrides Client Request Context
 
-You can now authenticate a user via a trusted application or proxy that overrides the client request context.
+Authenticates a user via a trusted application or proxy that uses the activation token.
 For more information, see [Authentication API[(/docs/api/resources/authn.html#primary-authentication-with-activation-token). <!-- OKTA-119692 -->
 
 #### HAL Link for User in Provisioned State
