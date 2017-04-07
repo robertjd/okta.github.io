@@ -12,9 +12,13 @@ The Okta System Log API provides read access to your organization's system log. 
 * The System Log API supports more query parameters than the Events API.
 * The System Log API returns more objects than the Events API.
 
+## Getting Started
+
 The System Log API has one endpoint:
 
 <span class="api-uri-template api-uri-get"><span class="api-label">GET</span> /api/v1/logs</span>
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/8f19fc704561a8b44e27){:target="_blank"}
 
 See below for [Examples](#examples) and more on how to use the System Log API.
 
@@ -23,6 +27,7 @@ See below for [Examples](#examples) and more on how to use the System Log API.
 ### Debugging
 The System Logs API can be used to troubleshoot user problems. For example, you
 can use the following `curl` command to see events from user "Jane Doe":
+
 ```
 curl -v -X GET \
 -H "Accept: application/json" \
@@ -33,6 +38,7 @@ curl -v -X GET \
 
 ### Polling
 You can also use this API to search for particular types of events:
+
 ```
 curl -v -X GET \
 -H "Accept: application/json" \
@@ -43,6 +49,7 @@ curl -v -X GET \
 
 ### Transferring Data to a separate system
 You can export your logs to a separate system for analysis or compliance. To obtain the entire dataset, query from the appropriate point of time in the past.
+
 ```
 curl -v -X GET \
 -H "Accept: application/json" \
