@@ -52,7 +52,7 @@ Access Policies can now be defined based on an IP address range. <!-- OKTA-12128
 
 #### Bring Your Own SAML Certificates
 
-Okta Admins can now upload their own SAML certificates to sign the assertion for Outbound SAML apps. These certificates can also be used to sign the AuthNRequest, as well as to decrypt the assertion for Inbound SAML. <JV: needs "for more info" link> <!-- OKTA-119158 -->
+Okta Admins can now upload their own SAML certificates to sign the assertion for Outbound SAML apps. These certificates can also be used to sign the AuthNRequest, as well as to decrypt the assertion for Inbound SAML. For more information, see [Bring Your Own SAML App Certificate](/docs/how-to/byo_saml.html).<!-- OKTA-119158 -->
 
 #### Universal Directory for User Locale
 
@@ -66,7 +66,7 @@ This endpoint enables the API user to recover from failure in the authentication
 
 #### Linking Users to Social Identity Providers
 
-Added a number of APIs that allow you to link an existing Okta user to a Social Identity Provider via an `externalId`. <JV: needs "for more info" link> <!-- OKTA-97257 -->
+Added a number of APIs that allow you to link an existing Okta user to a Social Identity Provider via an `externalId`. For more information, see [Identity Provider User Operations](/docs/api/resources/idps.html#identity-provider-user-operations) <!-- OKTA-97257 -->
 
 ### Platform Bugs Fixed
 
