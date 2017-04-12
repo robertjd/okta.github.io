@@ -10,11 +10,9 @@ excerpt: Summary of changes to the Okta Platform since Release 2017.12
 
 We are making org-wide rate limits more granular, and treating authenticated end-user interactions separately. More granular rate limits will further lessen the likelihood of calls to one URI impacting another. Treating authenticated end-user interactions separately will lessen the chances of one user's impacting another. We’re also providing a transition period so you can see what these changes will look like in your Okta system log before enforcing them:
 
-1. After Friday, 2017-04-07, you'll see system log alerts that let you know if you would have exceeded any of the new API rate limits. We're making this feature available to all preview orgs, and the feature will remain in preview for at least two weeks.
+1. After Monday, 2017-04-17, you'll see system log alerts that let you know if you would have exceeded any of the new API rate limits. We're making this feature available to all preview orgs, and the feature will remain in preview for at least two weeks.
 
-2. Starting later in April, 2017, we’ll treat authenticated end-user interactions on a per-user basis.
-
-Interactions like SSO after login won't apply to your org-wide API rate limits.
+2. Starting later in April, 2017, we’ll treat authenticated end-user interactions on a per-user basis. Interactions like SSO after login won't apply to your org-wide API rate limits.
 
 3. Early in May, 2017, we will enforce the new, more granular rate limits. At that point, the warnings in the System Log will change to error notifications.
 
@@ -31,13 +29,13 @@ issued to the user. For more information, see [the Users API](/docs/api/resource
 
 #### Token Requests with Grant Type password
 
-Token requests with `password` grant type (`grant_type`) and `openid` scope now returns an ID Token.
+Token requests with `password` grant type (`grant_type`) and `openid` scope now return an ID Token.
 Previously only the appropriate Access Token or Refresh Token was returned. <!-- OKTA-117288 -->
 
 #### Authentication That Overrides Client Request Context
 
-Authenticates a user via a trusted application or proxy that uses the activation token.
-For more information, see [Authentication API[(/docs/api/resources/authn.html#primary-authentication-with-activation-token). <!-- OKTA-119692 -->
+The API now authenticates a user via a trusted application or proxy that uses the activation token.
+For more information, see [Authentication API](/docs/api/resources/authn.html#primary-authentication-with-activation-token). <!-- OKTA-119692 -->
 
 #### HAL Link for User in Provisioned State
 
@@ -46,8 +44,7 @@ for requests when the user is in a PROVISIONED state but doesn't have a password
 
 #### New Developer Org Banner
 
-A new banner displays when you log into your developer org. It provides links to common onboarding tasks.
-Once you dismiss the banner, it can't be displayed again. <!-- OKTA-121055 -->
+A new banner displays when you log into your developer org. It provides links to common onboarding tasks. Once you dismiss the banner, it can't be displayed again. <!-- OKTA-121055 -->
 
 #### Access Policy by IP Range
 
