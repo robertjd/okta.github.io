@@ -40,7 +40,7 @@ For more information, see [Authentication API](/docs/api/resources/authn.html#pr
 #### HAL Link for User in Provisioned State
 
 A [HAL link](https://tools.ietf.org/html/draft-kelly-json-hal-06) to `/api/v1/users/:uid/lifecycle/reactivate` is now provided
-for requests when the user is in a PROVISIONED state but doesn't have a password. <JV: needs "for more info" link>. <!-- OKTA-119221 -->
+for requests when the user is in a PROVISIONED state but doesn't have a password.  <!-- OKTA-119221 -->
 
 #### New Developer Org Banner
 
@@ -62,7 +62,7 @@ When determining the user locale via the API, Okta uses the locale setting in th
 
 Added `lifecycle/reactivate` endpoint.
 
-This endpoint enables the API user to recover from failure in the authentication workflow, specifically when the user password is not set. In those cases this endpoint can be used to restart the activation by getting a new token and proceeding to set the user credentials. <!-- OKTA-119096 -->
+This endpoint enables the API user to recover from failure in the authentication workflow, specifically when the user password is not set. In those cases this endpoint can be used to restart the activation by getting a new token and proceeding to set the user credentials. For more information, see the [API Reference](/docs/api/resources/users.html#reactivate-user). <!-- OKTA-119096 -->
 
 #### Linking Users to Social Identity Providers
 
