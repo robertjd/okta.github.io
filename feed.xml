@@ -9,7 +9,7 @@
     
       <item>
         <title>Build a React Application with User Authentication in 15 Minutes</title>
-        <description>&lt;p&gt;React has quickly become one of the most favored front-end web frameworks, andis second only to plain old HTML5, &lt;a href=&quot;https://jaxenter.com/technology-trends-2017-top-frameworks-131993.html&quot;&gt;according to JAXenter&lt;/a&gt;. So it’s no surprise that &lt;a href=&quot;https://www.lynda.com/React-js-training-tutorials/7049-0.html&quot;&gt;developers are learning it&lt;/a&gt;, and &lt;a href=&quot;https://stackoverflow.com/jobs?sort=i&amp;amp;q=ReactJS&quot;&gt;employers are asking for it&lt;/a&gt;.&lt;/p&gt;
+        <description>&lt;p&gt;React has quickly become one of the most favored front-end web frameworks, and is second only to plain old HTML5, &lt;a href=&quot;https://jaxenter.com/technology-trends-2017-top-frameworks-131993.html&quot;&gt;according to JAXenter&lt;/a&gt;. So it’s no surprise that &lt;a href=&quot;https://www.lynda.com/React-js-training-tutorials/7049-0.html&quot;&gt;developers are learning it&lt;/a&gt;, and &lt;a href=&quot;https://stackoverflow.com/jobs?sort=i&amp;amp;q=ReactJS&quot;&gt;employers are asking for it&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;In this tutorial, you’ll start with a very simple React app with a couple of pages and some routing built in, and add authentication using &lt;a href=&quot;http://developer.okta.com/code/javascript/okta_sign-in_widget&quot;&gt;Okta’s Sign-In Widget&lt;/a&gt;. The Sign-In Widget is an embeddable Javascript widget that allows developers to use Okta’s secure, scalable architecture with a minimum of effort from within React applications. Let’s get started!&lt;/p&gt;
 &lt;h2 id=&quot;get-the-simple-react-seed-project&quot;&gt;Get the Simple React Seed Project&lt;/h2&gt;
@@ -179,9 +179,10 @@ npm start
 &lt;/div&gt;
 &lt;blockquote&gt;
   &lt;p&gt;&lt;em&gt;You might have noticed a weird bit of code in that &lt;code class=&quot;highlighter-rouge&quot;&gt;showLogin&lt;/code&gt; method. That first line: &lt;code class=&quot;highlighter-rouge&quot;&gt;Backbone.history.stop()&lt;/code&gt;. The widget itself uses &lt;a href=&quot;&quot;&gt;Backbone.js&lt;/a&gt; to navigate between its own screens (login, forgot password, etc.), and when it renders, it starts the &lt;code class=&quot;highlighter-rouge&quot;&gt;Backbone.history&lt;/code&gt;. Since you’ve now moved it out into a &lt;code class=&quot;highlighter-rouge&quot;&gt;showLogin&lt;/code&gt; function, the widget is going to re-render whenever the function is called. So this is just a little trick to tell Backbone to stop the history, because it’s going to restart when the widget is rendered.&lt;/em&gt;&lt;/p&gt;
-  &lt;h2 id=&quot;the-final-loginpage-react-component&quot;&gt;The Final LoginPage React Component&lt;/h2&gt;
-  &lt;p&gt;Let’s wrap this up. Make sure you bind the class’s &lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt; context to each of your methods. Add a &lt;code class=&quot;highlighter-rouge&quot;&gt;logout&lt;/code&gt; method, and change your &lt;code class=&quot;highlighter-rouge&quot;&gt;render&lt;/code&gt; method to make a decision on what to render, based on whether there is a currently logged in user.&lt;/p&gt;
 &lt;/blockquote&gt;
+
+&lt;h2 id=&quot;the-final-loginpage-react-component&quot;&gt;The Final LoginPage React Component&lt;/h2&gt;
+&lt;p&gt;Let’s wrap this up. Make sure you bind the class’s &lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt; context to each of your methods. Add a &lt;code class=&quot;highlighter-rouge&quot;&gt;logout&lt;/code&gt; method, and change your &lt;code class=&quot;highlighter-rouge&quot;&gt;render&lt;/code&gt; method to make a decision on what to render, based on whether there is a currently logged in user.&lt;/p&gt;
 
 &lt;p&gt;So the final version of &lt;code class=&quot;highlighter-rouge&quot;&gt;LoginPage.js&lt;/code&gt; should look like this.&lt;/p&gt;
 
@@ -267,7 +268,7 @@ npm start
 
 &lt;p&gt;I hope you’ve enjoyed this quick tour of our React support. If you have questions about Okta’s features, or what we’re building next, please hit me up on Twitter &lt;a href=&quot;https://twitter.com/leebrandt&quot;&gt;@leebrandt&lt;/a&gt;, leave a comment below, or open an issue on GitHub.&lt;/p&gt;
 </description>
-        <pubDate>Thu, 30 Mar 2017 00:00:00 -0700</pubDate>
+        <pubDate>Thu, 30 Mar 2017 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2017/03/30/react-okta-sign-in-widget</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2017/03/30/react-okta-sign-in-widget</guid>
       </item>
@@ -564,7 +565,7 @@ Chrome 56.0.2924 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Mac OS X 10.11.6&
 
 &lt;p&gt;I hope you’ve enjoyed this quick tour of our Angular support. If you have questions about Okta’s features, or what we’re building next, please hit me up &lt;a href=&quot;https://twitter.com/mraible&quot;&gt;on Twitter&lt;/a&gt;, &lt;a href=&quot;http://stackoverflow.com/questions/tagged/okta&quot;&gt;post a question to Stack Overflow with an “okta” tag&lt;/a&gt;, or &lt;a href=&quot;https://github.com/oktadeveloper/okta-angular-sign-in-widget-example/issues/new&quot;&gt;open a new issue on GitHub&lt;/a&gt;.&lt;/p&gt;
 </description>
-        <pubDate>Mon, 27 Mar 2017 00:00:00 -0700</pubDate>
+        <pubDate>Mon, 27 Mar 2017 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2017/03/27/angular-okta-sign-in-widget</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2017/03/27/angular-okta-sign-in-widget</guid>
       </item>
@@ -772,7 +773,7 @@ brew install springboot
 &lt;p&gt;In a future tutorial, I’ll show you how to develop one of these fancy UIs in Angular and use the access token retrieved to talk to a Spring Boot API that’s secured by Spring Security and does JWT validation.&lt;/p&gt;
 
 </description>
-        <pubDate>Tue, 21 Mar 2017 00:00:00 -0700</pubDate>
+        <pubDate>Tue, 21 Mar 2017 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2017/03/21/spring-boot-oauth</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2017/03/21/spring-boot-oauth</guid>
       </item>
@@ -1005,7 +1006,7 @@ Hello SAML!
 &lt;p&gt;Have questions or comments? Post your question to Stack Overflow with the “&lt;a href=&quot;http://stackoverflow.com/questions/tagged/okta&quot;&gt;okta&lt;/a&gt;” or “&lt;a href=&quot;http://stackoverflow.com/questions/tagged/okta-api&quot;&gt;okta-api&lt;/a&gt;” tag, hit me up via email at &lt;a href=&quot;mailto:matt.raible@okta.com&quot;&gt;matt.raible@okta.com&lt;/a&gt;, or ping me on Twitter &lt;a href=&quot;https://twitter.com/mraible&quot;&gt;@mraible&lt;/a&gt;. In future articles, I’ll show you to to configure Spring Boot with OAuth 2.0 and Okta. Then I’ll explore different techniques of authenticating with Angular and using the access token to talk to a secured Spring Boot application. Until then, happy authenticating! 😊&lt;/p&gt;
 
 </description>
-        <pubDate>Thu, 16 Mar 2017 00:00:00 -0700</pubDate>
+        <pubDate>Thu, 16 Mar 2017 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2017/03/16/spring-boot-saml</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2017/03/16/spring-boot-saml</guid>
       </item>
@@ -1082,7 +1083,7 @@ Hello SAML!
 
 &lt;p&gt;&lt;strong&gt;Happy Okta’ing!&lt;/strong&gt;&lt;/p&gt;
 </description>
-        <pubDate>Tue, 22 Mar 2016 00:00:00 -0700</pubDate>
+        <pubDate>Tue, 22 Mar 2016 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2016/03/22/use-kentor-authservices-with-okta</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2016/03/22/use-kentor-authservices-with-okta</guid>
       </item>
@@ -1112,7 +1113,7 @@ services within an application.&lt;/p&gt;
 
 &lt;iframe src=&quot;https://player.vimeo.com/video/150714428&quot; width=&quot;500&quot; height=&quot;281&quot; frameborder=&quot;0&quot; webkitallowfullscreen=&quot;&quot; mozallowfullscreen=&quot;&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
 </description>
-        <pubDate>Tue, 05 Jan 2016 00:00:00 -0800</pubDate>
+        <pubDate>Tue, 05 Jan 2016 00:00:00 -0500</pubDate>
         <link>http://developer.okta.com/blog/2016/01/05/rest-service-auth-jwt</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2016/01/05/rest-service-auth-jwt</guid>
       </item>
@@ -1127,7 +1128,7 @@ services within an application.&lt;/p&gt;
 
 &lt;iframe src=&quot;https://player.vimeo.com/video/148164438&quot; width=&quot;500&quot; height=&quot;281&quot; frameborder=&quot;0&quot; webkitallowfullscreen=&quot;&quot; mozallowfullscreen=&quot;&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
 </description>
-        <pubDate>Mon, 07 Dec 2015 00:00:00 -0800</pubDate>
+        <pubDate>Mon, 07 Dec 2015 00:00:00 -0500</pubDate>
         <link>http://developer.okta.com/blog/2015/12/07/oauth</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2015/12/07/oauth</guid>
       </item>
@@ -1544,7 +1545,7 @@ you implement these authentication concepts in your applications.&lt;/p&gt;
   &lt;li&gt;&lt;a href=&quot;https://jersey.java.net/documentation/latest/client.html#d0e5128&quot;&gt;Jersey client documentation&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
-        <pubDate>Wed, 02 Dec 2015 00:00:00 -0800</pubDate>
+        <pubDate>Wed, 02 Dec 2015 00:00:00 -0500</pubDate>
         <link>http://developer.okta.com/blog/2015/12/02/tls-client-authentication-for-services</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2015/12/02/tls-client-authentication-for-services</guid>
       </item>
@@ -1605,7 +1606,7 @@ In the event of trust page problems, make sure that you have ways to easily and 
 
 &lt;p&gt;&lt;em&gt;The Trust Page is the work of an amazing team that includes Tim Gu, Shawn Gupta, Nathan Tate, Wendy Liao, and myself.&lt;/em&gt;&lt;/p&gt;
 </description>
-        <pubDate>Thu, 11 Jun 2015 00:00:00 -0700</pubDate>
+        <pubDate>Thu, 11 Jun 2015 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2015/06/11/trustpage</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2015/06/11/trustpage</guid>
       </item>
@@ -1691,7 +1692,7 @@ compared to the amount of available RAM, which meant that we were sacrificing bo
 
 &lt;p&gt;Beyond the technical lessons we learned during this period, we were reminded that sometimes the best thing to do is stay the course. At times we were tempted to pull back, but moving forward ultimately paid off as each improvement we made exposed the inadequacy (for our platform) of a downstream component.&lt;/p&gt;
 </description>
-        <pubDate>Fri, 22 May 2015 00:00:00 -0700</pubDate>
+        <pubDate>Fri, 22 May 2015 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2015/05/22/tcmalloc</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2015/05/22/tcmalloc</guid>
       </item>
@@ -1910,7 +1911,7 @@ enforce limits and design for infinity.&lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
 </description>
-        <pubDate>Fri, 08 May 2015 00:00:00 -0700</pubDate>
+        <pubDate>Fri, 08 May 2015 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2015/05/08/software-engineering-design-principles</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2015/05/08/software-engineering-design-principles</guid>
       </item>
@@ -2016,7 +2017,7 @@ where we were last fall, our goal is &lt;strong&gt;zero failover time&lt;/strong
 their hands dirty tackling product issues? Our CTO doesn’t code very often, but when
 he does, he patches the JVM.&lt;/p&gt;
 </description>
-        <pubDate>Fri, 08 May 2015 00:00:00 -0700</pubDate>
+        <pubDate>Fri, 08 May 2015 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2015/05/08/productionalizing-active-mq</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2015/05/08/productionalizing-active-mq</guid>
       </item>
@@ -2178,7 +2179,7 @@ steps in writing on our wiki. Thanks guys!&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Thu, 23 Apr 2015 00:00:00 -0700</pubDate>
+        <pubDate>Thu, 23 Apr 2015 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2015/04/23/android-unit-testing-part-4</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2015/04/23/android-unit-testing-part-4</guid>
       </item>
@@ -2337,7 +2338,7 @@ dependency, not a real one.&lt;/p&gt;
 how to make tests isolated. You can also check out the full code at
 &lt;a href=&quot;https://github.com/vronin-okta/okta_blog_samples/tree/master/android_unit_testing&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 </description>
-        <pubDate>Tue, 14 Apr 2015 00:00:00 -0700</pubDate>
+        <pubDate>Tue, 14 Apr 2015 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2015/04/14/android-unit-testing-part-3</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2015/04/14/android-unit-testing-part-3</guid>
       </item>
@@ -2531,7 +2532,7 @@ because of a bad network connection.&lt;/p&gt;
 to achieve test isolation using dependency injection. You can also
 check out the full code at &lt;a href=&quot;https://github.com/vronin-okta/okta_blog_samples/tree/master/android_unit_testing&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 </description>
-        <pubDate>Tue, 07 Apr 2015 00:00:00 -0700</pubDate>
+        <pubDate>Tue, 07 Apr 2015 00:00:00 -0400</pubDate>
         <link>http://developer.okta.com/blog/2015/04/07/android-unit-testing-part-2</link>
         <guid isPermaLink="true">http://developer.okta.com/blog/2015/04/07/android-unit-testing-part-2</guid>
       </item>

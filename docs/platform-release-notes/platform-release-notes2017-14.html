@@ -13,9 +13,9 @@
   <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
   <link rel="stylesheet" type="text/css" media="all" href="/assets/css/animate.css">
   <link rel="stylesheet" type="text/css" media="all" href="/assets/css/okta.css">
-  <title>Platform Release Notes Index | Okta Developer</title>
-  <meta name="description" content="List of changes to the Okta Platform">
-  <link rel="canonical" href="http://developer.okta.com/docs/platform-release-notes/platform-release-notes2016-">
+  <title>Platform Release Notes | Okta Developer</title>
+  <meta name="description" content="Summary of changes to the Okta Platform since Release 2017.12">
+  <link rel="canonical" href="http://developer.okta.com/docs/platform-release-notes/platform-release-notes2017-14.html">
   <link rel="alternate" type="application/rss+xml" title="Okta Developer" href="http://developer.okta.com/feed.xml"><!-- GA -->
 
   <script>
@@ -172,46 +172,54 @@
 <!-- END Fixed sidebar -->
       <!-- START Page Content -->
       <div class="PageContent-main" id="docs-body">
-        <a id="edit-link" href="https://github.com/okta/okta.github.io/edit/master/_source/_docs/platform-release-notes/platform-release-notes2016-index.md">Edit Page</a>
-      <h2 id="index-of-platform-release-notes">Index of Platform Release Notes</h2>
+        <a id="edit-link" href="https://github.com/okta/okta.github.io/edit/master/_source/_docs/platform-release-notes/platform-release-notes2017-14.md">Edit Page</a>
+      <h2 id="release-201714">Release 2017.14</h2>
+
+<h3 id="advance-notice-api-rate-limit-improvements">Advance Notice: API Rate Limit Improvements</h3>
+
+<p>We are making org-wide rate limits more granular, and treating authenticated end-user interactions
+separately. More granular rate limits will further lessen the likelihood of calls to one URI impacting
+another. Treating authenticated end-user interactions separately will lessen the chances of one user’s
+impacting another. We’re also providing a transition period so you can see what these changes will
+look like in your Okta system log before enforcing them:</p>
+
+<ol>
+  <li>By approximately Friday, 4/7/2017, you’ll see system log alerts that let you know if you
+would have exceeded any of the new API rate limits. We’re making this feature available over the next few days to all preview orgs,
+and the feature will remain in preview for at least two weeks.</li>
+  <li>Starting later in April, 2017, we’ll treat authenticated end-user interactions on a per-user basis.
+Interactions like SSO after login won’t apply to your org-wide API rate limits.</li>
+  <li>Early in May, 2017, we will enforce the new, more granular rate limits. At that
+point, the warnings in the System Log will change to error notifications.</li>
+</ol>
+
+<p>Of course, as each change is released, we’ll announce the change here.</p>
+
+<p>For a full description of the rate limit changes, see <a href="https://support.okta.com/help/articles/Knowledge_Article/API-Rate-Limit-Improvements">API Rate Limit Improvements</a>.<!-- OKTA-110472 --></p>
+
+<!--
+### Feature Improvements
+ * xxx
+-->
+<!-- (OKTA-114417) -->
+
+<!-- ### Platform Bugs Fixed
+ * description (OKTA-number)
+ -->
+
+<h3 id="does-your-org-have-this-change-yet">Does Your Org Have This Change Yet?</h3>
+
+<p>To verify the current release for an org, click the <strong>Admin</strong> button and check the footer of the Dashboard page.</p>
+
+<p><img src="/assets/img/release_notes/version_footer.png" alt="Release Number in Footer" /></p>
+
+<h3 id="looking-for-something-else">Looking for Something Else?</h3>
 
 <ul>
-  <li><a href="platform-release-notes.html">Platform Release Notes for Current Preview Release</a></li>
-  <li><a href="platform-release-notes2017-14.html">Platform Release Notes for Release 2017.14</a></li>
-  <li><a href="platform-release-notes2017-12.html">Platform Release Notes for Release 2017.12</a></li>
-  <li><a href="platform-release-notes2017-11.html">Platform Release Notes for Release 2017.11</a></li>
-  <li><a href="platform-release-notes2017-10.html">Platform Release Notes for Release 2017.10</a></li>
-  <li><a href="platform-release-notes2017-09.html">Platform Release Notes for Release 2017.09</a></li>
-  <li><a href="platform-release-notes2017-05.html">Platform Release Notes for Release 2017.05</a></li>
-  <li><a href="platform-release-notes2017-04.html">Platform Release Notes for Release 2017.04</a></li>
-  <li><a href="platform-release-notes2017-03.html">Platform Release Notes for Release 2017.03</a></li>
-  <li><a href="platform-release-notes2017-02.html">Platform Release Notes for Release 2017.02</a></li>
-  <li><a href="platform-release-notes2016-52.html">Platform Release Notes for Release 2016.52</a></li>
-  <li><a href="platform-release-notes2016-51.html">Platform Release Notes for Release 2016.51</a></li>
-  <li><a href="platform-release-notes2016-50.html">Platform Release Notes for Release 2016.50</a></li>
-  <li><a href="platform-release-notes2016-49.html">Platform Release Notes for Release 2016.49</a></li>
-  <li><a href="platform-release-notes2016-47.html">Platform Release Notes for Release 2016.47</a></li>
-  <li><a href="platform-release-notes2016-46.html">Platform Release Notes for Release 2016.46</a></li>
-  <li><a href="platform-release-notes2016-45.html">Platform Release Notes for Release 2016.45</a></li>
-  <li><a href="platform-release-notes2016-43.html">Platform Release Notes for Release 2016.43</a></li>
-  <li><a href="platform-release-notes2016-41.html">Platform Release Notes for Release 2016.41</a></li>
-  <li><a href="platform-release-notes2016-40.html">Platform Release Notes for Release 2016.40</a></li>
-  <li><a href="platform-release-notes2016-39.html">Platform Release Notes for Release 2016.39</a></li>
-  <li><a href="platform-release-notes2016-37.html">Platform Release Notes for Release 2016.37</a></li>
-  <li><a href="platform-release-notes2016-36.html">Platform Release Notes for Release 2016.36</a></li>
-  <li><a href="platform-release-notes2016-35.html">Platform Release Notes for Release 2016.35</a></li>
-  <li><a href="platform-release-notes2016-34.html">Platform Release Notes for Release 2016.34</a></li>
-  <li><a href="platform-release-notes2016-33.html">Platform Release Notes for Release 2016.33</a></li>
-  <li><a href="platform-release-notes2016-31.html">Platform Release Notes for Release 2016.31</a></li>
-  <li><a href="platform-release-notes2016-30.html">Platform Release Notes for Release 2016.30</a></li>
-  <li><a href="platform-release-notes2016-29.html">Platform Release Notes for Release 2016.29</a></li>
-  <li><a href="platform-release-notes2016-28.html">Platform Release Notes for Release 2016.28</a></li>
-  <li><a href="platform-release-notes2016-27.html">Platform Release Notes for Release 2016.27</a></li>
-  <li><a href="platform-release-notes2016-26.html">Platform Release Notes for Release 2016.26</a></li>
-  <li><a href="platform-release-notes2016-25.html">Platform Release Notes for Release 2016.25</a></li>
-  <li><a href="platform-release-notes2016-24.html">Platform Release Notes for Release 2016.24</a></li>
-  <li><a href="platform-release-notes2016-23.html">Platform Release Notes for Release 2016.23</a></li>
+  <li><a href="platform-release-notes2016-index.html">Platform Release Note Index</a></li>
+  <li>For changes outside the Okta platform, see the <a href="https://help.okta.com/en/prev/Content/Topics/ReleaseNotes/preview.htm">Product Release Notes</a>.</li>
 </ul>
+
 
       </div>
       <div class="TableOfContents TableOfContentsPreload">

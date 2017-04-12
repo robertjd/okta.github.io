@@ -3001,7 +3001,7 @@ The next time the user federates into Okta via this IdP, they have to re-link th
      i5VPwaDtqduKkzwW9lUfn4xIMkTiVvCpe0X2HneD2Bpuao3/U8Rk0uiPfq6TooWaoW3kjsmErhEAs9bA7xuqo1KKY9CdHcFhk
      SsMhoeaZylZHtzbnoipUlQKSLMdJQiiYZQ0bYL83/Ta9fulr1EERICMFt3GUmtYaZZKHpWSfdJp9"</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="nt">"x5t"</span><span class="p">:</span><span class="w"> </span><span class="s2">"noocvK-9pzU-n35eimPK16zYEYk"</span><span class="w">
+  </span><span class="nt">"x5t#S256"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wzPVobIrveR1x-PCbjsFGNV-6zn7Rm9KuOWOG4Rk6jE"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 </div>
@@ -3080,7 +3080,7 @@ The next time the user federates into Okta via this IdP, they have to re-link th
      i5VPwaDtqduKkzwW9lUfn4xIMkTiVvCpe0X2HneD2Bpuao3/U8Rk0uiPfq6TooWaoW3kjsmErhEAs9bA7xuqo1KKY9CdHcFhk
      SsMhoeaZylZHtzbnoipUlQKSLMdJQiiYZQ0bYL83/Ta9fulr1EERICMFt3GUmtYaZZKHpWSfdJp9"</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="nt">"x5t"</span><span class="p">:</span><span class="w"> </span><span class="s2">"noocvK-9pzU-n35eimPK16zYEYk"</span><span class="w">
+  </span><span class="nt">"x5t#S256"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wzPVobIrveR1x-PCbjsFGNV-6zn7Rm9KuOWOG4Rk6jE"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 </div>
@@ -3168,7 +3168,7 @@ The next time the user federates into Okta via this IdP, they have to re-link th
        Dt+XlMTv/2qi5VPwaDtqduKkzwW9lUfn4xIMkTiVvCpe0X2HneD2Bpuao3/U8Rk0uiPfq6TooWaoW3kjsmErhEAs9bA7xuqo
        1KKY9CdHcFhkSsMhoeaZylZHtzbnoipUlQKSLMdJQiiYZQ0bYL83/Ta9fulr1EERICMFt3GUmtYaZZKHpWSfdJp9"</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="nt">"x5t"</span><span class="p">:</span><span class="w"> </span><span class="s2">"noocvK-9pzU-n35eimPK16zYEYk"</span><span class="w">
+    </span><span class="nt">"x5t#S256"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wzPVobIrveR1x-PCbjsFGNV-6zn7Rm9KuOWOG4Rk6jE"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
@@ -3473,6 +3473,261 @@ The next time the user federates into Okta via this IdP, they have to re-link th
   </span><span class="nt">"kty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RSA"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"use"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sig"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"x5t#S256"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5GOpy9CQVtfvBmu2T8BHvpKE4OGtC3BuS046t7p9pps"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="identity-provider-user-operations">Identity Provider User Operations</h2>
+
+<h3 class="api api-operation" id="listing-idps-associated-with-a-user">Listing IdPs associated with a user</h3>
+
+<p><span class="api-uri-template api-uri-get"><span class="api-label">GET</span> /api/v1/users/<em>:uid</em>/idps</span></p>
+
+<p>Lists the IdPs associated with the user.</p>
+
+<h5 class="api api-request api-request-params" id="request-parameters-22">Request Parameters</h5>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Param Type</th>
+      <th>DataType</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uid</td>
+      <td><code class="highlighter-rouge">id</code> of the Okta User</td>
+      <td>URL</td>
+      <td>String</td>
+      <td>TRUE</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 class="api api-response api-response-params" id="response-parameters-22">Response Parameters</h5>
+
+<p>Return the associated <a href="#identity-provider-model">Identity Providers</a></p>
+
+<h5 class="api api-request api-request-example" id="request-example-28">Request Example</h5>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>curl -v -X GET <span class="se">\</span>
+-H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+-H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+-H <span class="s2">"Authorization: SSWS </span><span class="k">${</span><span class="nv">api_token</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+<span class="s2">"https://</span><span class="k">${</span><span class="nv">org</span><span class="k">}</span><span class="s2">.okta.com/api/v1/users/00ub0oNGTSWTBKOLGLNR/idps"</span>
+</code></pre>
+</div>
+
+<h5 class="api api-response api-response-example" id="response-example-28">Response Example</h5>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">[{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0oa62b57p7c8PaGpU0h7"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FACEBOOK"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Facebook"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACTIVE"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-03-24T23:18:27.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"lastUpdated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-03-24T23:18:27.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OAUTH2"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"endpoints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.facebook.com/dialog/oauth"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTTP-REDIRECT"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"token"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://graph.facebook.com/v2.5/oauth/access_token"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTTP-POST"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"scopes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"public_profile"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"email"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"client"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your-client-id"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your-client-secret"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"policy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"provisioning"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUTO"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"profileMaster"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NONE"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"accountLink"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"filter"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUTO"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"subject"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"userNameTemplate"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"template"</span><span class="p">:</span><span class="w"> </span><span class="s2">"idpuser.userPrincipalName"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"filter"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"matchType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USERNAME"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"maxClockSkew"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"authorize"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://your-domain.okta.com/oauth2/v1/authorize?idp=0oa62b57p7c8PaGpU0h7&amp;
+          client_id={clientId}&amp;response_type={responseType}&amp;response_mode={responseMode}&amp;
+          scope={scopes}&amp;redirect_uri={redirectUri}&amp;state={state}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"hints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"GET"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"clientRedirectUri"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://your-domain.okta.com/oauth2/v1/authorize/callback"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"hints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"POST"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"idpUser"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://rain.okta1.com:1802/idps/0oa62b57p7c8PaGpU0h7/users/00ub0oNGTSWTBKOLGLNR"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"hints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"DELETE"</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}]</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>If the user does not exist, you receive an error response.</p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">400</span> <span class="ne">Bad Request</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+
+<span class="p">{</span><span class="w">
+  </span><span class="nt">"errorCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E0000007"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"errorSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found: Resource not found: 00u3b8ixnOCwbn8Sn0g4 (User)"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"errorLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E0000007"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"errorId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"oaeYW9k9yJuSSSkhaMQdA1-Zg"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"errorCauses"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 class="api api-operation" id="link-a-user-to-a-social-idp-without-a-transaction">Link a user to a Social IdP without a transaction</h3>
+
+<p><span class="api-uri-template api-uri-post"><span class="api-label">POST</span> /api/v1/idps/<em>:id</em>/users/<em>:uid</em></span></p>
+
+<p>Links an Okta user to an existing Social <a href="#identity-provider-model">Identity Provider</a>. This does not support the SAML2 <a href="#identity-provider-type">Identity Provider Type</a>.</p>
+
+<h5 class="api api-request api-request-params" id="request-parameters-23">Request Parameters</h5>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Param Type</th>
+      <th>DataType</th>
+      <th>Required</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td><code class="highlighter-rouge">id</code> of the IdP</td>
+      <td>URL</td>
+      <td>String</td>
+      <td>TRUE</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>uid</td>
+      <td><code class="highlighter-rouge">id</code> of the Okta User</td>
+      <td>URL</td>
+      <td>String</td>
+      <td>TRUE</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>externalId</td>
+      <td>unique IdP-specific identifier for user</td>
+      <td>Body</td>
+      <td>String</td>
+      <td>TRUE</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 class="api api-response api-response-params" id="response-parameters-23">Response Parameters</h5>
+
+<p>Return the associated <a href="#identity-provider-model">Identity Providers</a></p>
+
+<h5 class="api api-request api-request-example" id="request-example-29">Request Example</h5>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>curl -v -X POST <span class="se">\</span>
+-H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+-H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+-H <span class="s2">"Authorization: SSWS </span><span class="k">${</span><span class="nv">api_token</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+-d <span class="s1">'{
+  "externalId" : "121749775026145"
+}'</span> <span class="s2">"https://</span><span class="k">${</span><span class="nv">org</span><span class="k">}</span><span class="s2">.okta.com/api/v1/idps/0oa62b57p7c8PaGpU0h7/users/00ub0oNGTSWTBKOLGLNR"</span>
+</code></pre>
+</div>
+
+<h5 class="api api-response api-response-example" id="response-example-29">Response Example</h5>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00ub0oNGTSWTBKOLGLNR"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"externalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"121749775026145"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-03-30T02:19:51.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"lastUpdated"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-03-30T02:19:51.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://rain.okta1.com:1802/api/v1/idps/0oa62b57p7c8PaGpU0h7/users/00ub0oNGTSWTBKOLGLNR"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"hints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"DELETE"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"idp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://rain.okta1.com:1802/api/v1/idps/0oa62b57p7c8PaGpU0h7"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://rain.okta1.com:1802/api/v1/users/00ub0oNGTSWTBKOLGLNR"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>If either the user or the IdP does not exist, you receive an error response.</p>
+
+<div class="language-http highlighter-rouge"><pre class="highlight"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">400</span> <span class="ne">Bad Request</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+
+<span class="p">{</span><span class="w">
+  </span><span class="nt">"errorCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E0000007"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"errorSummary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Not found: Resource not found: 00ub0oNGTSWTBKOLGLNR (User)"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"errorLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E0000007"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"errorId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"oaeYW9k9yJuSSSkhaMQdA1-Zg"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"errorCauses"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 </div>
@@ -6491,7 +6746,7 @@ This object is used for dynamic discovery of related resources and lifecycle ope
      Dt+XlMTv/2qi5VPwaDtqduKkzwW9lUfn4xIMkTiVvCpe0X2HneD2Bpuao3/U8Rk0uiPfq6TooWaoW3kjsmErhEAs9bA7xuqo
      1KKY9CdHcFhkSsMhoeaZylZHtzbnoipUlQKSLMdJQiiYZQ0bYL83/Ta9fulr1EERICMFt3GUmtYaZZKHpWSfdJp9"</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="nt">"x5t"</span><span class="p">:</span><span class="w"> </span><span class="s2">"noocvK-9pzU-n35eimPK16zYEYk"</span><span class="w">
+  </span><span class="nt">"x5t#S256"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wzPVobIrveR1x-PCbjsFGNV-6zn7Rm9KuOWOG4Rk6jE"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 </div>
@@ -6560,8 +6815,8 @@ This object is used for dynamic discovery of related resources and lifecycle ope
       <td> </td>
     </tr>
     <tr>
-      <td>x5t</td>
-      <td>base64url-encoded SHA-1 thumbprint of the DER encoding of an X.509 certificate</td>
+      <td>x5t#S256</td>
+      <td>base64url-encoded SHA-256 thumbprint of the DER encoding of an X.509 certificate</td>
       <td>String</td>
       <td>FALSE</td>
       <td>TRUE</td>
