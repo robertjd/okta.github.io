@@ -1,9 +1,3 @@
-// all variables with "new-" are used for the new style
-// When we update the style for the other pages, we should normalize
-// them
-// Please Note: even though the variables are missing "new-"
-// they are still being used
-
 //-----------------------------------------------------------------------
 // Paths
 //-----------------------------------------------------------------------
@@ -27,11 +21,7 @@ $font-size:     (
                 'h4':               24px,
                 'h3':               28px,
                 'h2':               32px,
-                'h1':               36px,
-                'new-small':        12px,
-                'new-h2':           28px,
-                'new-h1':           44px,
-
+                'h1':               36px
 );
 
 
@@ -59,11 +49,7 @@ $line-height:   (
                 'h4':               34px,
                 'h3':               38px,
                 'h2':               42px,
-                'h1':               46px,
-                'large':            56px,
-                'new-h2':           36px,
-                'new-small':        20px,
-                'new-button':       38px,
+                'h1':               46px
 );
 
 
@@ -114,9 +100,7 @@ $colors:        (
                 'gray-lightest':          #fafafa,
                 'gray-lightest-hover':    #a9e6fd,
 
-                'blue-products':          #E0EEF6,
-
-                'new-gray-dark':          #3d3d3d
+                'blue-products':          #E0EEF6
 );
 
 
@@ -124,16 +108,11 @@ $colors:        (
 // Layout
 //-----------------------------------------------------------------------
 
-$site-width:                    1280px;
-$new-site-width:                1120px;
-$new-narrow-site-width:         760px;
-$grid-width:                    12;
+$site-width:    1280px;
+$grid-width:    12;
 
-$border-radius:                 3px;
-$border-size:                   2px;
-
-$line-break:    	20px;
-$gutter-width:  	20px;
+$line-break:    20px;
+$gutter-width:  20px;
 
 $breakpoints:   (
                 'xx-small':               320px,

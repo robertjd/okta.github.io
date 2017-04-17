@@ -4,9 +4,6 @@ title: "We'll be in touch shortly"
 valprop: {
 	title: "We'll be in touch shortly"
 }
-sitemap:
-  exclude: 'yes'
-redirect_to: "https://www.okta.com/developer/contact"
 ---
 
 

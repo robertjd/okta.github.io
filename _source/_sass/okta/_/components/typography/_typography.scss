@@ -8,15 +8,15 @@
 	@include media('<medium') {
 		@include margin(($line-break * 2) 0 $line-break);
 	}
-
+	
 	@include media('<small') {
 		br {
 			display: none;
 		}
 	}
-
-	a,
-	a:active,
+	
+	a, 
+	a:active, 
 	a:hover {
 		color: inherit;
 	}
@@ -33,13 +33,6 @@ html {
 	font-size: get-font-size('base');
 	font-weight: get-font-weight('base');
 	line-height: get-line-height('base');
-	&.wf-loading {
-		opacity: 0;
-		transform: translateY(-20px);
-	}
-	opacity: 1;
-	transition: transform .4s ease-in-out, opacity .4s ease-in-out;
-	transform: translateY(0);
 }
 
 %h1,
@@ -99,8 +92,8 @@ h6,
 p,
 ul,
 ol,
-blockquote,
-table,
+blockquote, 
+table, 
 address,
 form,
 pre {
@@ -117,7 +110,7 @@ a {
 	@include transition(normal color);
 	text-decoration: none;
 
-	&:active,
+	&:active, 
 	&:hover {
 		color: lighten(get-color('accent'), 10%);
 		text-decoration: underline;
