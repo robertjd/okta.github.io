@@ -1,10 +1,10 @@
 ---
 layout: docs_page
 title: Platform Release Notes
-excerpt: Summary of changes to the Okta Platform since Release 2017.12
+excerpt: Summary of changes to the Okta Platform since Release 2017.15
 ---
 
-## Release 2017.14
+## Release 2017.16
 
 ### Advance Notice: API Rate Limit Improvements
 
@@ -22,59 +22,21 @@ For a full description of the rate limit changes, see [API Rate Limit Improvemen
 
 ### Platform Feature Improvements
 
-#### Revoke Access Tokens and Refresh Tokens
+#### Zones API Generally Available in Preview
 
-Use the `oauthTokens` parameter when clearing user sessions to revoke all OpenID Connect and OAuth Access Tokens and Refresh Tokens
-issued to the user. For more information, see [the Users API](/docs/api/resources/users.html#clear-user-sessions).<!-- OKTA-116904 -->
+Access policies can now be defined based on an IP address range using [the Zones API](/docs/api/resources/zones.html).
+This feature is Generally Available in preview orgs and will be in preview for at least one month.
 
-#### Token Requests with Grant Type password
+#### feature
 
-Token requests with `password` grant type (`grant_type`) and `openid` scope now return an ID Token.
-Previously only the appropriate Access Token or Refresh Token was returned. <!-- OKTA-117288 -->
-
-#### Authentication That Overrides Client Request Context
-
-The API now authenticates a user via a trusted application or proxy that uses the activation token.
-For more information, see [Authentication API](/docs/api/resources/authn.html#primary-authentication-with-activation-token). <!-- OKTA-119692 -->
-
-#### HAL Link for User in Provisioned State
-
-A [HAL link](https://tools.ietf.org/html/draft-kelly-json-hal-06) to `/api/v1/users/:uid/lifecycle/reactivate` is now provided
-for requests when the user is in a PROVISIONED state but doesn't have a password.  <!-- OKTA-119221 -->
-
-#### New Developer Org Banner
-
-A new banner displays when you log into your developer org. It provides links to common onboarding tasks. Once you dismiss the banner, it can't be displayed again. <!-- OKTA-121055 -->
-
-#### Access Policy by IP Range
-
-Access Policies can now be defined based on an IP address range. <!-- OKTA-121280 -->
-
-#### Bring Your Own SAML Certificates
-
-Okta Admins can now upload their own SAML certificates to sign the assertion for Outbound SAML apps. These certificates can also be used to sign the AuthNRequest, as well as to decrypt the assertion for Inbound SAML. For more information, see [Bring Your Own SAML App Certificate](/docs/how-to/byo_saml.html).<!-- OKTA-119158 -->
-
-#### Universal Directory for User Locale
-
-When determining the user locale via the API, Okta uses the locale setting in the Universal Directory. If one isn't found, then Okta uses the org-wide display language instead. If the settings in Universal Directory and org are different for an end user, then Okta will prioritize the locale indicated in Universal Directory settings. This priority may change in future releases. <!-- OKTA-117789 -->
-
-#### Lifecycle Reactivation Endpoint
-
-Added `lifecycle/reactivate` endpoint.
-
-This endpoint enables the API user to recover from failure in the authentication workflow, specifically when the user password is not set. In those cases this endpoint can be used to restart the activation by getting a new token and proceeding to set the user credentials. For more information, see the [API Reference](/docs/api/resources/users.html#reactivate-user). <!-- OKTA-119096 -->
-
-#### Linking Users to Social Identity Providers
-
-Added a number of APIs that allow you to link an existing Okta user to a Social Identity Provider via an `externalId`. For more information, see [Identity Provider User Operations](/docs/api/resources/idps.html#identity-provider-user-operations) <!-- OKTA-97257 -->
+text <!-- OKTA-xxxxx -->
 
 ### Platform Bugs Fixed
 
- * Request to `/api/v1/users` while the user was still activating failed to return an HTTP 409 error. (OKTA-120458)
- * REACT samples contained errors. (OKTA-120530)
- * IdP key thumbprints were generated using SHA1. They are now generated using SHA-256, and the returned IdP key property has changed from `x5t` to `x5t#S256`. (OKTA-121442)
- * As part of the System Log API, if an invalid value was specified for `after`, we would return 0 results. Now you will get a validation error. (OKTA-119726)
-
+ * When a group was deleted, if that group was referenced by a social or SAML IdP, the reference wasn't removed and caused errors. (OKTA-116909)
+ * If a SAML IdP was specified in the query string for a request to the `/api/v1/authn` endpoint, the request sometimes failed. (OKTA-120122)
+ * Creating access policies for an authorization server failed for some client IDs. (OKTA-121230)
+ 
 ### Does Your Org Have This Change Yet?
 
 To verify the current release for an org, click the **Admin** button and check the footer of the Dashboard page.

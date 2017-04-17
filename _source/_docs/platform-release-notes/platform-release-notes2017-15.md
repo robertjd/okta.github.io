@@ -4,7 +4,7 @@ title: Platform Release Notes
 excerpt: Summary of changes to the Okta Platform since Release 2017.12
 ---
 
-## Release 2017.14
+## Release 2017.15
 
 ### Advance Notice: API Rate Limit Improvements
 
