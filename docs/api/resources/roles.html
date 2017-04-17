@@ -894,7 +894,7 @@
 <p>Removes an app target from an <code class="highlighter-rouge">APP_ADMIN</code> role assignment.</p>
 
 <blockquote>
-  <p>Removing the last app target changes the scope of the role assignment from only applying to specific app targets to applying to <strong>all</strong> app targets.</p>
+  <p>Don’t remove the last app target from a role assignment, as this causes an exception.  If you need a role assignment that applies to all apps, the API consumer should delete the <code class="highlighter-rouge">APP_ADMIN</code> role assignment and recreate it.</p>
 </blockquote>
 
 <h5 class="api api-request api-request-params" id="request-parameters-8">Request Parameters</h5>
