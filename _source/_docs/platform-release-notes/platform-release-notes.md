@@ -25,16 +25,12 @@ For a full description of the rate limit changes, see [API Rate Limit Improvemen
 #### Zones API Generally Available in Preview
 
 Access policies can now be defined based on an IP address range using [the Zones API](/docs/api/resources/zones.html).
-This feature is Generally Available in preview orgs and will be in preview for at least one month.
-
-#### feature
-
-text <!-- OKTA-xxxxx -->
+This feature is Generally Available in preview orgs and will be in preview for at least one month. <!-- OKTA-121280 -->
 
 ### Platform Bugs Fixed
 
  * When a group was deleted, if that group was referenced by a social or SAML IdP, the reference wasn't removed and caused errors. (OKTA-116909)
- * If a SAML IdP was specified in the query string for a request to the `/api/v1/authn` endpoint, the request sometimes failed. (OKTA-120122)
+ * If a SAML IdP was specified in the query string for a request to the `oauth2/v1/authorize` endpoint, the request failed in some orgs. (OKTA-120122)
  * Creating access policies for an authorization server failed for some client IDs. (OKTA-121230)
  
 ### Does Your Org Have This Change Yet?
