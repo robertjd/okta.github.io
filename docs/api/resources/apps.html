@@ -6120,6 +6120,10 @@ MIIC4DCCAcgCAQAwcTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExFjAUBgNVBAcMDVNh
 
 <p>Specifies credentials and scheme for the application’s <code class="highlighter-rouge">signOnMode</code>.</p>
 
+<blockquote>
+  <p>Note: To update the app you can provide just the <a href="#signing-credential-object">Signing Credential Object</a> instead of the entire Application Credential Object.</p>
+</blockquote>
+
 <table>
   <thead>
     <tr>
@@ -6332,6 +6336,7 @@ MIIC4DCCAcgCAQAwcTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExFjAUBgNVBAcMDVNh
 </div>
 
 <h4 id="signing-credential-object">Signing Credential Object</h4>
+
 <p>Determines the <a href="#application-key-credential-model">key</a> used for signing assertions for the <code class="highlighter-rouge">signOnMode</code></p>
 
 <table>
@@ -6341,10 +6346,6 @@ MIIC4DCCAcgCAQAwcTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExFjAUBgNVBAcMDVNh
       <th>Description</th>
       <th>DataType</th>
       <th>Nullable</th>
-      <th>Default</th>
-      <th>MinLength</th>
-      <th>MaxLength</th>
-      <th>Validation</th>
     </tr>
   </thead>
   <tbody>
@@ -6353,16 +6354,12 @@ MIIC4DCCAcgCAQAwcTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWExFjAUBgNVBAcMDVNh
       <td>Reference for <a href="#application-key-store-operations">key credential for the app</a></td>
       <td>String</td>
       <td>FALSE</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
     </tr>
   </tbody>
 </table>
 
 <blockquote>
-  <p>You must to enable the key rollover feature to view <code class="highlighter-rouge">kid</code>. Key rollover is an Early Access feature; contact Customer Support to enable it.</p>
+  <p>You must enable the key rollover feature to view <code class="highlighter-rouge">kid</code>. Key rollover is an  <a href="/docs/api/getting_started/releases-at-okta.html#early-access-ea"> <span class="api-label api-label-ea "> <i class="fa fa-flag"></i> Early Access </span> </a>  feature.</p>
 </blockquote>
 
 <div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
