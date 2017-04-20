@@ -33,13 +33,6 @@ html {
 	font-size: get-font-size('base');
 	font-weight: get-font-weight('base');
 	line-height: get-line-height('base');
-	&.wf-loading {
-		opacity: 0;
-		transform: translateY(-20px);
-	}
-	opacity: 1;
-	transition: transform .4s ease-in-out, opacity .4s ease-in-out;
-	transform: translateY(0);
 }
 
 %h1,
