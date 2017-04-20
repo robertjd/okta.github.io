@@ -107,7 +107,7 @@ Client applications have the following properties:
 > The `client_secret` is only shown on the initial creation of a client application (and only if the `token_endpoint_auth_method` is one that requires a client secret).
   It is never returned in a GET call. If a `client_secret` is not provided on creation and the `token_endpoint_auth_method` requires one Okta will generate a random `client_secret` for the client application.
 
-> The `client_id` must consist of alphanumeric characters, the following special characters `$-_.+!*'(),` and must contain between 6 and 100 characters, inclusive. The `client_secret` must consist of printable characters, which are defined in [the OAuth 2.0 Spec](https://tools.ietf.org/html/rfc6749#appendix-A), and must contain between 14 and 100 characters, inclusive.
+> The `client_id` must consist of alphanumeric characters, the following special characters `$-_.+!*'(),`, must contain between 6 and 100 characters, inclusive, and must not be the reserved word `ALL_CLIENTS`. The `client_secret` must consist of printable characters, which are defined in [the OAuth 2.0 Spec](https://tools.ietf.org/html/rfc6749#appendix-A), and must contain between 14 and 100 characters, inclusive.
 
 > The `grant_types` and `response_types` values described above are partially orthogonal, as they refer to arguments passed to different
   endpoints in the [OAuth 2.0 protocol](https://tools.ietf.org/html/rfc6749). However, they are related in that the `grant_types`

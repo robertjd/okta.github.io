@@ -55,9 +55,8 @@ curl -v -X GET \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -H "Authorization: SSWS ${api_token}" \
-"https://${org}.okta.com/api/v1/logs?since=2017-03-11T00%3A00%3A00%2B00%3A00"
+"https://${org}.okta.com/api/v1/logs?since=2017-03-11"
 ```
-
 
 ## Event Operations
 
