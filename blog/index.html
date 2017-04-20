@@ -2090,46 +2090,57 @@ security.saml2.metadata-url = &lt;your metadata url&gt;
     <span class="nd">@Value</span><span class="o">(</span><span class="s">"${security.saml2.metadata-url}"</span><span class="o">)</span>
     <span class="n">String</span> <span class="n">metadataUrl</span><span class="o">;</span>
 
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${server.ssl.key-alias}"</span><span class="o">)</span>
+    <span class="n">String</span> <span class="n">keyAlias</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${server.ssl.key-store-password}"</span><span class="o">)</span>
+    <span class="n">String</span> <span class="n">password</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${server.port}"</span><span class="o">)</span>
+    <span class="n">String</span> <span class="n">port</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${server.ssl.key-store}"</span><span class="o">)</span>
+    <span class="n">String</span> <span class="n">keyStoreFilePath</span><span class="o">;</span>
+
     <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="n">HttpSecurity</span> <span class="n">http</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="kd">final</span> <span class="n">HttpSecurity</span> <span class="n">http</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
         <span class="n">http</span>
             <span class="o">.</span><span class="na">authorizeRequests</span><span class="o">()</span>
-                <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/saml/**"</span><span class="o">).</span><span class="na">permitAll</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/saml*"</span><span class="o">).</span><span class="na">permitAll</span><span class="o">()</span>
                 <span class="o">.</span><span class="na">anyRequest</span><span class="o">().</span><span class="na">authenticated</span><span class="o">()</span>
                 <span class="o">.</span><span class="na">and</span><span class="o">()</span>
             <span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">saml</span><span class="o">())</span>
                 <span class="o">.</span><span class="na">serviceProvider</span><span class="o">()</span>
                     <span class="o">.</span><span class="na">keyStore</span><span class="o">()</span>
                         <span class="o">.</span><span class="na">storeFilePath</span><span class="o">(</span><span class="s">"saml/keystore.jks"</span><span class="o">)</span>
-                        <span class="o">.</span><span class="na">password</span><span class="o">(</span><span class="s">"secret"</span><span class="o">)</span>
-                        <span class="o">.</span><span class="na">keyname</span><span class="o">(</span><span class="s">"spring"</span><span class="o">)</span>
-                        <span class="o">.</span><span class="na">keyPassword</span><span class="o">(</span><span class="s">"secret"</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">password</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">password</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">keyname</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">keyAlias</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">keyPassword</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">password</span><span class="o">)</span>
                         <span class="o">.</span><span class="na">and</span><span class="o">()</span>
                     <span class="o">.</span><span class="na">protocol</span><span class="o">(</span><span class="s">"https"</span><span class="o">)</span>
-                    <span class="o">.</span><span class="na">hostname</span><span class="o">(</span><span class="s">"localhost:8443"</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">hostname</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"%s:%s"</span><span class="o">,</span> <span class="s">"localhost"</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">port</span><span class="o">))</span>
                     <span class="o">.</span><span class="na">basePath</span><span class="o">(</span><span class="s">"/"</span><span class="o">)</span>
                     <span class="o">.</span><span class="na">and</span><span class="o">()</span>
                 <span class="o">.</span><span class="na">identityProvider</span><span class="o">()</span>
-                    <span class="o">.</span><span class="na">metadataFilePath</span><span class="o">(</span><span class="n">metadataUrl</span><span class="o">)</span>
-                    <span class="o">.</span><span class="na">and</span><span class="o">();</span>
+                <span class="o">.</span><span class="na">metadataFilePath</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">metadataUrl</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre>
 </div>
 
-<p>Create an <code class="highlighter-rouge">MvcConfig.java</code> file in the same directory and use it to set the default view to <code class="highlighter-rouge">index</code>.</p>
+<p>Create an <code class="highlighter-rouge">IndexController.java</code> file in the same directory and use it to set the default view to <code class="highlighter-rouge">index</code>.</p>
 
 <div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">example</span><span class="o">;</span>
 
-<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.config.annotation.ViewControllerRegistry</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>
 
-<span class="nd">@Configuration</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MvcConfig</span> <span class="kd">extends</span> <span class="n">WebMvcConfigurerAdapter</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addViewControllers</span><span class="o">(</span><span class="n">ViewControllerRegistry</span> <span class="n">registry</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">registry</span><span class="o">.</span><span class="na">addViewController</span><span class="o">(</span><span class="s">"/"</span><span class="o">).</span><span class="na">setViewName</span><span class="o">(</span><span class="s">"index"</span><span class="o">);</span>
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">IndexController</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">index</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"index"</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre>
@@ -2176,6 +2187,8 @@ Hello SAML!
 <p>This article showed you how to create a SAML application in Okta and talk to it using Spring Boot and Spring Security’s SAML extension. The SAML extension hasn’t had a GA release, but hopefully will soon. I also believe it’s possible to take the SAML DSL (in <code class="highlighter-rouge">SecurityConfiguration.java</code>) and create a Spring Boot starter that allows you to get started with SAML simply by configuring application properties.</p>
 
 <p>Have questions or comments? Post your question to Stack Overflow with the “<a href="http://stackoverflow.com/questions/tagged/okta">okta</a>” or “<a href="http://stackoverflow.com/questions/tagged/okta-api">okta-api</a>” tag, hit me up via email at <a href="mailto:matt.raible@okta.com">matt.raible@okta.com</a>, or ping me on Twitter <a href="https://twitter.com/mraible">@mraible</a>. In future articles, I’ll show you to to configure Spring Boot with OAuth 2.0 and Okta. Then I’ll explore different techniques of authenticating with Angular and using the access token to talk to a secured Spring Boot application. Until then, happy authenticating! 😊</p>
+
+<p><strong>Update:</strong> Thanks to <a href="https://github.com/AlexeySoshin">Alexey Soshin</a> for contributing a <a href="https://github.com/oktadeveloper/okta-spring-boot-saml-example/pull/2">pull request</a> to make the code in this blog post more bootiful!</p>
 
 
 	  </section>
