@@ -311,7 +311,7 @@ Project <span class="s1">'angular-okta-example'</span> successfully created.
 <div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="err">*</span><span class="na">ngIf=</span><span class="s">"!user"</span> <span class="na">id=</span><span class="s">"okta-login-container"</span><span class="nt">&gt;&lt;/div&gt;</span>
 
 <span class="nt">&lt;div</span> <span class="err">*</span><span class="na">ngIf=</span><span class="s">"user"</span><span class="nt">&gt;</span>
-  Hello 
+  Hello {{user}}
 
   <span class="nt">&lt;button</span> <span class="err">(</span><span class="na">click</span><span class="err">)="</span><span class="na">logout</span><span class="err">()"</span><span class="nt">&gt;</span>Logout<span class="nt">&lt;/button&gt;</span>
 <span class="nt">&lt;/div&gt;</span>

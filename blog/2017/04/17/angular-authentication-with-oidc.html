@@ -249,7 +249,7 @@ installing component
   <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"search"</span> <span class="na">name=</span><span class="s">"query"</span> <span class="err">[(</span><span class="na">ngModel</span><span class="err">)]="</span><span class="na">query</span><span class="err">"</span> <span class="err">(</span><span class="na">keyup</span><span class="err">.</span><span class="na">enter</span><span class="err">)="</span><span class="na">search</span><span class="err">()"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="err">(</span><span class="na">click</span><span class="err">)="</span><span class="na">search</span><span class="err">()"</span><span class="nt">&gt;</span>Search<span class="nt">&lt;/button&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
-<span class="nt">&lt;pre&gt;&lt;/pre&gt;</span>
+<span class="nt">&lt;pre&gt;</span>{{searchResults | json}}<span class="nt">&lt;/pre&gt;</span>
 </code></pre>
 </div>
 
@@ -460,10 +460,10 @@ and add the service to the list of providers.</p>
   <span class="nt">&lt;/thead&gt;</span>
   <span class="nt">&lt;tbody&gt;</span>
   <span class="nt">&lt;tr</span> <span class="err">*</span><span class="na">ngFor=</span><span class="s">"let person of searchResults; let i=index"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
-    <span class="nt">&lt;td&gt;&lt;/td&gt;</span>
-    <span class="nt">&lt;td&gt;&lt;br/&gt;</span>
-      ,  
+    <span class="nt">&lt;td&gt;</span>{{person.name}}<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>{{person.phone}}<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span>{{person.address.street}}<span class="nt">&lt;br/&gt;</span>
+      {{person.address.city}}, {{person.address.state}} {{person.address.zip}}
     <span class="nt">&lt;/td&gt;</span>
   <span class="nt">&lt;/tr&gt;</span>
   <span class="nt">&lt;/tbody&gt;</span>
@@ -529,7 +529,7 @@ and add the service to the list of providers.</p>
 
 <p>Modify <code class="highlighter-rouge">search.component.html</code> to add a link for editing a person.</p>
 
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;td&gt;&lt;a</span> <span class="err">[</span><span class="na">routerLink</span><span class="err">]="['/</span><span class="na">edit</span><span class="err">',</span> <span class="na">person</span><span class="err">.</span><span class="na">id</span><span class="err">]"</span><span class="nt">&gt;&lt;/a&gt;&lt;/td&gt;</span>
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;td&gt;&lt;a</span> <span class="err">[</span><span class="na">routerLink</span><span class="err">]="['/</span><span class="na">edit</span><span class="err">',</span> <span class="na">person</span><span class="err">.</span><span class="na">id</span><span class="err">]"</span><span class="nt">&gt;</span>{{person.name}}<span class="nt">&lt;/a&gt;&lt;/td&gt;</span>
 </code></pre>
 </div>
 
@@ -558,10 +558,10 @@ installing component
 <p>Update <code class="highlighter-rouge">src/app/edit/edit.component.html</code> to display an editable form. You might notice I’ve added <code class="highlighter-rouge">id</code> attributes to most elements. This is to make things easier when writing integration tests with Protractor.</p>
 
 <div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="err">*</span><span class="na">ngIf=</span><span class="s">"person"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;h3&gt;&lt;/h3&gt;</span>
+  <span class="nt">&lt;h3&gt;</span>{{editName}}<span class="nt">&lt;/h3&gt;</span>
   <span class="nt">&lt;div&gt;</span>
     <span class="nt">&lt;label&gt;</span>Id:<span class="nt">&lt;/label&gt;</span>
-    
+    {{person.id}}
   <span class="nt">&lt;/div&gt;</span>
   <span class="nt">&lt;div&gt;</span>
     <span class="nt">&lt;label&gt;</span>Name:<span class="nt">&lt;/label&gt;</span>
@@ -767,7 +767,7 @@ The function calls a <code class="highlighter-rouge">gotoList()</code> function 
 
 <p>You’ll also need to wrap everything in a <code class="highlighter-rouge">&lt;form&gt;</code> element. Add <code class="highlighter-rouge">&lt;form&gt;</code> after the <code class="highlighter-rouge">&lt;h3&gt;</code> tag and close it before the last <code class="highlighter-rouge">&lt;/div&gt;</code>. You’ll also need to add an <code class="highlighter-rouge">(ngSubmit)</code> handler to the form and change the save button to be a regular submit button.</p>
 
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;h3&gt;&lt;/h3&gt;</span>
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;h3&gt;</span>{{editName}}<span class="nt">&lt;/h3&gt;</span>
 <span class="nt">&lt;form</span> <span class="err">(</span><span class="na">ngSubmit</span><span class="err">)="</span><span class="na">save</span><span class="err">()"</span> <span class="na">ngNativeValidate</span><span class="nt">&gt;</span>
   ...
   <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">id=</span><span class="s">"save"</span><span class="nt">&gt;</span>Save<span class="nt">&lt;/button&gt;</span>
@@ -782,7 +782,8 @@ The function calls a <code class="highlighter-rouge">gotoList()</code> function 
 
 <p>In this screenshot, you might notice the address fields are blank. This is explained by the error in your console.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>If ngModel is used within a form tag, either the name attribute must be set or the form control must be defined as 'standalone' in ngModelOptions.
+<div class="highlighter-rouge"><pre class="highlight"><code>If ngModel is used within a form tag, either the name attribute must be set or the form 
+control must be defined as 'standalone' in ngModelOptions.
 
 Example 1: &lt;input [(ngModel)]="person.firstName" name="first"&gt;
 Example 2: &lt;input [(ngModel)]="person.firstName" [ngModelOptions]="{standalone: true}"&gt;
@@ -875,7 +876,7 @@ Example 2: &lt;input [(ngModel)]="person.firstName" [ngModelOptions]="{standalon
 
 <span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
   <span class="na">template</span><span class="p">:</span> <span class="err">`</span><span class="o">&lt;</span><span class="nx">div</span> <span class="o">*</span><span class="nx">ngIf</span><span class="o">=</span><span class="s2">"givenName"</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">Welcome</span><span class="p">,</span> <span class="o">!&lt;</span><span class="sr">/h2</span><span class="err">&gt;
+<span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">Welcome</span><span class="p">,</span> <span class="p">{{</span><span class="nx">givenName</span><span class="p">}}</span><span class="o">!&lt;</span><span class="sr">/h2</span><span class="err">&gt;
 </span><span class="o">&lt;</span><span class="nx">button</span> <span class="p">(</span><span class="nx">click</span><span class="p">)</span><span class="o">=</span><span class="s2">"logout()"</span><span class="o">&gt;</span><span class="nx">Logout</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
 </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;&lt;</span><span class="nx">a</span> <span class="nx">routerLink</span><span class="o">=</span><span class="s2">"/search"</span> <span class="nx">routerLinkActive</span><span class="o">=</span><span class="s2">"active"</span><span class="o">&gt;</span><span class="nx">Search</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
@@ -885,7 +886,7 @@ Example 2: &lt;input [(ngModel)]="person.firstName" [ngModelOptions]="{standalon
 </span><span class="o">&lt;</span><span class="sr">/div&gt;</span><span class="err">`
 </span><span class="p">})</span>
 <span class="k">export</span> <span class="kr">class</span> <span class="nx">HomeComponent</span> <span class="p">{</span>
-  <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">oauthService</span><span class="err">:</span> <span class="nx">OAuthService</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="na">oauthService</span><span class="p">:</span> <span class="nx">OAuthService</span><span class="p">)</span> <span class="p">{</span>
   <span class="p">}</span>
 
   <span class="nx">login</span><span class="p">()</span> <span class="p">{</span>
@@ -1007,7 +1008,7 @@ Example 2: &lt;input [(ngModel)]="person.firstName" [ngModelOptions]="{standalon
 
 <span class="err">@</span><span class="nx">Component</span><span class="p">({</span>
   <span class="na">template</span><span class="p">:</span> <span class="err">`</span><span class="o">&lt;</span><span class="nx">div</span> <span class="o">*</span><span class="nx">ngIf</span><span class="o">=</span><span class="s2">"givenName"</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">Welcome</span><span class="p">,</span> <span class="o">!&lt;</span><span class="sr">/h2</span><span class="err">&gt;
+<span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">Welcome</span><span class="p">,</span> <span class="p">{{</span><span class="nx">givenName</span><span class="p">}}</span><span class="o">!&lt;</span><span class="sr">/h2</span><span class="err">&gt;
 </span><span class="o">&lt;</span><span class="nx">button</span> <span class="p">(</span><span class="nx">click</span><span class="p">)</span><span class="o">=</span><span class="s2">"logout()"</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"btn btn-default"</span><span class="o">&gt;</span><span class="nx">Logout</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
 </span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;&lt;</span><span class="nx">a</span> <span class="nx">routerLink</span><span class="o">=</span><span class="s2">"/search"</span> <span class="nx">routerLinkActive</span><span class="o">=</span><span class="s2">"active"</span><span class="o">&gt;</span><span class="nx">Search</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
