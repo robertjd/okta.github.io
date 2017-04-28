@@ -10,16 +10,16 @@ The Stormpath Import tool is a script that takes the data that you exported from
 <a name="prerequisites-and-capacity-planning"></a>
 ## Prerequisites and Capacity Planning
 
-Before you begin the import process, you will need the following:
+Before you begin the import process, you need the following:
 
 - A decompressed local copy of the data you [exported from Stormpath](https://stormpath.com/export)
 - An Okta account which you can sign-up for here: [https://www.okta.com/developer/signup/stormpath/](https://www.okta.com/developer/signup/stormpath/)
 - The URL for your new Okta org (for example: https://dev-884792.oktapreview.com)
-- An Okta API token. For instructions on how to get one, see here: [http://developer.okta.com/docs/api/getting_started/getting_a_token.html](http://developer.okta.com/docs/api/getting_started/getting_a_token.html)
+- An Okta API token: [Instructions](http://developer.okta.com/docs/api/getting_started/getting_a_token.html)
 
-Once you have collected all these, you can start [the import process](#running-the-import).
+Once you have collected all these, start [the import process](#running-the-import).
 
-> **NOTE:** If you are planning on migrating more than 20,000 users and/or 20 apps, you will need to get your org limit increased. To increase your limit, email [developers@okta.com](mailto:developers@okta.com).
+> **NOTE:** If you are planning on migrating more than 20,000 users and/or 20 apps, you will need to get your limits increased. To increase your limit, email [developers@okta.com](mailto:developers@okta.com).
 
 <a name="things-that-wont-migrate-and-known-caveats"></a>
 ## Things That Won't Migrate and Known Caveats
@@ -27,7 +27,7 @@ Once you have collected all these, you can start [the import process](#running-t
 <a name="custom-data-for-accounts-only"></a>
 #### Custom Data For Accounts Only
 
-Custom Data on any Stormpath resources other than Accounts will not be imported. This means that Custom Data will not be imported from any of the following resources:
+Custom Data on any Stormpath resources other than Accounts is not imported. This means that Custom Data will not be imported from any of the following resources:
 
 - Tenant
 - Application
@@ -40,7 +40,7 @@ Account Custom Data will be imported according to the rules explained [below](#s
 <a name="account-links--duplicate-emails"></a>
 #### Account Links & Duplicate Emails
 
-Accounts are identified based on their email address and merged based on their Account Links. If multiple Accounts have the same email address and are linked with Account Links, then the import tool will merge these Accounts into a single Okta User. There are two scenarios in which an Account will not be imported: 
+Accounts are identified based on their email address and merged based on their Account Links. If multiple Accounts have the same email address and are linked with Account Links, then the import tool merges these Accounts into a single Okta User. There are two scenarios in which an Account is not imported: 
 
 - If there are multiple Stormpath Accounts with the **same** email address that are **not** linked with AccountLinks
 - If there are multiple Stormpath Accounts with **different** email addresses that **are** linked with AccountLinks. 
@@ -48,7 +48,7 @@ Accounts are identified based on their email address and merged based on their A
 <a name="unverified-accounts"></a>
 #### Unverified Accounts
 
-Accounts with `status` value `UNVERIFIED` will not be imported. For more information on the `UNVERIFIED` status in Stormpath, see [the Stormpath documentation](https://docs.stormpath.com/rest/product-guide/latest/accnt_mgmt.html#the-email-verification-workflow).
+Accounts with `status` value `UNVERIFIED` are not imported. For more information on the `UNVERIFIED` status in Stormpath, see [the Stormpath documentation](https://docs.stormpath.com/rest/product-guide/latest/accnt_mgmt.html#the-email-verification-workflow).
 
 <a name="active-directory-and-other-ldap-directories"></a>
 #### Active Directory and other LDAP Directories
@@ -58,20 +58,20 @@ LDAP Directories are not imported. For more information see [below](#stormpath-d
 <a name="social-directory-caveats"></a>
 #### Social Directory Caveats
 
-Only Facebook, Google, and LinkedIn Directories will be migrated, as explained [below](#stormpath-directories-social). GitHub and Twitter Social Directories are not supported.
+Only Facebook, Google, and LinkedIn Directories are imported, as explained [below](#stormpath-directories-social). GitHub and Twitter Social Directories are not supported.
 
 <a name="password-strength-caveats"></a>
 #### Password Strength Caveats
 
-The Stormpath Password Policy attributes `maxLength` and `minDiacritic` are not supported in Okta and will not migrate. For more information see the [Password Strength section below](#stormpath-directory-password-strength).
+The Stormpath Password Policy attributes `maxLength` and `minDiacritic` are not supported in Okta and will not be imported. For more information see the [Password Strength section below](#stormpath-directory-password-strength).
 
 <a name="running-the-import"></a>
-## Running the Import
+## Running the Import Tool
 
 <a name="install"></a>
 #### Install
 
-The Import Tool is written in Node.js, and will require Node.js version 7 or higher.
+The Import Tool is written in Node.js, and requires Node.js version 7 or higher.
 
 ```
 npm install -g @okta/stormpath-migration
@@ -130,12 +130,12 @@ import-stormpath --stormPathBaseDir /path/to/export/data --oktaBaseUrl https://y
 <a name="how-to-sanity-check-your-import"></a>
 ### How to Sanity Check Your Import
 
-At a very minimum, you should log in to your Okta Admin Console and check to make sure that the imported data looks the way you’d expect it to. For more information on this, see [How Stormpath Maps to Okta](#how-stormpath-maps-to-okta) below.
+At a minimum, you should log in to your Okta Admin Console and check to make sure that the imported data looks the way you’d expect it to. For more information on this, see [How Stormpath Maps to Okta](#how-stormpath-maps-to-okta) below.
 
 <a name="updating-your-application"></a>
 ### Updating Your Application
 
-After you run the import tool and check the results, you will have to update your application to use the latest version of the Stormpath integration. It is very important that you read the changelog for your integration.
+After you run the import tool and check the results, update your application to use the latest version of the Stormpath integration. It is very important that you read the changelog for your integration to understand how the upgrade will affect your application.
 
 > NOTE: These integrations will not be supported after 2017-08-17.
 
@@ -147,14 +147,14 @@ Node Express-Stormpath | 4 | Release candidates currently documented [here](http
 ASP.NET 4.x | 4 | [Changelog](https://github.com/stormpath/stormpath-dotnet-owin-middleware/blob/master/changelog.md), [Migration Guide](https://github.com/stormpath/stormpath-dotnet-owin-middleware/blob/master/migrating.md) 
 ASP.NET Core | 4 | [Changelog](https://github.com/stormpath/stormpath-dotnet-owin-middleware/blob/master/changelog.md), [Migration Guide](https://github.com/stormpath/stormpath-dotnet-owin-middleware/blob/master/migrating.md)
 
-> NOTE: If you are not using one of these integrations, then you will have to port the SDK functionality over to use the Okta REST API.
+> NOTE: If you are not using one of these integrations, then you will have to port the SDK functionality to use the Okta REST API.
 
 Once you have updated your application and read the Changelog, you should try logging in with a known user to confirm the import has succeeded. If you are experiencing any problems, get in touch: [developers@okta.com](mailto:developers@okta.com)
 
 <a name="debugging-the-tool"></a>
 ### Debugging the tool
 
-If you experience problems with your import, you can try setting the `logLevel` higher, as documented [above](#optional-args). You can also see the import script's source code [on GitHub](https://github.com/okta/stormpath-migration
+If you experience problems with your import, try setting the `logLevel` higher, as documented [above](#optional-args). You can also read the import script's source code [on GitHub](https://github.com/okta/stormpath-migration
 ). 
 
 <a name="how-stormpath-maps-to-okta"></a>
@@ -412,7 +412,7 @@ Okta Group Password Policies made for imported Stormpath Password Strength polic
 
 [Stormpath Social Directories](https://docs.stormpath.com/rest/product-guide/latest/auth_n.html#social-login-providers) (Facebook, Google, LinkedIn) are modeled as [Okta Identity Providers](http://developer.okta.com/docs/api/resources/idps.html). Twitter and GitHub are not supported, so any Stormpath Social Directories for those providers are not imported.
 
-Your Social providers Client ID and Secret are also migrated into the IdP's `credentials` object.
+Your Social providers Client ID and Secret are also imported into the IdP's `credentials` object.
 
 Any Stormpath Accounts that were associated with your Stormpath Social Directory will have their equivalent Okta Users associated with the new Okta Identity Provider. Custom [Attribute Mappings](https://docs.stormpath.com/rest/product-guide/latest/reference.html#attribute-statement-mapping-rules) from your Stormpath Social Directory are added as [Custom Schema Attributes](http://developer.okta.com/docs/api/resources/schemas.html) to the relevant User Profiles.
 
@@ -432,9 +432,9 @@ Identity Providers created for imported Stormpath Social Directories have a `nam
 <a name="stormpath-directories-saml"></a>
 ### Stormpath Directories (SAML)
 
-Just like Stormpath Social Directories, [Stormpath SAML Directories](https://docs.stormpath.com/rest/product-guide/latest/auth_n.html#social-login-providers) are also modeled as [Okta Identity Providers](http://developer.okta.com/docs/api/resources/idps.html). Your SAML signing certificate is also migrated over, as well as the SSO Login URL.
+Just like Stormpath Social Directories, [Stormpath SAML Directories](https://docs.stormpath.com/rest/product-guide/latest/auth_n.html#social-login-providers) are also modeled as [Okta Identity Providers](http://developer.okta.com/docs/api/resources/idps.html). Your SAML signing certificate is also imported over, as well as the SSO Login URL.
 
-Additionally, any attribute mappings that you defined in Stormpath will be migrated over as [Custom Schema Attributes](http://developer.okta.com/docs/api/resources/schemas.html).
+Additionally, any attribute mappings that you defined in Stormpath are be imported as [Custom Schema Attributes](http://developer.okta.com/docs/api/resources/schemas.html).
 
 Users will be associated with this new SAML IdP when they next log in.
 
