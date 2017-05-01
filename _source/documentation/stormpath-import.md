@@ -165,7 +165,7 @@ If you experience problems with your import, try setting the `logLevel` higher, 
 
 The Okta Organization (or Org) represents your private space inside Okta, which means it is equivalent to a Stormpath Tenant. Your Stormpath Accounts are modeled as Users inside Okta. The equivalent of the Stormpath Directory, Group, or Organization in Okta is the Group. In Okta, Groups can be thought of as sets of Users, and Users can be members of many different sets. Whereas in Stormpath your user Account belonged to a particular Directory, in Okta these associations are far more free-form. An Okta User can be associated with many different Groups simultaneously. For an example of how this can affect your user model, see [below](#changes-in-structure-and-hierarchy).
 
-The import tool works by iterating over your Stormpath data and then uses the Okta API to create equivalent objects inside Okta. The table below shows how this mapping happens:
+The import tool works by iterating over your Stormpath data and then uses the Okta API to create equivalent objects inside Okta. The table below shows how this mapping happens. Further information on this mapping can be found in dedicated sections below:
 
 **Headline Resources**
 
@@ -174,7 +174,7 @@ Stormpath Resource | Okta Equivalent
 Account | [User](http://developer.okta.com/docs/api/resources/users.html#user-properties)
 Application | [OAuth 2.0 Client Application](http://developer.okta.com/docs/api/resources/oauth-clients.html) acting as a client for an [OAuth 2.0 Authorization Server](http://developer.okta.com/docs/api/resources/oauth2.html#authorization-servers)
 Directory (Cloud) | [Group](http://developer.okta.com/docs/api/resources/groups.html)
-Directory (Social) | [Identity Provider](http://developer.okta.com/docs/api/resources/idps.html)
+Directory (Social) | [Identity Provider](http://developer.okta.com/docs/api/resources/idps.html) + [Group](http://developer.okta.com/docs/api/resources/groups.html)
 Directory (SAML) | [Identity Provider](http://developer.okta.com/docs/api/resources/idps.html)
 Directory (LDAP) | Not imported ([see below](#stormpath-directories-ldap))
 Directory Password Strength | [Group Password Policy](http://developer.okta.com/docs/api/resources/policy.html#GroupPasswordPolicy)
