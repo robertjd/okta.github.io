@@ -163,7 +163,7 @@ If you experience problems with your import, try setting the `logLevel` higher, 
 <a name="overview"></a>
 ### Overview
 
-The Okta **Organization** (or Org) represents your private space inside Okta, which means it is equivalent to a Stormpath Tenant. Your Stormpath Accounts are modeled as **Users** inside Okta. The equivalent of the Stormpath Directory, Group, or Organization in Okta is the **Group**. In Okta, Groups can be thought of sets of Users, and Users can be members of many different sets. Whereas in Stormpath your user Account belonged to a particular Directory, in Okta these associations are far more free-form. An Okta User can be associated with many different Groups simultaneously. For an example of how this can affect your user model, see [below](#changes-in-structure-and-hierarchy).
+The Okta **Organization** (or Org) represents your private space inside Okta, which means it is equivalent to a Stormpath Tenant. Your Stormpath Accounts are modeled as **Users** inside Okta. The equivalent of the Stormpath Directory, Group, or Organization in Okta is the **Group**. In Okta, Groups can be thought of as sets of Users, and Users can be members of many different sets. Whereas in Stormpath your user Account belonged to a particular Directory, in Okta these associations are far more free-form. An Okta User can be associated with many different Groups simultaneously. For an example of how this can affect your user model, see [below](#changes-in-structure-and-hierarchy).
 
 The import tool works by iterating over your Stormpath data and then uses the Okta API to create equivalent objects inside Okta. The table below shows how this mapping happens:
 
@@ -183,7 +183,7 @@ Organization | [Group](http://developer.okta.com/docs/api/resources/groups.html)
 Custom Data | [Custom Schema Attributes](http://developer.okta.com/docs/api/resources/schemas.html)
 
 
-Now you might notice that many Stormpath resources are becoming Groups inside Okta. This is primarily because the Okta Groups API supports prefix searching. As part of the import process, your Okta entities will have relevant prefixes attached to them. So, to fetch all Groups that represent imported Stormpath Directories, the query would be:
+You may notice that many Stormpath resources are becoming Groups inside Okta. This is primarily because the Okta Groups API supports prefix searching. As part of the import process, your Okta entities will have relevant prefixes attached to them. So, to fetch all Groups that represent imported Stormpath Directories, the query would be:
 
 ```
 GET /api/v1/groups?q=dir
@@ -354,16 +354,16 @@ And here it is after the two different migration strategies have been applied:
 
 **Flattened**  
 
-In this case, all properties except the last one are concatenated into the attribute name, and the last value is preserved. This strategy is mostly likely to preserve the data structure, though two important points should be noted:
+In this case, all properties except the last one are concatenated into the attribute name, and the last value is preserved. This strategy is most likely to preserve the data structure, though two important points should be noted:
 
 - Mixed-type arrays will be converted into arrays of strings
 - Empty objects will not be imported
 
-It also allows for [search](http://developer.okta.com/docs/api/resources/users.html#list-users-with-search). For these reasons, this is the default strategy that is used by the import tool.
+Because it will likely preserve the data structure, and also because allows for [search](http://developer.okta.com/docs/api/resources/users.html#list-users-with-search), this is the default strategy that is used by the import tool.
 
 **Stringified**
 
-Stringifying pulls the entire object into a single string, which is then added as a value to the Profile attribute "customData". If there are multiple complex objects, they are all included in that string. Do not use this strategy if you will need to search your custom schema attributes in Okta. If you do not have a consistent schema across all accounts, and one property may have multiple types values, e.g. a number or string, the stringify option may be a better choice (if search is not needed).
+Stringifying serializes the entire object into a single string, which is then added as a value to the Profile attribute "customData". If there are multiple complex objects, they are all included in that string. Do not use this strategy if you will need to search your custom schema attributes in Okta. If you do not have a consistent schema across all accounts, and one property may have multiple types values, e.g. a number or string, the stringify option may be a better choice (if search is not needed).
 
 <a name="stormpath-directories-cloud"></a>
 ### Stormpath Directories (Cloud)
@@ -384,9 +384,11 @@ Okta Groups made for imported Stormpath Cloud Directories use the `name` propert
 <a name="stormpath-directory-password-strength"></a>
 #### Stormpath Directory Password Strength
 
-The [Stormpath Cloud Directory Password Policy's Strength resource](https://docs.stormpath.com/rest/product-guide/latest/reference.html#password-strength) maps almost entirely to the [Okta Password Policy's Complexity object](http://developer.okta.com/docs/api/resources/policy.html#PasswordComplexityObject), and the `preventReuse` attribute being mapped to the [Okta Password Policy's Age object](http://developer.okta.com/docs/api/resources/policy.html#PasswordAgeObject). 
+The [Stormpath Cloud Directory Password Policy's Strength resource](https://docs.stormpath.com/rest/product-guide/latest/reference.html#password-strength) maps almost entirely to the [Okta Password Policy's Complexity object](http://developer.okta.com/docs/api/resources/policy.html#PasswordComplexityObject), with the `preventReuse` attribute being mapped to the [Okta Password Policy's Age object](http://developer.okta.com/docs/api/resources/policy.html#PasswordAgeObject). 
 
-There are a few points to note here: First of all, the Stormpath Password Policy attributes `maxLength` and `minDiacritic` are not supported in Okta and will not migrate. Also, the Stormpath attributes `minLowerCase`, `minUpperCase`, `minNumber`, and `minSymbol` all have integer values in Stormpath, specifying an occurrence requirement. Whereas in Okta, the equivalent attributes take 0 or 1, meaning that the value must occur at least once. For more information see [here](http://developer.okta.com/docs/api/resources/policy.html#PasswordComplexityObject). 
+There are a few points to note here: 
+
+- First of all, the Stormpath Password Policy attributes `maxLength` and `minDiacritic` are not supported in Okta and will not migrate. Also, the Stormpath attributes `minLowerCase`, `minUpperCase`, `minNumber`, and `minSymbol` all have integer values in Stormpath, specifying an occurrence requirement. Whereas in Okta, the equivalent attributes take 0 or 1, meaning that the value must occur at least once. For more information see [here](http://developer.okta.com/docs/api/resources/policy.html#PasswordComplexityObject). 
 
 Stormpath Directory Password Strength Attribute | Okta Complexity Attribute
 --- | ---
@@ -434,7 +436,7 @@ Identity Providers created for imported Stormpath Social Directories have a `nam
 
 Just like Stormpath Social Directories, [Stormpath SAML Directories](https://docs.stormpath.com/rest/product-guide/latest/auth_n.html#social-login-providers) are also modeled as [Okta Identity Providers](http://developer.okta.com/docs/api/resources/idps.html). Your SAML signing certificate is also imported over, as well as the SSO Login URL.
 
-Additionally, any attribute mappings that you defined in Stormpath are be imported as [Custom Schema Attributes](http://developer.okta.com/docs/api/resources/schemas.html).
+Additionally, any attribute mappings that you defined in Stormpath are  imported as [Custom Schema Attributes](http://developer.okta.com/docs/api/resources/schemas.html).
 
 Users will be associated with this new SAML IdP when they next log in.
 
@@ -475,7 +477,7 @@ Okta Groups that model Stormpath Groups use the `name` property inside the Okta 
 <a name="stormpath-organizations"></a>
 ### Stormpath Organizations
 
-The [Stormpath Organization](https://docs.stormpath.com/rest/product-guide/latest/reference.html#organization) becomes a Group in Okta, and its information is imported to a [Okta Group Profile]((http://developer.okta.com/docs/api/resources/groups.html#profile-object) (see table below). The Organization Account Store Mappings are used to find all Accounts associated with that Organization, and the imported Users are associated with this new Organization Group.
+The [Stormpath Organization](https://docs.stormpath.com/rest/product-guide/latest/reference.html#organization) becomes a Group in Okta, and its information is imported to an [Okta Group Profile](http://developer.okta.com/docs/api/resources/groups.html#profile-object) (see table below). The Organization Account Store Mappings are used to find all Accounts associated with that Organization, and the imported Users are associated with this new Organization Group.
 
 Stormpath Organization Attribute | Okta Group Profile Attribute
 --- | ---
