@@ -42,8 +42,8 @@ Account Custom Data will be imported according to the rules explained [below](#s
 
 Accounts are identified based on their email address and merged based on their Account Links. If multiple Accounts have the same email address and are linked with Account Links, then the import tool merges these Accounts into a single Okta User. There are two scenarios in which an Account is not imported: 
 
-- If there are multiple Stormpath Accounts with the **same** email address that are **not** linked with AccountLinks
-- If there are multiple Stormpath Accounts with **different** email addresses that **are** linked with AccountLinks. 
+- If there are multiple Stormpath Accounts with the same email address that are not linked with AccountLinks
+- If there are multiple Stormpath Accounts with different email addresses that are linked with AccountLinks. 
 
 <a name="unverified-accounts"></a>
 #### Unverified Accounts
@@ -163,7 +163,7 @@ If you experience problems with your import, try setting the `logLevel` higher, 
 <a name="overview"></a>
 ### Overview
 
-The Okta **Organization** (or Org) represents your private space inside Okta, which means it is equivalent to a Stormpath Tenant. Your Stormpath Accounts are modeled as **Users** inside Okta. The equivalent of the Stormpath Directory, Group, or Organization in Okta is the **Group**. In Okta, Groups can be thought of as sets of Users, and Users can be members of many different sets. Whereas in Stormpath your user Account belonged to a particular Directory, in Okta these associations are far more free-form. An Okta User can be associated with many different Groups simultaneously. For an example of how this can affect your user model, see [below](#changes-in-structure-and-hierarchy).
+The Okta Organization (or Org) represents your private space inside Okta, which means it is equivalent to a Stormpath Tenant. Your Stormpath Accounts are modeled as Users inside Okta. The equivalent of the Stormpath Directory, Group, or Organization in Okta is the Group. In Okta, Groups can be thought of as sets of Users, and Users can be members of many different sets. Whereas in Stormpath your user Account belonged to a particular Directory, in Okta these associations are far more free-form. An Okta User can be associated with many different Groups simultaneously. For an example of how this can affect your user model, see [below](#changes-in-structure-and-hierarchy).
 
 The import tool works by iterating over your Stormpath data and then uses the Okta API to create equivalent objects inside Okta. The table below shows how this mapping happens:
 
@@ -416,7 +416,7 @@ Okta Group Password Policies made for imported Stormpath Password Strength polic
 
 Your Social providers Client ID and Secret are also imported into the IdP's `credentials` object.
 
-Any Stormpath Accounts that were associated with your Stormpath Social Directory will have their equivalent Okta Users associated with the new Okta Identity Provider. Custom [Attribute Mappings](https://docs.stormpath.com/rest/product-guide/latest/reference.html#attribute-statement-mapping-rules) from your Stormpath Social Directory are added as [Custom Schema Attributes](http://developer.okta.com/docs/api/resources/schemas.html) to the relevant User Profiles.
+Any Stormpath Accounts that were associated with your Stormpath Social Directory will have their equivalent Okta Users associated with the new Okta Identity Provider. Custom [Attribute Mappings](https://docs.stormpath.com/rest/product-guide/latest/reference.html#attribute-statement-mapping-rules) from your Stormpath Social Directory are added as [Custom Schema Attributes](http://developer.okta.com/docs/api/resources/schemas.html) to the relevant User Profiles. An Okta Group is also created and associated with the relevant Authorization Server. That Group shares the same `name` as the Identity Provider and is assigned Users as they are created during social login. 
 
 Stormpath Directory Attribute | Okta Group Profile Attribute
 --- | ---
@@ -477,7 +477,7 @@ Okta Groups that model Stormpath Groups use the `name` property inside the Okta 
 <a name="stormpath-organizations"></a>
 ### Stormpath Organizations
 
-The [Stormpath Organization](https://docs.stormpath.com/rest/product-guide/latest/reference.html#organization) becomes a Group in Okta, and its information is imported to an [Okta Group Profile](http://developer.okta.com/docs/api/resources/groups.html#profile-object) (see table below). The Organization Account Store Mappings are used to find all Accounts associated with that Organization, and the imported Users are associated with this new Organization Group.
+The [Stormpath Organization](https://docs.stormpath.com/rest/product-guide/latest/reference.html#organization) becomes a Group in Okta, and its information is imported to an [Okta Group Profile](http://developer.okta.com/docs/api/resources/groups.html#profile-object) (see table below). The Organization Account Store Mappings are used to find all Accounts associated with that Organization, and the imported Users are associated with this new Organization Group. 
 
 Stormpath Organization Attribute | Okta Group Profile Attribute
 --- | ---
