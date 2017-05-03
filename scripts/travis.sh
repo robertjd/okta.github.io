@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ex
 
+source "${0%/*}/helpers.sh"
+
 if [ $TRAVIS_EVENT_TYPE != 'push' ]; then
   export PHANTOMJS=true
 fi
@@ -24,3 +26,10 @@ npm install
 
 # 3. Run tests
 npm test
+
+# 4. Run lint
+export GENERATED_SITE_LOCATION="_site"
+if ! url_consistency_check || ! duplicate_slug_in_url; then
+  echo "FAILED LINT CHECK!"
+  exit 1;
+fi

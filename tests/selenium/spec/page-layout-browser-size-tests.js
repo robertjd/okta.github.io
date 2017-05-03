@@ -5,7 +5,8 @@ function isOnScreen(elementFinder) {
     const location = elementFinder.getLocation();
     const size = elementFinder.getSize();
     return Promise.all([location, size]).then((args) => {
-      const [pos, dim] = args;
+      const pos = args[0];
+      const dim = args[1];
       return dim.width + pos.x > 0 && dim.height + pos.y > 0;
     });
   };
@@ -27,14 +28,14 @@ describe('page layout and browser size tests', function() {
   });
 
   it('shows the main navigation with desktop browser sizes', function() {
-    browser.manage().window().setSize(1060, 640);
+    browser.driver.manage().window().setSize(1060, 640);
     browser.wait(isOnScreen($('#top-nav')));
     expect($('#mobile-nav').isDisplayed()).toBeFalsy();
   });
 
   // Phantom does not support the CSS transform we use to hide the top nav
   itNoPhantom('shows mobile navigation with mobile browser sizes', function() {
-    browser.manage().window().setSize(360, 640);
+    browser.driver.manage().window().setSize(360, 640);
     browser.wait(EC.not(isOnScreen($('#top-nav'))));
     expect($('#mobile-nav').isDisplayed()).toBeTruthy();
   });
