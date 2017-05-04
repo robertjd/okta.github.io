@@ -41,4 +41,16 @@ util.formatUrl = function (url, hideNav) {
   return url + (hideNav ? '?hideNav=true' : '');
 };
 
+util.isOnScreen = function (elementFinder) {
+  return () => {
+    const location = elementFinder.getLocation();
+    const size = elementFinder.getSize();
+    return Promise.all([location, size]).then((args) => {
+      const pos = args[0];
+      const dim = args[1];
+      return dim.width + pos.x > 0 && dim.height + pos.y > 0;
+    });
+  };
+}
+
 util.EC = EC;

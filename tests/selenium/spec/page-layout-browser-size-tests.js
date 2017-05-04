@@ -1,43 +1,37 @@
-const EC = protractor.ExpectedConditions;
-
-function isOnScreen(elementFinder) {
-  return () => {
-    const location = elementFinder.getLocation();
-    const size = elementFinder.getSize();
-    return Promise.all([location, size]).then((args) => {
-      const pos = args[0];
-      const dim = args[1];
-      return dim.width + pos.x > 0 && dim.height + pos.y > 0;
-    });
-  };
-}
-
-function itNoPhantom(desc, fn) {
-  if (process.env.PHANTOMJS) {
-    xit(desc, fn);
-  } else {
-    it(desc, fn);
-  }
-}
+const NavPage = require('../framework/page-objects/NavPage');
 
 describe('page layout and browser size tests', function() {
+  var navPage;
 
-  beforeEach(() => {
+  beforeEach(function() {
     browser.ignoreSynchronization = true;
-    browser.get('http://localhost:4000');
+    navPage = new NavPage();
   });
-
-  it('shows the main navigation with desktop browser sizes', function() {
-    browser.driver.manage().window().setSize(1060, 640);
-    browser.wait(isOnScreen($('#top-nav')));
-    expect($('#mobile-nav').isDisplayed()).toBeFalsy();
+  
+  it('does not have mobile navigation visible at large sizes', function() {
+    // FIXME: Abstract this into a "Run this test on desktop" function.
+    //        Take sizes from the CSS that we use to define sizes.
+    navPage.setWindowSize(1060, 640);
+    
+    navPage.waitTillTopNavOnScreen();
+    expect(navPage.getMobileNavHeight()).toEqual(0);
+    expect(navPage.getMobileNavWidth()).toEqual(0);
   });
-
-  // Phantom does not support the CSS transform we use to hide the top nav
-  itNoPhantom('shows mobile navigation with mobile browser sizes', function() {
-    browser.driver.manage().window().setSize(360, 640);
-    browser.wait(EC.not(isOnScreen($('#top-nav'))));
-    expect($('#mobile-nav').isDisplayed()).toBeTruthy();
+  
+  itNoPhantom('has mobile navigation visible at small sizes', function() {
+    navPage.setWindowSize(360, 640);
+    
+    navPage.waitTillTopNavNotOnScreen();
+    expect(navPage.getMobileNavHeight()).toBeGreaterThan(0);
+    expect(navPage.getMobileNavWidth()).toBeGreaterThan(0);
   });
+  
+  function itNoPhantom(desc, fn) {
+    if (process.env.PHANTOMJS) {
+      xit(desc, fn);
+    } else {
+      it(desc, fn);
+    }
+  }
 
 });

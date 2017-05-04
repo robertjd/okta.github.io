@@ -2,8 +2,9 @@
 
 const util = require('../shared/util');
 const _ = require('lodash');
+const EC = protractor.ExpectedConditions;
 
-class BasePageObject {
+class BasePage {
   constructor(url, getPage) {
     this.url = url;
     if (_.isUndefined(getPage) || getPage) {
@@ -26,7 +27,15 @@ class BasePageObject {
     browser.driver.manage().window().setSize(width, height);
   }
 
+  waitTillOnScreen(elementFinder) {
+    browser.wait(util.isOnScreen(elementFinder));
+  }
+
+  waitTillNotOnScreen(elementFinder) {
+    browser.wait(EC.not(util.isOnScreen(elementFinder)));
+  }
+
   initialize() {}
 }
 
-module.exports = BasePageObject;
+module.exports = BasePage;
