@@ -61,7 +61,7 @@ and generate the final site content.
 5. Stop Jekyll with `ctrl+c`
 6. Discard changed files (they have "localhost:4000" in link URLs instead of "developer.okta.com") with `git checkout .`
 7. Build a production version with `npm run build-prod`
-8. Commit and push changes to github. When ready for review create a pull request and mention the users you want to
+8. Commit and push changes to GitHub. When ready for review, create a pull request and mention the users you want to
    review your changes.
 
 ### Resolving conflicts with "upstream"
