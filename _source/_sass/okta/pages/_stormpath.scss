@@ -77,7 +77,6 @@
 		display: flex;
 		flex-direction: column;
 		height: 541px;
-		overflow: hidden;
 		width: 100%;
 		border-radius: $border-radius;
 
@@ -278,6 +277,48 @@
 			+ a {
 				margin-left: get-spacing('small');
 			}
+		}
+	}
+}
+
+.ToolTip{
+	position: relative;
+	cursor: pointer;
+	display: inline-block;
+	border-bottom: 1px dotted #ccc;
+    text-decoration: none;
+	.ToolTip-text{
+		visibility: hidden;
+		position: absolute;
+		background-color: #555;
+		color: #fff;
+		text-align: center;
+		padding: 8px;
+		border-radius: 6px;
+		z-index: 1;
+		opacity: 0;
+		width: 360px;
+		transition: opacity .6s;
+		&.ToolTip-top{
+			top: -70px;
+			left: 0;
+		}
+		&:after{
+			content: " ";
+		    position: absolute;
+		    top: 100%;
+		    left: 50%;
+		    margin-left: -5px;
+		    border-width: 5px;
+		    border-style: solid;
+		    border-color: #555 transparent transparent transparent;
+		}
+	}
+
+	&:hover{
+		.ToolTip-text{
+			opacity: 0.95;
+			visibility: visible;
 		}
 	}
 }
