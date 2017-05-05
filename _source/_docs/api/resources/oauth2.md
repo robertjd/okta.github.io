@@ -492,6 +492,11 @@ code_verifier      | Expected if grant_type specified *authorization_code* for n
 client_id          | Expected if *code_verifier* is included or client credentials are not provided in the Authorization header. This is used in conjunction with the client_secret parameter to authenticate the client application. | String |
 client_secret      | Expected if *code_verifier* is not included and client credentials are not provided in the Authorization header. This is used in conjunction with the client_id parameter to authenticate the client application. | String |
 
+Parameter Details:
+
+* Remember to configure your client app for the `grant_type` selected. To check, navigate to the Okta user interface and choose **Admin** > **Applications** > *Application Name* > **General** > **General Settings**.
+* If client credentials are not provided in the Authorization header, `client_id` and `client_secret` are required. For example, if `grant_type` is `password` (resource owner password flow), `client_id` and `client_secret` are required.
+
 ##### Token Authentication Method
 
 For clients authenticating by client credentials, provide the [`client_id`](oidc.html#request-parameters)
@@ -568,6 +573,27 @@ Content-Type: application/json;charset=UTF-8
     "error" : "invalid_client",
     "error_description" : "No client credentials found."
 }
+~~~
+#### Request Example: Resource Owner Password Flow
+
+~~~
+curl -X POST \
+  https://danger.oktapreview.com/oauth2/aus8tf1sb1BJ7vywW0h7/v1/token \
+  --header "accept: application/json" \
+  --header "cache-control: no-cache" \
+  --header "content-type: application/x-www-form-urlencoded" \
+  -d 'grant_type=password&username=<username>&password=<password>&scope=api%3Aread&client_id=<clientid>&client_secret=<secret>'
+~~~
+
+#### Response Example: Resource Owner Password Flow
+
+~~~
+curl -X POST \
+  https://danger.oktapreview.com/oauth2/aus8tf1sb1BJ7vywW0h7/v1/token \
+  --header "accept: application/json" \
+  --header "cache-control: no-cache" \
+  --header "content-type: application/x-www-form-urlencoded" \
+  -d 'grant_type=password&username=<username>&password=<password>&scope=api%3Aread&client_id=<clientid>&client_secret=<secret>'
 ~~~
 
 ### Introspection Request
