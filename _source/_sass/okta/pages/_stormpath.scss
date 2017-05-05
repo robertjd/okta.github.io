@@ -281,13 +281,14 @@
 	}
 }
 
-.ToolTip{
+.ToolTip {
 	position: relative;
 	cursor: pointer;
 	display: inline-block;
 	border-bottom: 1px dotted #ccc;
     text-decoration: none;
-	.ToolTip-text{
+	
+	.ToolTip-text {
 		visibility: hidden;
 		position: absolute;
 		background-color: #555;
@@ -299,11 +300,13 @@
 		opacity: 0;
 		width: 360px;
 		transition: opacity .6s;
-		&.ToolTip-top{
+		
+		&.ToolTip-top {
 			top: -70px;
 			left: 0;
 		}
-		&:after{
+		
+		&:after {
 			content: " ";
 		    position: absolute;
 		    top: 100%;
@@ -315,8 +318,8 @@
 		}
 	}
 
-	&:hover{
-		.ToolTip-text{
+	&:hover {
+		.ToolTip-text {
 			opacity: 0.95;
 			visibility: visible;
 		}
