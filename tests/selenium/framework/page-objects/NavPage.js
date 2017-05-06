@@ -9,25 +9,17 @@ class NavPage extends BasePage {
     this.topNav = element(by.css('#top-nav'));
     this.mobileNav = element(by.css("#mobile-nav"));
   }
-
-  getMobileNavHeight() {
-    return this.mobileNav.getSize().then(function(dimension) {
-      return dimension.height;
-    });
-  }
-
-  getMobileNavWidth() {
-    return this.mobileNav.getSize().then(function(dimension) {
-      return dimension.width;
-    });
-  }
-
+  
   waitTillTopNavOnScreen() {
-    BasePage.prototype.waitTillOnScreen(this.topNav);
+    this.waitTillOnScreen(this.topNav);
   }
 
   waitTillTopNavNotOnScreen() {
-    BasePage.prototype.waitTillNotOnScreen(this.topNav);
+    this.waitTillNotOnScreen(this.topNav);
+  }
+  
+  isMobileNavDisplayed() {
+    return this.mobileNav.isDisplayed();
   }
 }
 
