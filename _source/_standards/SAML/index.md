@@ -151,7 +151,7 @@ Use the [Okta SAML validation tool](http://saml.oktadev.com/) to speed up the pr
 
 This tool makes it easy for you to send SAML Requests to your SAML SP. It  allows you to quickly change the contents of the SAML requests and simplifies the process of debugging SAML issues by automatically decoding SAML payloads and displaying server headers for you.
 
-You can also install the [SAML Tracer extension to Firefox](saml_tracer.html) for testing, or similar tools for other browsers. 
+You can also install the [SAML Tracer extension to Firefox](saml_tracer.html) for testing, or similar tools for other browsers.
 
 ## SAML Toolkits
 
@@ -161,9 +161,9 @@ can help you build your applications and integrations:
 - [.NET Framework](https://en.wikipedia.org/wiki/.NET_Framework_version_history) 4.5 or above: [Kentor Authentication Services](https://github.com/KentorIT/authservices#kentor-authentication-services)
 - .NET Framework 4 or below: [ComponentSpace SAML 2.0](http://www.componentspace.com/SAMLv20.aspx) - Paid software, licenses start at $299
 - Java: [OpenSAML](https://shibboleth.net/products/opensaml-java.html)
-- Java/Spring: [Spring Security SAML](/docs/guides/spring_security_saml.html)
-- PHP: [SimpleSAMLphp](/docs/guides/simplesamlphp.html)
-- Python: [PySAML2](/docs/guides/pysaml2.html)
+- Java/Spring: [Spring Security SAML](/code/java/spring_security_saml.html)
+- PHP: [SimpleSAMLphp](/code/php//simplesamlphp.html)
+- Python: [PySAML2](/code/python/pysaml2.html)
 - Ruby: [Ruby-SAML](https://rubygems.org/gems/ruby-saml)
 
 > Note: Okta doesn't own or maintain these toolkits, though we do provide documentation to help you use them with Okta.

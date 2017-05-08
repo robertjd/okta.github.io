@@ -130,4 +130,4 @@ Advantages of using Okta Social Authentication include:
 
 ## Error Codes
 
-See the [OpenID Connect and Okta Social Authentication](/docs/api/getting_started/error_codes.html#openid-connect-and-okta-social-authentication) section of the [Error Codes](/docs/api/getting_started/error_codes.html) API documentation.
+See the [OpenID Connect and Okta Social Authentication](/reference/error_codes/index#openid-connect-and-okta-social-authentication) section of the [Error Codes](/docs/api/getting_started/error_codes.html) API documentation.

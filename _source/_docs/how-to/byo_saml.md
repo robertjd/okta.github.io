@@ -26,8 +26,8 @@ The general procedure is the same for Outbound and Inbound SAML application; how
   3. [Sign the CSR](#step-3--sign-the-csr)
   4. [Publish the CSR](#step-4--publish-the-csr)
   5. [Update the key credential for the app to specify the new certificate](#step-5--update-the-key-credential)
-  6. [Clone the certificate (optional)](#step-6--clone-the-certificate-(optional))
-  7. [Upload the new certificate to the ISV](#step-6--upload-the-sha1-certificate-to-the-isv)
+  6. [Clone the certificate (optional)](#step-6--clone-the-certificate-optional)
+  7. [Upload the new certificate to the ISV](#step-7--upload-the-new-certificate-to-the-isv)
 
 > **Important:** In the third step, use your own process to sign the CSR. You can't move to step four until the process is completed.
 
