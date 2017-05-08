@@ -53,7 +53,7 @@ This document provides step-by-step instructions for creating and configuring th
 ### Create the Authorization Server
 
 1. In the Okta user interface, navigate to **Security > API**.
-<img src="/assets/img/auth_server_image.png" alt="Authorization Server" width="640px" />
+{% img auth_server_image.png alt:"Authorization Server" width:"640px" %}
 
 2. Choose **Add Authorization Server** and supply the requested information.
 
@@ -63,7 +63,7 @@ This document provides step-by-step instructions for creating and configuring th
     * **Description** 
 
 When complete, your authorization server **Settings** tab displays the information that you provided and allows you to edit it.
-<img src="/assets/img/auth_server2.png" alt="Add Authorization Server" width="640px" />
+{% img auth_server2.png alt:"Add Authorization Server" width:"640px" %}
 
 ### Create Scopes
 
@@ -75,10 +75,10 @@ If you need scopes in addition to the reserved scopes provided, create them now.
 
 1. In the Okta user interface, navigate to **Security > API**.
 2. Choose the name of the authorization server to display it, and then select **Scopes**.
-<img src="/assets/img/scope1.png" alt="Add Scopes" width="800px" />
+{% img scope1.png alt:"Add Scopes" width:"800px" %}
 
 3. Choose **Scopes > Add Scope**, and provide a name and description, then choose **Create** to save the scope.
-<img src="/assets/img/scope2.png" alt="View Scopes" width="800px" />
+{% img scope2.png alt:"View Scopes" width:"800px" %}
 
 These scopes are referenced by the **Claims** dialog.
 
@@ -90,10 +90,10 @@ Create ID Token claims for OpenID Connect, or Access Tokens for OAuth 2.0:
 
 1. In the Okta user interface, navigate to **Security > API**.
 2. Choose the name of the authorization server to display it, and choose **Claims**.
-<img src="/assets/img/claims1.png" alt="Choose Claims" width="800px" />
+{% img claims1.png alt:"Choose Claims" width:"800px" %}
  Okta provides a default subject claim. You can edit the mapping, or create your own claims.
 3. Choose **Add Claim** and provide the requested information.
-<img src="/assets/img/claim.png" alt="Edit Claims" width="800px" />
+{% img claim.png alt:"Edit Claims" width:"800px" %}
 
     * **Name**
     * **Claim type**: Choose Access Token (Oauth 2.0) or ID Token (OpenID Connect).
@@ -109,7 +109,7 @@ While in the Claims list, you can:
 * Sort claims by type.
 * Delete claims you've created, or disable claims for testing or debugging purposes.
 
-    <img src="/assets/img/claims2.png" alt="Claims List" width="640px" />
+    {% img claims2.png alt:"Claims List" width:"640px" %}
     
 ### Create Access Policies
 
@@ -118,17 +118,17 @@ Create access policies and rules for a client or set of clients.
 1. In the Okta user interface, navigate to **Security > API**.
 2. Choose the name of an authorization server. 
 3. Choose **Access Policies > Add New Access Policy** 
-    <img src="/assets/img/access_policy1.png" alt="Add Access Policy" width="640px" />
+    {% img access_policy1.png alt:"Add Access Policy" width:"640px" %}
 4. Provide the requested information:
     * **Name**
     * **Description**
     * Assign to **All clients**, or select **The following clients:** and enter the name of the clients covered by this access policy.
-    <img src="/assets/img/access_policy2.png" alt="Access Policy Configuration" width="640px" />
+    {% img access_policy2.png alt:"Access Policy Configuration" width:"640px" %}
 
 While in the Access Policy list, you can:
 * Set access policies to be active or deactivate them for testing or debugging purposes.
 * Reorder any policies you create using drag-n-drop.  
-    <img src="/assets/img/access_policy3.png" alt="Access Policy List" width="640px" />
+    {% img access_policy3.png alt:"Access Policy List" width:"640px" %}
 
 Polices are evaluated in priority order, as are the rules in a policy. 
 The first policy and rule that matches the client request is applied and no further rule or policy processing occurs.
@@ -142,7 +142,7 @@ is valid.
 1. In the Okta user interface, navigate to **Security > API**.
 2. Choose the name of an authorization server, and select **Access Policies**.
 3. Choose the name of an access policy, and select **Add Rule**
-    <img src="/assets/img/rule1.png" alt="Add Rule" width="640px" />
+    {% img rule1.png alt:"Add Rule" width:"640px" %}
 4. Enter the requested information:
     * **Rule Name**
     * **IF User is**&mdash;Select whether there's no user (client credentials flow), or a user assigned to a client that's assigned to this rule's policy,
@@ -151,7 +151,7 @@ is valid.
     * **AND Access token lifetime is**&mdash;Choose the length of time before an access token expires.
     * **AND Refresh token lifetime is**&mdash;Choose the length of time before a refresh token expires.
 5. Choose **Create Rule** to save the rule.
-    <img src="/assets/img/rule2.png" alt="Rules List" width="640px" />
+    {% img rule2.png alt:"Rules List" width:"640px" %}
 
 While in the Rules list for an access policy, you can:
 

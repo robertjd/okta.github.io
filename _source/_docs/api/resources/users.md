@@ -2759,7 +2759,7 @@ Okta does not support uploading images via the Users API.  All operations in thi
 
 The following diagram shows the state model for a user:
 
-![STAGED, PROVISIONED, ACTIVE, RECOVERY, LOCKED_OUT, PASSWORD_EXPIRED, or DEPROVISIONED](/assets/img/okta-user-status.png "Okta User Status Diagram")
+{% img okta-user-status.png "Okta User Status Diagram" alt:"STAGED, PROVISIONED, ACTIVE, RECOVERY, LOCKED_OUT, PASSWORD_EXPIRED, or DEPROVISIONED" %}
 
 ### Understanding User Status Values
 

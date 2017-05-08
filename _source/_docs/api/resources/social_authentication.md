@@ -32,7 +32,7 @@ Okta Social Authentication allows Okta to integrate with a Social Identity Provi
 
 The following diagram shows a high-level architecture of Okta Social Authentication for your application:
 
-<img src="/assets/img/social_authentication_flow.png" alt="Social Authentication Flow" width="800px" />
+{% img social_authentication_flow.png alt:"Social Authentication Flow" width:"800px" %}
 
 Advantages of using Okta Social Authentication include:
 

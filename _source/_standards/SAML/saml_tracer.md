@@ -28,10 +28,10 @@ To create a SAML request for an SP-initiated flow and inspect the request and re
 2. Look at the SAML tracer window and see the SAML request sent from your application to Okta. 
 3. Okta returns a SAML Response.
 
-![SAML Request SP Flow](/assets/img/saml-request-sp-flow.png "sample sp request in tracer")
+{% img saml-request-sp-flow.png "sample sp request in tracer" alt:"SAML Request SP Flow" %}
 Figure 1: SP-Initiated Request in SAML tracer
 
-![SAML Response SP Flow](/assets/img/saml-response-sp-flow.png "sample sp response in tracer")
+{% img saml-response-sp-flow.png "sample sp response in tracer" alt:"SAML Response SP Flow" %}
 Figure 2: SP-Initiated Response in SAML tracer
 
 ## IDP Initiated Flow 
@@ -44,7 +44,7 @@ To create a SAML request for an IdP-initiated flow and inspect it in SAML tracer
 
 You can also start an IdP flow by selecting the App Embed link in a browser (**SAML App** > **General** > **App Embed Link**).
 
-![SAML Response IdP](/assets/img/idp-flow-saml-trace.png "sample idp response in tracer")
+{% img idp-flow-saml-trace.png "sample idp response in tracer" alt:"SAML Response IdP" %}
 Figure 3: IdP-Initiated Response in SAML tracer
 
 When you receive a SAML request and response successfully from Okta, it indicates that your configuration is successfully working with Okta.

@@ -340,7 +340,7 @@ In our sample application, each user resource has a Boolean
 
 Your SCIM API must support the following SCIM API endpoints to work with Okta:
 
-<img src="/assets/img/scim_flowchart.png" alt="scim api endpoints required to work with Okta" width="640px" />
+{% img scim_flowchart.png alt:"scim api endpoints required to work with Okta" width:"640px" %}
 
 ##### Create Account: POST /Users
 
@@ -1025,13 +1025,13 @@ or need to support the Profile Master action, Okta will need to custom-configure
 Please request this in your email to <developers@okta.com>. 
 
 1. Navigate to the admin interface in your Okta org by clicking **Admin**. 
-    ![Admin Button](/assets/img/scim-end-user-ui.png)
+    {% img scim-end-user-ui.png alt:"Admin Button" %}
 
 2. Click **Applications**, then **Add Application**. 
-    ![Admin Button](/assets/img/scim-apps.png)
+    {% img scim-apps.png alt:"Admin Button" %}
 
 3. Search for “SCIM”. You’ll see three different SCIM template applications for each SCIM version (1.1 and 2.0) based off of the various authentication methods you could choose to support (Header Auth, Basic Auth, or Bearer Token).
-    ![Admin Button](/assets/img/scim-templates.png)
+    {% img scim-templates.png alt:"Admin Button" %}
 
 #### Submit for Okta Review
 
@@ -1236,7 +1236,7 @@ Another option is by URL. When the customer configures your app in Okta, we can 
 Okta can use part of this url in the SCIM endpoint for that customer, for example http://www.company.com/tenantA/scim or http://www.company.com/tenantB/scim). 
 This subdomain field can be configured with Okta after you submit your app for Okta review.
 
-![Example SCIM endpoint with subdomain](/assets/img/scim-scalar.png)
+{% img scim-scalar.png alt:"Example SCIM endpoint with subdomain" %}
 
 **Why do I need to implement the type attribute for attributes such as emails/phoneNumbers/addresses?**
 

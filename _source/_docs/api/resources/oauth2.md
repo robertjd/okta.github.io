@@ -39,7 +39,7 @@ flows defined by [the OAuth 2.0 spec](http://oauth.net/documentation), you may w
     * Does not support refresh tokens
     * Assumes Resource Owner and Public Client are on the same device
 
-    ![Browser/Single-Page Application](/assets/img/browser_spa_implicit_flow.png)
+    {% img browser_spa_implicit_flow.png alt:"Browser/Single-Page Application" %}
 
 2. Native Application
 
@@ -47,7 +47,7 @@ flows defined by [the OAuth 2.0 spec](http://oauth.net/documentation), you may w
     * Uses [Authorization Code Grant Flow](https://tools.ietf.org/html/rfc6749#section-4.1)
     * Can use custom redirect URIs like `myApp://oauth:2.0:native`
 
-    ![Native Application Flow](/assets/img/native_auth_flow.png)
+    {% img native_auth_flow.png alt:"Native Application Flow" %}
 
     > Note: For native applications, the client_id and client_secret are embedded in the source code of the application; in this context, the client secret isn't treated as a secret.
         Therefore native apps should make use of Proof Key for Code Exchange (PKCE) to mitigate authorization code interception.
@@ -60,7 +60,7 @@ flows defined by [the OAuth 2.0 spec](http://oauth.net/documentation), you may w
     * Assumes Resource Owner and Client are on separate devices
     * Most secure flow as tokens never pass through user-agent
 
-    ![Web Application Flow](/assets/img/web_app_flow.png)
+    {% img web_app_flow.png alt:"Web Application Flow" %}
 
 4. Service Application
 
@@ -69,7 +69,7 @@ flows defined by [the OAuth 2.0 spec](http://oauth.net/documentation), you may w
     * Optimized for [Confidential Clients](https://tools.ietf.org/html/rfc6749#section-2.1) acting on behalf of itself or a user
     * Back-channel only flow to obtain an access token using the Client’s credentials
 
-    ![Service Application Flow](/assets/img/service_app_flow.png).
+    {% img service_app_flow.png alt:"Service Application Flow" %}.
 
 
     > Note: The OAuth 2.0 specification mandates that clients implement CSRF protection for their redirection URI endpoints.
