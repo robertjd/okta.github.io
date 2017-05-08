@@ -89,7 +89,7 @@ How to install the Spring Security SAML sample Okta application on Mac OS X:
 
 	This task compiles, tests, and assembles the code into a `.war` file.
 
-	A succesful build should look something like this: {% img spring-security-saml-build.png alt:"successful build" %}
+	A successful build should look something like this: {% img spring-security-saml-build.png alt:"successful build" %}
 
 	- Your compiled war archive file, `spring-security-SAML2-sample.war`, can be found in directory `build/libs/`
 

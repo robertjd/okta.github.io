@@ -763,7 +763,7 @@ curl -v -X POST \
 
 Customize (and optionally localize) the SMS message sent to the user in case Okta needs to resend the message as part of enrollment.
 
->For instructions about how to create custome templates, see [SMS Template](/docs/api/resources/templates.html#add-sms-template).
+>For instructions about how to create custom templates, see [SMS Template](/docs/api/resources/templates.html#add-sms-template).
 
 
 ###### Request Example
