@@ -1,3 +1,5 @@
+//= require vendor/jquery-3.1.0.min
+
 (function($) {
 
   $('.mobile-toggle').click(function() {
