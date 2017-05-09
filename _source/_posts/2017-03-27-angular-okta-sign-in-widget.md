@@ -221,7 +221,7 @@ This happens when Cross-Origin Resource Sharing (CORS) is not enabled. To enable
 select **Security** > **API** > **Trusted Origins**. Click the "Add Origin" button and specify `http://localhost:4200`
 as the Origin URL with Type `CORS`. For more specific instructions, see Okta's [Enabling CORS documentation](http://developer.okta.com/docs/api/getting_started/enabling_cors.html).
 
-<img alt="CORS Configuration" src="/assets/img/blog/angular-sign-in-widget/cors-configuration.png" style="width: 800px">
+{% img blog/angular-sign-in-widget/cors-configuration.png alt:"CORS Configuration" style:"width: 800px" %}
 
 After making this change, enter an assigned person's credentials to login. You should see a "Hello {email}" message with a logout button.
 

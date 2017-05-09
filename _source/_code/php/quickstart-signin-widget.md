@@ -8,7 +8,7 @@ support_email: developers@okta.com
 # Overview
 The Okta Sign-In Widget is a JavaScript widget from Okta that gives you a fully featured and customizable login experience which can be used to authenticate users on any web site.
 
-![Screenshot of basic Okta Sign-In Widget](/assets/img/okta-signin.png)
+{% img okta-signin.png alt:"Screenshot of basic Okta Sign-In Widget" %}
 
 # Configuring your Organization
 There are some steps to prepare for the use of the Okta Sign-In Widget. We need to sign up for Okta, set up CORS
@@ -339,7 +339,7 @@ Please note the following:
 * Okta always publishes keys to the JWKS.
 * To save the network round trip, your app can cache the JWKS response locally. The standard HTTP caching headers are used and should be respected.
 {% beta %}
-* The administrator can switch the authorization server key rotation mode to **MANUAL** by [updating the authorization server](/docs/api/resources/oauth2.html#update-authorization-server) and then control when to [rotate the keys](#rotate-authorization-server-keys).
+* The administrator can switch the authorization server key rotation mode to **MANUAL** by [updating the authorization server](/docs/api/resources/oauth2.html#update-authorization-server) and then control when to rotate the keys.
 {% endbeta %}
 
 Keys used to sign tokens automatically rotate and should always be resolved dynamically against the published JWKS. Your app can fail if you hardcode public keys in your applications. Be sure to include key rollover in your implementation.
