@@ -3,39 +3,47 @@
 const util = require('../shared/util');
 const _ = require('lodash');
 const EC = protractor.ExpectedConditions;
+const baseUrl = 'http://localhost:4000/';
 
 class BasePage {
-  constructor(url, getPage) {
-    this.url = url;
-    if (_.isUndefined(getPage) || getPage) {
-      this.get();
+  constructor(relativeURL) {
+    if(relativeURL) {
+      this.url = baseUrl + relativeURL;
+    } else {
+      this.url = baseUrl;
     }
-    this.initialize();
   }
 
   get() {
+    browser.ignoreSynchronization = true;
     browser.get(util.formatUrl(this.url, true));
-    util.wait($('.Page'));
-  }
-
-  navigateTo(url) {
-    browser.get(util.formatUrl(url, true));
-    util.wait($('.Page'));  
   }
 
   setWindowSize(width, height) {
     browser.driver.manage().window().setSize(width, height);
   }
 
-  waitTillOnScreen(elementFinder) {
+  waitUntilOnScreen(elementFinder) {
     browser.wait(util.isOnScreen(elementFinder));
   }
 
-  waitTillNotOnScreen(elementFinder) {
+  waitUntilOffScreen(elementFinder) {
     browser.wait(EC.not(util.isOnScreen(elementFinder)));
   }
 
-  initialize() {}
+  doElementsContainText(elements, expectedTextArray) {
+    return elements.filter(function(element, index) {
+      return element.getText().then(function(text) {
+        for (var i = 0; i < expectedTextArray.length; i++) {
+          if (text == expectedTextArray[i]) {
+            return true;
+          }
+        }
+      })
+    }).then(function(elementList) {
+      return elementList.length == expectedTextArray.length;
+    })
+  }
 }
 
 module.exports = BasePage;

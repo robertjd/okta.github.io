@@ -1,21 +1,31 @@
 'use strict';
 
 const BasePage = require('./BasePage');
+const util = require('../shared/util');
 
 class NavPage extends BasePage {
-  constructor(getPage) {
-    var url = 'http://localhost:4000';
-    super(url, getPage);
-    this.topNav = element(by.css('#top-nav'));
-    this.mobileNav = element(by.css("#mobile-nav"));
-  }
-  
-  waitTillTopNavOnScreen() {
-    this.waitTillOnScreen(this.topNav);
+  constructor() {
+    super();
+    this.topNav = $('#top-nav');
+    this.mobileNav = $('#mobile-nav');
+    this.header = $('#header');
   }
 
-  waitTillTopNavNotOnScreen() {
-    this.waitTillNotOnScreen(this.topNav);
+  load() {
+    this.get();
+    return this.waitForPageLoad();
+  }
+
+  waitForPageLoad() {
+    return util.wait(this.header);
+  }
+
+  waitUntilTopNavOnScreen() {
+    this.waitUntilOnScreen(this.topNav);
+  }
+
+  waitUntilTopNavOffScreen() {
+    this.waitUntilOffScreen(this.topNav);
   }
   
   isMobileNavDisplayed() {
