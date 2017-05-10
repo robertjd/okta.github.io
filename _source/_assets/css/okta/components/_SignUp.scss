@@ -1,0 +1,356 @@
+%SignupSection {
+	@include padding(x-large 0);
+	overflow: hidden;
+	background: get-color('gray-lightest');
+	background-image: url(#{$asset-path}/img/bg--forms-circle.png);
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	position: relative;
+}
+
+.SignupSection,
+[class^='SignupSection--'],
+[class*=' SignupSection--'] {
+	@extend %SignupSection;
+}
+
+.SignupSection {
+	.Wrap {
+		@include color(default);
+		font-weight: 100;
+		font-size: 1.67em;
+		line-height: 145%;
+
+		@include media('<small') {
+			padding: 0;
+
+			.Column,
+			[class^='Column-'],
+			[class*=' Column-'] {
+				@include padding(0 medium);
+			}
+		}
+
+		&:before {
+			background: get-color('white');
+			left: 70%;
+			bottom: -80px;
+			content: '';
+			display: block;
+			position: absolute;
+			top: -100px;
+			width: 50vw;
+
+			@include media('<large') {
+				left: 60%;
+			}
+
+			@include media('<medium') {
+				left: 55%;
+			}
+
+			@include media('<small') {
+				display: none;
+			}
+		}
+
+	}
+
+	h2,
+	h3 {
+		@include color('blue-bright');
+	}
+
+	h2 {
+		font-weight: 100;
+		font-size: 3rem;
+		line-height: 1.0;
+		margin-bottom: 0;
+
+		@include media('<medium') {
+			font-size: 2.5rem;
+		}
+	}
+
+	p.large {
+		font-size: 1.5rem;
+		line-height: 1.25;
+		font-weight: 300;
+	}
+
+	.sidekick.blockquote {
+		padding: 3rem;
+
+		@include media('<small') {
+			padding: 1.5rem;
+		}
+
+		blockquote {
+			position: relative;
+			border: none;
+		}
+
+		blockquote:before {
+			position: absolute;
+			top:0;
+			left: calc(50% - 16px);
+			content: '';
+			background: url(#{$asset-path}/img/blockquote.png) center center no-repeat;
+			width: 32px;
+			height: 32px;
+		}
+
+		.row div {
+			blockquote {
+				color: inherit;
+				p,h1,h2,h3,h4,h5,h6 {
+					color: inherit;
+				}
+			}
+		}
+
+		blockquote > p {
+			margin: get-spacing(medium) 0 0 0;
+			@include color(blue-bright);
+			font-size: 1.25rem;
+			line-height: 1.5;
+			font-weight: 300;
+			text-align: center;
+		}
+
+		cite {
+			@include color(blue-bright);
+			font-style: normal;
+			font-size: 1.5rem;
+			font-weight: normal;
+		}
+	}
+
+	.OccForm {
+		&,
+		p {
+			@include color('charcoal');
+			font-family: 'museo-sans', sans-serif;
+			font-size: 14px;
+			font-weight: 300;
+			line-height: 21px;
+		}
+
+		label,
+		&--error {
+			display: none;
+		}
+
+		.casl-inputs {
+			@include padding(small 0);
+		}
+
+		.global-error {
+			display: none;
+			@include color('red');
+			@include font-weight('500');
+			display: block;
+			margin-bottom: 0;
+			padding-bottom: #{get-spacing(small) * 1.5};
+		}
+
+		&-terms {
+			margin-top: get-spacing('x-small');
+
+			p {
+				font-size: 10px;
+				font-weight: 500;
+				line-height: 14px;
+			}
+		}
+
+		input[type='text'],
+		input[type='email'],
+		select {
+			@include color('charcoal');
+			@include padding(0 x-small);
+			@include transition(border normal, color normal);
+			background: #fff;
+			border: 1px solid get-color('gray');
+			display: block;
+			font-family: 'proxima-nova', sans-serif;
+			font-size: 14px;
+			height: 30px;
+			line-height: 28px;
+			margin: 0 0 get-spacing(x-small) 0;
+			width: 100%;
+
+			&.error {
+				border-color: get-color('gray') !important;
+			}
+
+			&::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+				@include color('gray');
+			}
+
+			&::-moz-placeholder { /* Firefox 19+ */
+				@include color('gray');
+			}
+
+			&:-ms-input-placeholder { /* IE 10+ */
+				@include color('gray');
+			}
+
+			&:-moz-placeholder { /* Firefox 18- */
+				@include color('gray');
+			}
+
+			&:focus {
+				background: #fff;
+				border-color: get-color('green');
+			}
+		}
+
+		.is-invalid {
+			input[type='text'],
+			input[type='email'],
+			select {
+				border-color: get-color('red') !important;
+				border-width: 2px;
+				line-height: 26px;
+				transition: none;
+			}
+
+			.OccForm--error {
+				@include color('red');
+				@include font-weight('500');
+				display: block;
+				margin-bottom: 0;
+			}
+		}
+
+		.is-valid {
+			input[type='text'],
+			input[type='email'],
+			select {
+				border-color: get-color('green') !important;
+			}
+		}
+
+
+		&-label {
+			@include margin(x-small 0 xx-small);
+			position: relative;
+			z-index: 5;
+		}
+
+		&-submit {
+			@include margin(x-small 0 0);
+			position: relative;
+
+			&:before {
+				@include transition(opacity normal);
+				background: url('#{$asset-path}/img/ajax-loader-white.gif') no-repeat center;
+				background-size: 16px;
+				content: '';
+				display: block;
+				height: 16px;
+				left: 90px;
+				opacity: 0;
+				position: absolute;
+				top: 50%;
+				transform: translate(-50%, -50%) scale(0);
+				width: 16px;
+				z-index: 5;
+			}
+
+			input[type='submit'] {
+				@include margin(small 0 0 0);
+				@include font-weight(bold);
+				@include line-height(small);
+				border-radius: 18px;
+				background: get-color('green');
+				border-color: transparent;
+				color: #fff;
+				max-width: 100%;
+				width: 180px;
+
+				&:focus,
+				&:active,
+				&:hover {
+					border-color: transparent;
+					outline: none;
+				}
+			}
+
+			&.is-processing {
+				&:before {
+					opacity: 1;
+					transform: translate(-50%, -50%) scale(1);
+				}
+
+				input[type='submit'] {
+					background: get-color('green') !important;
+					color: get-color('green') !important;
+				}
+			}
+
+		}
+
+	}
+
+	.FormColumn {
+
+		@include media('<small') {
+			@include padding(medium medium !important);
+			background: get-color('white');
+		}
+
+		#developer_error {
+			display: none;
+
+			p {
+				font-size: 1.1rem;
+				line-height: 1.5rem;
+			}
+		}
+	}
+}
+
+.SignupSection--ThankYou {
+	@extend %SignupSection;
+
+	text-align: center;
+	background-image: none;
+	background-color: get-color('white');
+
+	h1 {
+		@include color('blue-bright');
+		font-size: 3.5rem;
+		font-weight: 100;
+		line-height: 94%;
+		padding-top: 30px;
+	}
+
+	h3 {
+		@include color('charcoal');
+		font-weight: 100;
+		font-size: 2rem;
+		line-height: 120%;
+	}
+
+	p {
+		color: #5d5d5d;
+		font-weight: 300;
+		font-size: 1.5rem;
+		line-height: 145%;
+	}
+
+	.Wrap {
+
+		&:before {
+			display: none;
+		}
+	}
+
+	&.highlight {
+		@include padding(medium 0);
+		background: get-color('gray-lightest');
+	}
+}
