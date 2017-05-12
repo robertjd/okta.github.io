@@ -1,8 +1,12 @@
-var EC = protractor.ExpectedConditions;
-var util = module.exports = {};
+let EC = protractor.ExpectedConditions;
+let util = module.exports = {};
 
 util.wait = function (elementFinder) {
   return browser.wait(EC.presenceOf(elementFinder));
+};
+
+util.waitTillClickable = function (elementFinder) {
+  return browser.wait(EC.elementToBeClickable(elementFinder));
 };
 
 util.formatUrl = function (url, hideNav) {
