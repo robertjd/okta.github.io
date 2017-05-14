@@ -16,7 +16,7 @@ class BasePage {
 
   get() {
     browser.ignoreSynchronization = true;
-    browser.get(util.formatUrl(this.url, true));
+    browser.get(this.url);
   }
 
   setWindowSize(width, height) {
@@ -31,19 +31,23 @@ class BasePage {
     browser.wait(EC.not(util.isOnScreen(elementFinder)));
   }
 
-  doElementsContainText(elements, expectedTextArray) {
-    return elements.filter(function(element, index) {
-      return element.getText().then(function(text) {
-        for (var i = 0; i < expectedTextArray.length; i++) {
-          if (text == expectedTextArray[i]) {
-            return true;
-          }
-        }
-      })
-    }).then(function(elementList) {
+  elementsContainText(elements, expectedTextArray) {
+    if (!Array.isArray(expectedTextArray)) {
+      expectedTextArray = [expectedTextArray];
+    }
+    return elements.filter((element, index) => {
+      return element.getText().then((text) => {
+        return expectedTextArray.indexOf(text) > -1;
+      });
+    }).then((elementList) => {
       return elementList.length == expectedTextArray.length;
     })
   }
+
+  urlContains(str) {
+    return EC.urlContains(str)();
+  }
+
 }
 
 module.exports = BasePage;

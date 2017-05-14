@@ -213,7 +213,7 @@
 
 			#mobile-search {
 				@include margin(0 small 0 0);
-				background: url(#{$asset-path}/img/icons/search--mobile.svg) center no-repeat;
+				background: image_url("icons/search--mobile.svg") center no-repeat;
 				background-size: 24px;
 				border: 2px solid get-color('accent');
 				border-radius: 100%;

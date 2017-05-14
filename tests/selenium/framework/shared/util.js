@@ -5,10 +5,6 @@ util.wait = function (elementFinder) {
   return browser.wait(EC.presenceOf(elementFinder));
 };
 
-util.formatUrl = function (url, hideNav) {
-  return url + (hideNav ? '?hideNav=true' : '');
-};
-
 util.isOnScreen = function (elementFinder) {
   return () => {
     const location = elementFinder.getLocation();

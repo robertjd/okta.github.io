@@ -8,7 +8,7 @@ describe('page layout and browser size tests', function() {
     browser.ignoreSynchronization = true;
     navPage.load();
   });
-  
+
   it('shows the main navigation with desktop browser sizes', function() {
     // FIXME: Abstract this into a "Run this test on desktop" function.
     //        Take sizes from the CSS that we use to define sizes.
