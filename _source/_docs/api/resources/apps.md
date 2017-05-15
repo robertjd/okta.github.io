@@ -2529,7 +2529,7 @@ curl -v -X PUT \
 {:.api .api-operation}
 
 Update the app with a `profile`, a container for any valid JSON schema. Use the profile to define a whitelist of groups
-that you can then reference and pass as claims using the [Okta Expression Language's `getFilteredGroup`](/reference/okta_expresion_langauge/#group-functions).
+that you can then reference and pass as claims using the [Okta Expression `getFilteredGroups`](/reference/okta_expression_language/index.html#group-functions).
 
 To add a profile to an OpenID Connect public client app:
 
