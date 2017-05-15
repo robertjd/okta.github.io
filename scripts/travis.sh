@@ -23,10 +23,12 @@ if [ "$PHANTOMJS" == "true" ]; then
 fi
 
 if [ "$CHROMEHEADLESS" == "true" ]; then
-    # Install latest stable version of google chrome
-    chmod u+x ./scripts/install_chrome.sh
-    ./scripts/install_chrome.sh -f
-    google-chrome --version
+  cat /etc/*release
+
+  # Install latest stable version of google chrome
+  chmod u+x ./scripts/install_chrome.sh
+  ./scripts/install_chrome.sh -f
+  google-chrome --version
 fi
 
 # 2. Run the npm install to pull in test dependencies
