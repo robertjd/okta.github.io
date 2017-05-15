@@ -24,7 +24,7 @@ fi
 
 if [ "$CHROMEHEADLESS" == "true" ]; then
     # Install latest stable version of google chrome
-    chmod u+x install_chrome.sh
+    chmod u+x ./scripts/install_chrome.sh
     ./scripts/install_chrome.sh -f
     google-chrome --version
 fi
