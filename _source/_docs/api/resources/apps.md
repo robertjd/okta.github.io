@@ -2525,7 +2525,56 @@ curl -v -X PUT \
 }
 ~~~
 
+#### Update App with Profile for OpenID Connect Apps
+{:.api .api-operation}
 
+Update the app with a `profile`, a container for any valid JSON schema. Use the profile to define a whitelist of groups
+that you can then reference and pass as claims using the [Okta Expression Language's `getFilteredGroup`](/reference/okta_expresion_langauge/#group-functions).
+
+To add a profile to an OpenID Connect public client app:
+
+1. Create a [public client app](/docs/api/resources/oauth-clients.html) configured for OpenID Connect, if it doesn't already exist. Creating the public client app creates a corresponding app accessible via the Apps API.
+2. List your org's apps and look for the app named `OAuth2AppInstance` that corresponds to your public client app.
+3. Use the `OAuth2AppInstance` ID to update the app instance and public client app with a profile property. The profile property should list all groups that you wish to use as claims.
+4. Once this profile is populated, you can search it using the [Okta Expression `getFilteredGroups`](/reference/okta_expression_language/#group-functions).
+
+
+Profile Requirements
+
+* The profile is not encrypted, so don't store sensitive data in it.
+* Only attributes exposed in the API can be accessed by the expression, so don't store non-API attributes in the profile.
+* Actions related to the profile are recorded in System Log, not the Events Log.
+* The profile doesn't limit the level of nesting in the JSON schema you created, but there is a size limit of XX MB.
+
+<!-- Not sure what this caveat is telling the customer to do The registration portal would need to ensure that the property name and data type is consistent for all your use cases. -->
+
+##### Request Parameters
+{:.api .api-request .api-request-params}
+
+Parameter     | Description                                                             | Param Type | DataType                                      | Required |
+------------- | ----------------------------------------------------------------------- | ---------- | --------------------------------------------- | -------- |
+aid           | unique key of [Application](#application-model)                         | URL        | String                                        | TRUE     |
+app           | app with new key credential kid                                         | Body       | [Application](#application-model)             | FALSE    |
+profile       | Valid JSON schema for specifying a whitelist of groups for claims       | Body       | String                                        | FALSE    |
+
+##### Response Parameters
+{:.api .api-response .api-response-params}
+
+[Application](#application-model) with updated `profile`.
+
+##### Request Example
+{:.api .api-request .api-request-example}
+
+~~~sh
+add example
+~~~
+
+##### Response Example
+{:.api .api-response .api-response-example}
+
+~~~
+Add example json
+~~~
 
 ### Delete Application
 {:.api .api-operation}
