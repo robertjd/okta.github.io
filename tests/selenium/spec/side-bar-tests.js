@@ -9,34 +9,31 @@ describe('sidebar navigation tests', function() {
         sideBarPage.runTestOnDesktopBrowserSize(); // At smaller sizes, sidebar navigation is hidden
     });
 
-    it('has all the links in use cases side navigation', function(done) {
+    it('has all the links in use cases side navigation', function() {
         let expectedUseCases = ['Authentication', 'Multi-Factor Authentication', 'API Access Management', 'Integrate with Okta'];
         let useCasesNavText = sideBarPage.getUseCasesLinkText();
         for(let i = 0; i < expectedUseCases.length; i++) {
             expect(useCasesNavText).toContain(expectedUseCases[i]);
         }
-        done();
     });
 
-    it('has all the links in reference side navigation', function(done) {
+    it('has all the links in reference side navigation', function() {
         let expectedReferences = ['Getting Started', 'Authentication Reference', 'API Reference', 'Error Codes', 'Okta Expression Language', 'Platform Release Notes'];
         let referenceNavText = sideBarPage.getReferencesLinkText();
         for(let i = 0; i < expectedReferences.length; i++) {
             expect(referenceNavText).toContain(expectedReferences[i]);
         }
-        done();
     });
 
-    it('has all the links in standards side navigation', function(done) {
+    it('has all the links in standards side navigation', function() {
         let expectedStandards = ['OAuth 2.0 and Okta', 'OpenID Connect and Okta', 'SAML', 'SCIM Provisioning with Lifecycle Management'];
         let standardsNavText = sideBarPage.getStandardsLinkText();
         for(let i = 0; i < expectedStandards.length; i++) {
             expect(standardsNavText).toContain(expectedStandards[i]);
         }
-        done();
     });
   
-    it('navigates to links on side navigation', function(done) {
+    it('navigates to links on side navigation', function() {
         sideBarPage.clickMFAUseCase();
         sideBarPage.waitTillURLChangedTo("/use_cases/mfa/");
 
@@ -45,10 +42,9 @@ describe('sidebar navigation tests', function() {
 
         sideBarPage.clickIntegrateUseCaseLink();
         sideBarPage.waitTillURLChangedTo("/use_cases/integrate_with_okta/");
-        done();
     });
 
-    it('contains sub-links on reference side navigation', function(done) {
+    it('contains sub-links on reference side navigation', function() {
         // Sub-links are shown when the user clicks on the main link on the side bar
         sideBarPage.clickGettingStartedReferenceLink();
         sideBarPage.waitTillURLChangedTo("/docs/api/getting_started/api_test_client.html");
@@ -73,6 +69,5 @@ describe('sidebar navigation tests', function() {
         for(let i = 0; i < expectedSubLinks.length; i++) {
             expect(subLinks).toContain(expectedSubLinks[i]);
         }
-        done();
     });
 });

@@ -12,16 +12,15 @@ describe('table of contents navigation tests', function() {
     tocPage.runTestOnDesktopBrowserSize();  // At smaller sizes, table of contents is hidden
   });
 
-  util.itNoPhantom('has basic table of contents in the documentation page', function(done) {
+  util.itNoPhantom('has basic table of contents in the documentation page', function() {
     expect(tocPage.doesLevel1ItemContain('Authentication')).toBeTruthy();
 
     let expectedLevel2Items = ['Introduction', 'Building apps supporting Single Sign-On', 'Building custom login experience for your application',
       'Sign-in Widget', 'Auth SDK – a lightweight Javascript-based SDK', 'Authentication APIs – REST APIs for any client', 'Social Authentication'];
     expect(tocPage.doLevel2ItemsContain(expectedLevel2Items)).toBeTruthy();
-    done();
   });
 
-  util.itNoPhantom('has table of contents with multi level items', function(done) {
+  util.itNoPhantom('has table of contents with multi level items', function() {
     sideBarPage.clickMFAUseCase();
     sideBarPage.waitTillURLChangedTo("/use_cases/mfa/");
 
@@ -46,6 +45,5 @@ describe('table of contents navigation tests', function() {
     
     expect(tocPage.areLevel3ItemsVisible(['Prerequisites'])).toBeTruthy();
     expect(tocPage.areLevel3ItemsVisible(expectedLevel3Items)).toBeFalsy();
-    done();
   });
 });

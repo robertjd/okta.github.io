@@ -15,7 +15,7 @@ class BasePage {
 
   get() {
     browser.ignoreSynchronization = true;
-    browser.get(util.formatUrl(this.url, true));
+    browser.get(util.formatUrl(this.url, false));
   }
 
   setWindowSize(width, height) {

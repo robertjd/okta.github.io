@@ -8,11 +8,10 @@ describe('blog page tests', function () {
         blogPage.load();
     });
     
-    it('has blog posts with read more links and pagination', function (done) {
+    it('has blog posts with read more links and pagination', function () {
         expect(blogPage.getBlogPostCount()).toBeGreaterThan(0);
         expect(blogPage.doBlogsHaveReadMoreLink()).toBeTruthy();
         expect(blogPage.isPaginationVisible()).toBeTruthy();
         expect(blogPage.doesPaginationHaveLinks()).toBeTruthy();
-        done();
     });
 });
