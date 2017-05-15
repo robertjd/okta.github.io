@@ -18,7 +18,7 @@ const config = {
 
   jasmineNodeOpts: {
     print: () => {},
-    defaultTimeoutInterval: 25000
+    defaultTimeoutInterval: 250000
   },
 
   specs: ['spec/*.js'],
