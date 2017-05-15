@@ -20,10 +20,11 @@ util.isOnScreen = function (elementFinder) {
     return Promise.all([location, size]).then((args) => {
       const pos = args[0];
       const dim = args[1];
-      console.log("********* dim.height = " + dim.height);
       console.log("********* dim.width = " + dim.width);
-      console.log("********* dim.height = " + pos.x);
-      console.log("********* dim.height = " + pos.y);
+      console.log("********* pos.x = " + pos.x);
+
+      console.log("********* dim.height = " + dim.height);
+      console.log("********* pos.y = " + pos.y);
 
       return dim.width + pos.x > 0 && dim.height + pos.y > 0;
     });
