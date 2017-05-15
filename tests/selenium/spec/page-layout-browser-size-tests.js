@@ -9,23 +9,25 @@ describe('page layout and browser size tests', function() {
     navPage.load();
   });
   
-  it('shows the main navigation with desktop browser sizes', function() {
+  it('shows the main navigation with desktop browser sizes', function(done) {
     navPage.runTestOnDesktopBrowserSize();
     navPage.waitUntilTopNavOnScreen();
     expect(navPage.isMobileNavDisplayed()).toBeFalsy();
+    done();
   });
 
   // Phantom does not support the CSS transform we use to hide the top nav
-  util.itNoPhantom('shows mobile navigation with mobile browser sizes', function() {
+  util.itNoPhantom('shows mobile navigation with mobile browser sizes', function(done) {
     navPage.runTestOnMobileBrowserSize();
     navPage.waitUntilTopNavOffScreen();
     expect(navPage.isMobileNavDisplayed()).toBeTruthy();
 
     navPage.clickMobileToggle();
     expect(navPage.isMobileNavActive()).toBeTruthy();
+    done();
   });
 
-  it('does search on desktop browser sizes', function() {
+  it('does search on desktop browser sizes', function(done) {
     navPage.runTestOnDesktopBrowserSize();
     navPage.clickSearchIcon();
     expect(navPage.areSearchResultsPresent()).toBeFalsy();
@@ -33,5 +35,6 @@ describe('page layout and browser size tests', function() {
       navPage.submitSearch();
     });
     expect(navPage.areSearchResultsPresent()).toBeTruthy();
+    done();
   });
 });
