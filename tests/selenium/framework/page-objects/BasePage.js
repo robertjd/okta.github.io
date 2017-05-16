@@ -3,7 +3,7 @@
 const util = require('../shared/util');
 const _ = require('lodash');
 const EC = protractor.ExpectedConditions;
-const baseUrl = 'http://localhost:4000/';
+const baseUrl = 'http://localhost:4000';
 
 class BasePage {
   constructor(relativeURL) {
@@ -41,6 +41,18 @@ class BasePage {
       });
     }).then((elementList) => {
       return elementList.length == expectedTextArray.length;
+    })
+  }
+
+  elementContainsText(element, expectedTextArray) {
+    return element.getText().then(function(text) {
+      let found = true;
+      for (let i = 0; i < expectedTextArray.length; i++) {
+        if (text.indexOf(expectedTextArray[i]) < 0) {
+          found = false;
+        }
+      }
+      return found;
     })
   }
 

@@ -25,4 +25,8 @@ util.itNoPhantom = function(desc, fn) {
   };
 }
 
+util.waitTillClickable = function (elementFinder) {
+  return browser.wait(EC.elementToBeClickable(elementFinder));
+};
+
 util.EC = EC;
