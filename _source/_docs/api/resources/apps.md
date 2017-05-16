@@ -2528,25 +2528,21 @@ curl -v -X PUT \
 #### Update App with Profile Property for OpenID Connect Apps
 {:.api .api-operation}
 
-Update the [app's `profile` property](#application-properties), a container for any valid JSON schema that can be references from a request. For example, you can use the profile to define a whitelist of groups
+Update the [app's `profile` property](#application-properties), a container for any valid JSON schema that can be referenced from a request. For example, you can use the profile to define a whitelist of groups
 that you can then reference and pass as claims using the [Okta Expression `getFilteredGroups`](/reference/okta_expression_language/index.html#group-functions).
 
-To add a profile to an OpenID Connect public client app:
+To add a `profile` property to an OpenID Connect public client app:
 
-1. Create a [public client app](/docs/api/resources/oauth-clients.html) configured for OpenID Connect, if it doesn't already exist. Creating the public client app creates a corresponding app accessible via the Apps API.
-2. List your org's apps and look for the app named `OAuth2AppInstance` that corresponds to your public client app.
-3. Use the `OAuth2AppInstance` ID to update the app instance and public client app with a `profile` property.
-4. Once the property is populated, you can refer to it in requests.
+1. Create a [public client app](/docs/api/resources/oauth-clients.html) configured for OpenID Connect, if it doesn't already exist. Creating the public client app creates a corresponding app instance accessible via the Apps API.
+2. List your org's apps and look for the app named `oidc_client` that corresponds to your public client app.
+3. Use the ID of the corresponding app instance to update the app instance and public client app with a `profile` property.
+4. Once the property is populated, you can refer to it in Okta Expression Language, such as the [Okta Expression `getFilteredGroups`](/reference/okta_expression_language/index.html#group-functions).
 
 
 Profile Requirements
 
 * The profile is not encrypted, so don't store sensitive data in it.
-* Only attributes exposed in the API can be accessed by the expression, so don't store non-API attributes in the profile.
-* Actions related to the profile are recorded in System Log, not the Events Log.
 * The profile doesn't limit the level of nesting in the JSON schema you created, but there is a practical size limit.
-
-<!-- Not sure what this caveat is telling the customer to do The registration portal would need to ensure that the property name and data type is consistent for all your use cases. -->
 
 ### Delete Application
 {:.api .api-operation}
