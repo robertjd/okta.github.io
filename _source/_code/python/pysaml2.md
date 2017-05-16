@@ -12,6 +12,7 @@ saml_library_url: https://github.com/rohe/pysaml2
 git_url: git@github.com:jpf/okta-pysaml2-example.git
 github_repo_name: okta-pysaml2-example
 redirect_from: "/docs/examples/pysaml2.html"
+weight: 2
 ---
 
 # Overview

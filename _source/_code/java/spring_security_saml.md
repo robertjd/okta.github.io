@@ -3,6 +3,7 @@ layout: docs_page
 title: Spring Security SAML
 excerpt: Guidance on how to SAML-enable your application using open source Spring Security library.
 redirect_from: "/docs/examples/spring_security_saml.html"
+weight: 4
 ---
 
 # Overview
