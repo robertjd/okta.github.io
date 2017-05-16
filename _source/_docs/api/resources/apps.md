@@ -2529,13 +2529,13 @@ curl -v -X PUT \
 {:.api .api-operation}
 
 Update the [app's `profile` property](#application-properties), a container for any valid JSON schema that can be referenced from a request. For example, you can use the profile to define a whitelist of groups
-that you can then reference and pass as claims using the [Okta Expression `getFilteredGroups`](/reference/okta_expression_language/index.html#group-functions).
+that you can then reference using the [Okta Expression `getFilteredGroups`](/reference/okta_expression_language/index.html#group-functions).
 
 To add a `profile` property to an OpenID Connect public client app:
 
 1. Create a [public client app](/docs/api/resources/oauth-clients.html) configured for OpenID Connect, if it doesn't already exist. Creating the public client app creates a corresponding app instance accessible via the Apps API.
 2. List your org's apps and look for the app named `oidc_client` that corresponds to your public client app.
-3. Use the ID of the corresponding app instance to update the app instance and public client app with a `profile` property.
+3. Use the ID of the corresponding app instance to update the app instance properties with a `profile` property.
 4. Once the property is populated, you can refer to it in Okta Expression Language, such as the [Okta Expression `getFilteredGroups`](/reference/okta_expression_language/index.html#group-functions).
 
 
