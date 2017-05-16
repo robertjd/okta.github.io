@@ -2525,7 +2525,7 @@ curl -v -X PUT \
 }
 ~~~
 
-#### Update App with Profile Property for OpenID Connect Apps
+#### Set Profile Property for OpenID Connect Apps
 {:.api .api-operation}
 
 Update the [app's `profile` property](#application-properties), a container for any valid JSON schema that can be referenced from a request. For example, you can use the profile to define a whitelist of groups
@@ -2541,8 +2541,8 @@ To add a `profile` property to an OpenID Connect public client app:
 
 Profile Requirements
 
-* The profile is not encrypted, so don't store sensitive data in it.
-* The profile doesn't limit the level of nesting in the JSON schema you created, but there is a practical size limit.
+* The `profile` property is not encrypted, so don't store sensitive data in it.
+* The `profile` property doesn't limit the level of nesting in the JSON schema you created, but there is a practical size limit.
 
 ### Delete Application
 {:.api .api-operation}
@@ -4328,7 +4328,7 @@ Applications have the following properties:
 | visibility       | visibility settings for app                  |  [Visibility Object](#visibility-object)                            | TRUE       | FALSE    | FALSE      |             |             |
 | credentials      | credentials for the specified `signOnMode`   |  [Application Credentials Object](#application-credentials-object)  | TRUE       | FALSE    | FALSE      |             |             |
 | settings         | settings for app                             | Object ( [App Names & Settings](#app-names--settings))              | TRUE       | FALSE    | FALSE      |             |             |
-| profile          | Valid JSON schema for specifying properties  | [JSON](#update-app-with-profile-property-for-openid-connect-apps)  | TRUE       | FALSE    | FALSE      |             |             |
+| profile          | Valid JSON schema for specifying properties  | [JSON](#set-profile-property-for-openid-connect-apps)  | TRUE       | FALSE    | FALSE      |             |             |
 | _links           | discoverable resources related to the app    |  [JSON HAL](http://tools.ietf.org/html/draft-kelly-json-hal-06)     | TRUE       | FALSE    | TRUE       |             |             |
 | _embedded        | embedded resources related to the app        |  [JSON HAL](http://tools.ietf.org/html/draft-kelly-json-hal-06)     | TRUE       | FALSE    | TRUE       |             |             |
 | ---------------- | -------------------------------------------- | ------------------------------------------------------------------ | ---------- | -------- | ---------- | ----------- | ----------- |
@@ -4336,7 +4336,7 @@ Applications have the following properties:
 Property details
  
  * `id`, `created`, `lastUpdated`, `status`, `_links`, and `_embedded` are only available after an app is created.
- * `profile` is only available for OpenID Connect apps. See [Update App with Profile Property](#update-app-with-profile-property-for-openid-connect-apps).
+ * `profile` is only available for OpenID Connect apps. See [Set Profile Property for OpenID Connect Apps](#set-profile-property-for-openid-connect-apps).
 
 ##### App Names & Settings
 
