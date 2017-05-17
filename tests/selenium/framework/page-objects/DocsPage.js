@@ -12,16 +12,7 @@ class DocsPage extends BasePage {
     this.h2Elements = $$('h2');
     this.h3Elements = $$('h3');
     this.h4Elements = $$('h4');
-  }
-
-  load() {
-    this.get();
-    return this.waitForPageLoad();
-  }
-
-  waitForPageLoad() {
-    // This waits for the sidebar menu to fully finish rendering
-    return util.wait(this.pageLoadElement);
+    this.setPageLoadElement(this.pageLoadElement);
   }
 
   hasHeader(str) {

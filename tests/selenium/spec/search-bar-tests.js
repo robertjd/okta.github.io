@@ -10,7 +10,7 @@ describe('navigation bar search tests', function() {
   });
 
   it('does search on desktop browser sizes', function () {
-    navPage.setWindowSize(1060, 640);
+    navPage.resizeDesktop();
 
     navPage.clickSearchIcon();
     expect(navPage.areSearchResultsPresent()).toBeFalsy();
@@ -18,11 +18,11 @@ describe('navigation bar search tests', function() {
     navPage.enterSearchText('Authentication');
     navPage.submitSearch();
 
-    expect(navPage.areSearchResultsPresent()).toBeTruthy();
+    expect(navPage.areSearchResultsPresent()).toBe(true);
   });
 
   util.itNoPhantom('does search on mobile browser sizes', function () {
-    navPage.setWindowSize(360, 640);
+    navPage.resizeMobile();
 
     navPage.clickMobileSearch();
     expect(navPage.areSearchResultsPresent()).toBeFalsy();
@@ -30,6 +30,6 @@ describe('navigation bar search tests', function() {
     navPage.enterMobileSearchText('Authentication');
     navPage.submitMobileSearch();
 
-    expect(navPage.areSearchResultsPresent()).toBeTruthy();
+    expect(navPage.areSearchResultsPresent()).toBe(true);
   });
 });

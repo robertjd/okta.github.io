@@ -7,11 +7,25 @@ const baseUrl = 'http://localhost:4000';
 
 class BasePage {
   constructor(relativeURL) {
+    this.pageLoadElement = "";
     if(relativeURL) {
       this.url = baseUrl + relativeURL;
     } else {
       this.url = baseUrl;
     }
+  }
+
+  setPageLoadElement(element) {
+    this.pageLoadElement = element;
+  }
+
+  load() {
+    this.get();
+    return this.waitForPageLoad();
+  }
+
+  waitForPageLoad() {
+    return util.wait(this.pageLoadElement);
   }
 
   get() {
@@ -44,22 +58,29 @@ class BasePage {
     })
   }
 
-  elementContainsText(element, expectedTextArray) {
-    return element.getText().then(function(text) {
-      let found = true;
-      for (let i = 0; i < expectedTextArray.length; i++) {
-        if (text.indexOf(expectedTextArray[i]) < 0) {
-          found = false;
-        }
-      }
-      return found;
-    })
-  }
-
   urlContains(str) {
     return EC.urlContains(str)();
   }
 
+  getCurrentURL() {
+    return browser.getCurrentUrl().then(function(url) {
+      // return url relative to baseURL
+      return url.replace(baseUrl, '');
+    })
+  }
+
+  getBaseURL() {
+    return baseUrl;
+  }
+
+  // FIXME: Take sizes from the CSS that we use to define sizes.
+  resizeDesktop() {
+    browser.driver.manage().window().setSize(1060, 640);
+  }
+
+  resizeMobile() {
+    browser.driver.manage().window().setSize(360, 640);
+  }
 }
 
 module.exports = BasePage;

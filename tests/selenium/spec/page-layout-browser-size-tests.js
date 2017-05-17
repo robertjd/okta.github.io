@@ -10,17 +10,15 @@ describe('page layout and browser size tests', function() {
   });
 
   it('shows the main navigation with desktop browser sizes', function() {
-    // FIXME: Abstract this into a "Run this test on desktop" function.
-    //        Take sizes from the CSS that we use to define sizes.
-    navPage.setWindowSize(1060, 640);
+    navPage.resizeDesktop();
     navPage.waitUntilTopNavOnScreen();
     expect(navPage.isMobileNavDisplayed()).toBeFalsy();
   });
 
   // Phantom does not support the CSS transform we use to hide the top nav
   util.itNoPhantom('shows mobile navigation with mobile browser sizes', function() {
-    navPage.setWindowSize(360, 640);
+    navPage.resizeMobile();
     navPage.waitUntilTopNavOffScreen();
-    expect(navPage.isMobileNavDisplayed()).toBeTruthy();
+    expect(navPage.isMobileNavDisplayed()).toBe(true);
   });
 });

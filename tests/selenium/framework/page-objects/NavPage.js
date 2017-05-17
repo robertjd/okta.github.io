@@ -14,15 +14,7 @@ class NavPage extends BasePage {
     this.resultsBox = $('.gsc-resultsbox-visible');
     this.mobileSearch = $('#mobile-search');
     this.mobileSearchInput = $('#gsc-i-id1');
-  }
-
-  load() {
-    this.get();
-    return this.waitForPageLoad();
-  }
-
-  waitForPageLoad() {
-    return util.wait(this.header);
+    this.setPageLoadElement(this.header);
   }
 
   waitUntilTopNavOnScreen() {
@@ -38,12 +30,10 @@ class NavPage extends BasePage {
   }
 
   clickSearchIcon() {
-    util.waitTillClickable(this.searchIcon);
     return this.searchIcon.click();
   }
 
   clickMobileSearch() {
-    util.waitTillClickable(this.mobileSearch);
     return this.mobileSearch.click();
   }
 
