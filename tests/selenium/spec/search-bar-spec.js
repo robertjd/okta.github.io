@@ -1,19 +1,21 @@
 const NavPage = require('../framework/page-objects/NavPage');
 const util = require('../framework/shared/util');
 
-describe('navigation bar search tests', function() {
+describe('navigation bar search spec', function() {
   const navPage = new NavPage();
 
   beforeEach(function() {
-    browser.ignoreSynchronization = true;
     navPage.load();
   });
 
   it('does search on desktop browser sizes', function () {
     navPage.resizeDesktop();
-
+    // After resize it's better to call load() which waits for the presence of a page element
+    // Sometimes, the searchIcon isn't present immediately after resize
+    navPage.load();
+    
     navPage.clickSearchIcon();
-    expect(navPage.areSearchResultsPresent()).toBeFalsy();
+    expect(navPage.areSearchResultsPresent()).toBe(false);
 
     navPage.enterSearchText('Authentication');
     navPage.submitSearch();
@@ -25,7 +27,7 @@ describe('navigation bar search tests', function() {
     navPage.resizeMobile();
 
     navPage.clickMobileSearch();
-    expect(navPage.areSearchResultsPresent()).toBeFalsy();
+    expect(navPage.areSearchResultsPresent()).toBe(false);
 
     navPage.enterMobileSearchText('Authentication');
     navPage.submitMobileSearch();

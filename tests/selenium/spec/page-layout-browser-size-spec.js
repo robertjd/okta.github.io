@@ -1,11 +1,10 @@
 const NavPage = require('../framework/page-objects/NavPage');
 const util = require('../framework/shared/util');
 
-describe('page layout and browser size tests', function() {
+describe('page layout and browser size spec', function() {
   const navPage = new NavPage();
 
   beforeEach(function() {
-    browser.ignoreSynchronization = true;
     navPage.load();
   });
 

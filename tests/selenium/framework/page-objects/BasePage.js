@@ -7,7 +7,7 @@ const baseUrl = 'http://localhost:4000';
 
 class BasePage {
   constructor(relativeURL) {
-    this.pageLoadElement = "";
+    this.$pageLoad = null;
     if(relativeURL) {
       this.url = baseUrl + relativeURL;
     } else {
@@ -15,22 +15,18 @@ class BasePage {
     }
   }
 
-  setPageLoadElement(element) {
-    this.pageLoadElement = element;
+  setPageLoad(element) {
+    this.$pageLoad = element;
   }
 
   load() {
-    this.get();
+    browser.ignoreSynchronization = true;
+    browser.get(this.url);
     return this.waitForPageLoad();
   }
 
   waitForPageLoad() {
-    return util.wait(this.pageLoadElement);
-  }
-
-  get() {
-    browser.ignoreSynchronization = true;
-    browser.get(this.url);
+    return util.wait(this.$pageLoad);
   }
 
   setWindowSize(width, height) {
@@ -63,17 +59,18 @@ class BasePage {
   }
 
   getCurrentURL() {
-    return browser.getCurrentUrl().then(function(url) {
-      // return url relative to baseURL
-      return url.replace(baseUrl, '');
-    })
+    return browser.getCurrentUrl().then(url => url.replace(baseUrl, ''));
   }
-
-  getBaseURL() {
-    return baseUrl;
-  }
-
-  // FIXME: Take sizes from the CSS that we use to define sizes.
+  
+  // These are values used in css for managing different browser sizes -
+  // max-width: 1599px -> xxLarge
+  // max-width: 1399px -> xLarge
+  // max-width: 1199px -> large
+  // max-width: 1023px -> medium
+  // max-width: 899px -> mediumSmall
+  // max-width: 767px -> small
+  // max-width: 479px -> xSmall
+  // max-width: 319px -> xxSmall
   resizeDesktop() {
     browser.driver.manage().window().setSize(1060, 640);
   }

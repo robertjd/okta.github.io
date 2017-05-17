@@ -6,52 +6,28 @@ const util = require('../shared/util');
 class BlogPage extends BasePage {
   constructor(url) {
     super(url);
-    this.blogElement = $('.wrap.blog');
-    this.blogPostElements = $$('article.post-block');
-    this.paginationElement = $('.pagination');
-    this.nextLink = element(by.partialLinkText('Next'));
-    this.prevLink = element(by.partialLinkText('Prev'));
-    this.setPageLoadElement(this.blogElement);
+    this.$blog = $('.wrap.blog');
+    this.$$blogPost = $$('article.post-block');
+    this.$pagination = $('.pagination');
+    this.$nextLink = element(by.partialLinkText('Next'));
+    this.$prevLink = element(by.partialLinkText('Prev'));
+    this.setPageLoad(this.$blog);
   }
   
   getBlogPostCount() {
-    return this.blogPostElements.count();
+    return this.$$blogPost.count();
   }
 
   isPaginationVisible() {
-    return this.paginationElement.isDisplayed();
+    return this.$pagination.isDisplayed();
   }
-
-  doesPaginationHaveLinks() {
-    let links = ['Prev', '1', '2', 'Next'];
-
-    return this.paginationElement.getText().then(function(text) {
-      for (let i = 0; i < links.length; i++) {
-        if (text.indexOf(links[i]) < 0) {
-          return false;
-        }
-      }
-      return true;
-    })
-  }
-
-  doBlogsHaveReadMoreLink() {
-    let blogCount = 0;
-    return this.blogPostElements.filter(function (blogPost) {
-      blogCount++;
-      let readMoreLink = blogPost.element(by.linkText('Read more'));
-      return readMoreLink.isPresent();
-    }).then(function (elementList) {
-      return elementList.length == blogCount;
-    })
-  }
-
+  
   clickNext() {
-    return this.nextLink.click();
+    return this.$nextLink.click();
   }
 
   clickPrevious() {
-    return this.prevLink.click();
+    return this.$prevLink.click();
   }
 
   clickItem(item) {
@@ -60,13 +36,13 @@ class BlogPage extends BasePage {
   }
 
   clickReadMoreOnPost(post) {
-    let blogPost = this.blogPostElements.get(post);
+    let blogPost = this.$$blogPost.get(post);
     let readMoreLink = blogPost.element(by.linkText('Read more'));
     return readMoreLink.click();
   }
   
   getBlogLink(post) {
-    let blogPost = this.blogPostElements.get(post);
+    let blogPost = this.$$blogPost.get(post);
     let title = blogPost.element(by.css('a'));
     return title.getAttribute('href');
   }
