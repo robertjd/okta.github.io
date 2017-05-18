@@ -80,7 +80,7 @@ $(function () {
                         })
                         .done(function(resp) {
                             var url = window.location.toString(),
-                                thank_you_url = window.location.protocol.toString().concat('//', window.location.host, window.location.pathname.replace('index.html', ''), 'thank-you/');
+                                thank_you_url = resp.thankyou;
 
                             // preserve query string
                             if (url.indexOf('?') > 0) {
