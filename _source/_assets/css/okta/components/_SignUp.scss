@@ -54,9 +54,7 @@
         display: none;
       }
     }
-
   }
-
 
   h2 {
     @include color('default');
@@ -95,7 +93,7 @@
 
     blockquote:before {
       position: absolute;
-      top:0;
+      top: 0;
       left: calc(50% - 16px);
       content: '';
       background: url(#{$asset-path}/img/blockquote.png) center center no-repeat;
@@ -106,7 +104,14 @@
     .row div {
       blockquote {
         color: inherit;
-        p,h1,h2,h3,h4,h5,h6 {
+
+        p,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
           color: inherit;
         }
       }
@@ -235,7 +240,6 @@
       }
     }
 
-
     &-label {
       @include margin(x-small 0 xx-small);
       position: relative;
@@ -292,13 +296,10 @@
           color: get-color('green') !important;
         }
       }
-
     }
-
   }
 
   .FormColumn {
-
     @include media('<small') {
       @include padding(medium medium !important);
       background: get-color('white');
@@ -317,7 +318,6 @@
 
 .SignupSection--ThankYou {
   @extend %SignupSection;
-
   text-align: center;
   background-image: none;
   background-color: get-color('white');
@@ -345,7 +345,6 @@
   }
 
   .Wrap {
-
     &:before {
       display: none;
     }
