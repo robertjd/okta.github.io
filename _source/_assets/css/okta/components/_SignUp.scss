@@ -57,26 +57,28 @@
 
   }
 
-  h2,
-  h3 {
-    @include color('blue-bright');
-  }
 
   h2 {
-    font-weight: 100;
-    font-size: 3rem;
-    line-height: 1.0;
-    margin-bottom: 0;
+    @include color('default');
+    @include font-size('new-h2');
 
     @include media('<medium') {
       font-size: 2.5rem;
     }
   }
 
-  p.large {
-    font-size: 1.5rem;
-    line-height: 1.25;
-    font-weight: 300;
+  h3 {
+    @include color('default');
+    @include font-size('h6');
+    @include font-weight('base');
+    @include line-height('h6');
+  }
+
+  p {
+    @include color('default');
+    @include font-size('base');
+    @include font-weight('x-small');
+    @include line-height('small');
   }
 
   .sidekick.blockquote {
