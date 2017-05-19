@@ -20,6 +20,8 @@ describe('navigation bar search spec', () => {
     navPage.enterSearchText('Authentication');
     navPage.submitSearch();
 
+    // Search results are not immediately available. We need this wait for a short period
+    navPage.waitForSearchResults();
     expect(navPage.areSearchResultsPresent()).toBe(true);
   });
 
