@@ -367,36 +367,7 @@
 .SignupSection--ThankYou {
   @extend %SignupSection;
   text-align: center;
-  background-image: none;
   background-color: get-color('white');
-
-  h1 {
-    @include color('blue-bright');
-    font-size: 3.5rem;
-    font-weight: 100;
-    line-height: 94%;
-    padding-top: 30px;
-  }
-
-  h3 {
-    @include color('charcoal');
-    font-weight: 100;
-    font-size: 2rem;
-    line-height: 120%;
-  }
-
-  p {
-    color: #5d5d5d;
-    font-weight: 300;
-    font-size: 1.5rem;
-    line-height: 145%;
-  }
-
-  .Wrap {
-    &:before {
-      display: none;
-    }
-  }
 
   &.highlight {
     @include padding(medium 0);
