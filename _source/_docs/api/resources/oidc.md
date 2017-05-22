@@ -89,16 +89,16 @@ and claims about the authenticated user that clients can rely on.
 
 Clients can use any of the following sequences of operations to obtain an Access Token:
 * [Authorization code flow](http://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth) -- the client obtains
-an authorization code from the authorization server's Authorization endpoint and uses it to obtain an ID token and an access
+an authorization code from the authorization server's authentication endpoint and uses it to obtain an ID token and an access
 token from the authorization server's Token endpoint.
 * [Implicit flow](http://openid.net/specs/openid-connect-core-1_0.html#ImplicitFlowAuth) -- the client obtains an ID
-token and optionally an Access Token directly from the authorization server's Authorization endpoint.
+token and optionally an Access Token directly from the authorization server's authentication endpoint.
 * [Hybrid flow](http://openid.net/specs/openid-connect-core-1_0.html#HybridFlowAuth) -- a combination of the other
 two flows.
 
 Clients should always [validate ID Tokens](#validating-id-tokens) to ensure their integrity.
 
-The ID Tokens returned by the Authentication endpoint (implicit flow) or the Token endpoint (authorization code flow)
+The ID Tokens returned by the authentication endpoint (implicit flow) or the Token endpoint (authorization code flow)
 are identical, except that in the implicit flow, the *nonce* parameter is required (and hence must have been included
 in the request), and the *at_hash* parameter is required if the response includes an Access Token but prohibited if the
 response does not include an Access Token.
@@ -709,7 +709,7 @@ Parameter         | Description                                                 
 [idp](idps.html)  | Identity provider (default is Okta) | Query      | String    | FALSE    | Okta is the IDP. |
 sessionToken      | Okta one-time sessionToken. This allows an API-based user login flow (rather than Okta login UI). Session tokens can be obtained via the [Authentication API](authn.html).   | Query | String    | FALSE | |
 response_type     | Any combination of *code*, *token*, and *id_token*. The combination determines the [flow](http://openid.net/specs/openid-connect-core-1_0.html#Authentication). The `code` response type returns an authorization code, which the client can use to obtain an Access Token or a Refresh Token. | Query        | String   |   TRUE   |  |
-client_id         | Obtained during either [UI client registration](../../guides/social_authentication.html) or [API client registration](oauth-clients.html). It identifies the client and must match the value preregistered in Okta. | Query        | String   | TRUE     |
+client_id         | Obtained during either [UI client registration](/docs/api/resources/social_authentication.html) or [API client registration](oauth-clients.html). It identifies the client and must match the value preregistered in Okta. | Query        | String   | TRUE     |
 redirect_uri      | Callback location where the authorization code should be sent. It must match the value preregistered in Okta during client registration. | Query        | String   |  TRUE    |
 display           | How to display the authentication and consent UI. Valid values: *page* or *popup*.  | Query        | String   | FALSE     |  |
 max_age           | Allowable elapsed time, in seconds, since the last time the end user was actively authenticated by Okta. | Query      | String    | FALSE    | |
@@ -731,13 +731,13 @@ login_hint | A username to prepopulate if prompting for authentication.  | Query
     * *query* -- Parameters are encoded in the query string added to the *redirect_uri* when redirecting back to the client.
     * *form_post* -- Parameters are encoded as HTML form values that are auto-submitted in the User Agent.Thus, the values are transmitted via the HTTP POST method to the client
       and the result parameters are encoded in the body using the application/x-www-form-urlencoded format.
-    * *okta_post_message* -- Uses [HTML5 Web Messaging](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) (for example, window.postMessage()) instead of the redirect for the authorization response from the authorization endpoint.
+    * *okta_post_message* -- Uses [HTML5 Web Messaging](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) (for example, window.postMessage()) instead of the redirect for the authorization response from the authentication endpoint.
       *okta_post_message* is an adaptation of the [Web Message Response Mode](https://tools.ietf.org/html/draft-sakimura-oauth-wmrm-00#section-4.1).
       This value provides a secure way for a single-page application to perform a sign-in flow
       in a popup window or an iFrame and receive the ID Token and/or access token back in the parent page without leaving the context of that page.
       The data model for the [postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) call is in the next section.
 
- * Okta requires the OAuth 2.0 *state* parameter on all requests to the authorization endpoint in order to prevent cross-site request forgery (CSRF).
+ * Okta requires the OAuth 2.0 *state* parameter on all requests to the authentication endpoint in order to prevent cross-site request forgery (CSRF).
  The OAuth 2.0 specification [requires](https://tools.ietf.org/html/rfc6749#section-10.12) that clients protect their redirect URIs against CSRF by sending a value in the authorize request which binds the request to the user-agent's authenticated state.
  Using the *state* parameter is also a countermeasure to several other known attacks as outlined in [OAuth 2.0 Threat Model and Security Considerations](https://tools.ietf.org/html/rfc6819).
 
@@ -878,7 +878,7 @@ The following parameters can be posted as a part of the URL-encoded form values 
 Parameter          | Description                                                                                         | Type       |
 -------------------+-----------------------------------------------------------------------------------------------------+------------|
 grant_type         | Can be one of the following: *authorization_code*, *password*, *refresh_token*, or *client_credentials*. Determines the mechanism Okta will use to authorize the creation of the tokens. | String |
-code               | Expected if grant_type specified *authorization_code*. The value is what was returned from the [authorization endpoint](#authentication-request). | String |
+code               | Expected if grant_type specified *authorization_code*. The value is what was returned from the [authentication endpoint](#authentication-request). | String |
 refresh_token      | Expected if the grant_type specified *refresh_token*. The value is what was returned from this endpoint via a previous invocation. | String |
 username           | Expected if the grant_type specified *password*. | String |
 password           | Expected if the grant_type specified *password*. | String |
