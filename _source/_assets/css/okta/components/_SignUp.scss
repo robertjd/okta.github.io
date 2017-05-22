@@ -129,6 +129,54 @@
   }
 
   .OccForm {
+    &.mktoForm {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100% !important;
+
+      .mktoButtonRow {
+        display: flex;
+        justify-content: center;
+      }
+
+      .mktoButtonWrap {
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      .mktoFieldWrap {
+        float: none;
+      }
+
+      .mktoFormRow,
+      .mktoFieldWrap,
+      .mktoFieldDescriptor,
+      textarea,
+      input,
+      select {
+        width: 100% !important;
+      }
+
+      .mktoFieldDescriptor {
+        margin-bottom: 0 !important;
+      }
+
+      label[for='Prospecting_Notes__c'] {
+        @include font-weight('bold');
+        display: block;
+        margin-bottom: get-spacing(xx-small);
+      }
+
+      .mktoGutter,
+      .mktoAsterix,
+      .mktoOffset {
+        display: none;
+      }
+    }
+  }
+
+  .mktoForm,
+  .OccForm {
     &,
     p {
       @include color('charcoal');
@@ -166,6 +214,7 @@
       }
     }
 
+    input[type='tel'],
     input[type='text'],
     input[type='email'],
     select {
@@ -240,6 +289,7 @@
       z-index: 5;
     }
 
+    .mktoButtonWrap,
     &-submit {
       @include margin(x-small 0 0);
       position: relative;
@@ -260,10 +310,13 @@
         z-index: 5;
       }
 
+      button[type='submit'],
       input[type='submit'] {
         @include margin(small 0 0 0);
+        @include font-size(small);
         @include font-weight(bold);
         @include line-height(small);
+        font-family: 'museo-sans', sans-serif;
         border-radius: 18px;
         background: get-color('green');
         border-color: transparent;
