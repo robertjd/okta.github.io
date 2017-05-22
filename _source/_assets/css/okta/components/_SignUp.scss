@@ -1,12 +1,6 @@
 %SignupSection {
   @include padding(x-large 0);
-  overflow: hidden;
-  background: get-color('gray-lightest');
-  background-image: url(#{$asset-path}/img/bg--forms-circle.png);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-position: left bottom;
-  position: relative;
+  background-color: get-color('gray-lightest');
 }
 
 .SignupSection,
