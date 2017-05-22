@@ -13,7 +13,18 @@ layout: base
                 <script src="//app-ab12.marketo.com/js/forms2/js/forms2.min.js"></script>
                 <form id="mktoForm_1056" class="OccForm"></form>
                 <script>
-                MktoForms2.loadForm('//app-ab12.marketo.com', '380-NLU-416', 1056);
+                MktoForms2.loadForm('//app-ab12.marketo.com', '380-NLU-416', 1056, function(form) {
+                    form.onSuccess(function(values, followUpUrl) {
+
+                        form.getFormElem()
+                            .parents(".FormColumn")
+                            .html('<h2>Thank you for contacting us!</h2>');
+
+                        // Return false to prevent the submission handler from
+                        // taking the lead to the follow up url
+                        return false;
+                    });
+                });
                 </script>
             </div>
         </div>
