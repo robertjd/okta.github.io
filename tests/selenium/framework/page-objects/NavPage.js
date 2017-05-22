@@ -53,6 +53,10 @@ class NavPage extends BasePage {
     return this.$resultsBox.isPresent();
   }
 
+  waitForSearchResults() {
+    return util.wait(this.$resultsBox);
+  }
+
   submitMobileSearch() {
     return this.$mobileSearchInput.sendKeys(protractor.Key.ENTER);
   }
