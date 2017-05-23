@@ -196,10 +196,10 @@
     }
 
     .global-error {
-      display: none;
       @include color('red');
       @include font-weight('500');
       display: block;
+      display: none;
       margin-bottom: 0;
       padding-bottom: #{get-spacing(small) * 1.5};
     }
@@ -214,16 +214,26 @@
       }
     }
 
+    select {
+      &.mktoField {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        @include padding(0 small);
+      }
+    }
+
+    textarea,
     input[type='number'],
     input[type='tel'],
     input[type='text'],
     input[type='email'],
     select {
       @include color('charcoal');
-      @include padding(0 x-small);
+      @include padding(0 small);
       @include transition(border normal, color normal);
       background: #fff;
-      border: 1px solid get-color('gray');
+      border: 1px solid get-color('gray-dark');
       display: block;
       font-family: 'proxima-nova', sans-serif;
       font-size: 14px;
@@ -317,8 +327,8 @@
         @include font-size(small);
         @include font-weight(bold);
         @include line-height(small);
-        font-family: 'museo-sans', sans-serif;
-        border-radius: 18px;
+        font-family: $font-family !important;
+        border-radius: 3px;
         background: get-color('green');
         border-color: transparent;
         color: #fff;
