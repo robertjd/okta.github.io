@@ -36,7 +36,7 @@ if (process.env.CHROME_HEADLESS) {
     }
   }
 }
-
+  
 // Run SauceLabs on master branch and internal topic branches
 else if (process.env.TRAVIS) {
   console.log('-- Using SauceLabs --');
