@@ -34,9 +34,11 @@ Jekyll to be able to build and view the site, follow the steps below:
    gems on your system.
 5. Now install gems needed by this project into the projects gemset with `gem install bundler` and then `bundle install`.
    This will essentially read the Gemfile in the root directory and install all packages required to run the site.
-6. Start the site `npm start`
-7. Visit `http://localhost:4000` in your browser
-8. To stop serving the site hit `ctrl+c` in the terminal
+6. Install NPM if you don't alreayd have it. On OSX, if you are a brew user, `brew install node`, otherwise see this [guide](https://www.dyclassroom.com/howto-mac/how-to-install-nodejs-and-npm-on-mac-using-homebrew).
+7. Run `npm install`
+8. Start the site `npm start`
+9. Visit `http://localhost:4000` in your browser
+10. To stop serving the site hit `ctrl+c` in the terminal
 
 ### Important Directories
 
@@ -164,7 +166,7 @@ Create a production build of the `weekly` branch, merge it, then reset `weekly`.
 1. Create a new topic branch based off of `weekly`:
 
     ```bash
-    [okta.github.io weekly]$ git fetch origin
+    [okta.github.io master]$ git fetch origin
     [okta.github.io master]$ git checkout -b my-weekly-branch origin/weekly
     ```
     
@@ -189,15 +191,16 @@ Create a production build of the `weekly` branch, merge it, then reset `weekly`.
 
 7. After it's been merged into `weekly`, it will be deployed to the [staging site](https://d384qaxymvjmjw.cloudfront.net/) - this usually takes a couple minutes. Verify that all weekly changes show up correctly on the live version of the site. Note - you can know exactly when it's been pushed by looking at the bacon publish task for the okta.github.io artifact.
 
-8. Create a PR for the `weekly` branch to merge into `master`. Once it's been approved, merge it into `master`. The changes are live!
+8. Create a PR for the `weekly` branch to merge into `master`. Once it's been approved, merge it into `master`. The changes are live! Don't merge into `weekly` before the next step!
 
-9. Reset the `weekly` branch with the latest `master` changes
+9. Reset the `weekly` branch with the latest `master` changes.
 
     ```bash
     [okta.github.io master]$ git fetch origin
     
-    # Note: This will overwrite any new changes to the weekly branch! Before running this,
-    # make sure there are no new commits that have been merged in since you merged into master.
+    # Note: The following command overwrites any new changes to the weekly branch! Before running this,
+    # make sure there are no new commits that have been merged in since you merged into master. 
+    # If there have been merges since step 8, you must rebase before pushing master to weekly.
     [okta.github.io master]$ git push -f origin origin/master:weekly
     ```
 
