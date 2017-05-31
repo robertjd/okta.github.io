@@ -7,7 +7,7 @@ $(function () {
         pass_blacklist = false,
         one_checked = false,
         signup_form = '#developer_signup',
-        api_url = 'https://oktastg.prod.acquia-sites.com/developerapi';
+        api_url = 'https://www.okta.com/developerapi';
 
     if ((localStorage.getItem('okta_dev_country') == null || localStorage.getItem('okta_dev_region') == null) && typeof geoip2 != 'undefined'){
         var geo_error = function(error) {
