@@ -50,29 +50,6 @@
     }
   }
 
-  h2 {
-    @include color('default');
-    @include font-size('new-h2');
-
-    @include media('<medium') {
-      font-size: 2.5rem;
-    }
-  }
-
-  h3 {
-    @include color('default');
-    @include font-size('h6');
-    @include font-weight('base');
-    @include line-height('h6');
-  }
-
-  p {
-    @include color('default');
-    @include font-size('base');
-    @include font-weight('x-small');
-    @include line-height('small');
-  }
-
   .sidekick.blockquote {
     padding: 3rem;
 
@@ -370,6 +347,38 @@
         font-size: 1.1rem;
         line-height: 1.5rem;
       }
+    }
+  }
+}
+
+// text styles shared between signup/thankyou pages
+.SignupSection,
+.SignupSection--ThankYou {
+  .Wrap {
+    h1 {
+      @include color('default');
+      @include font-size('new-h1');
+      @include font-weight('light');
+      @include line-height('large');
+    }
+
+    h2 {
+      @include color('default');
+      @include font-size('new-h2');
+    }
+
+    h3 {
+      @include color('default');
+      @include font-size('h6');
+      @include font-weight('base');
+      @include line-height('h6');
+    }
+
+    p {
+      @include color('default');
+      @include font-size('base');
+      @include font-weight('x-small');
+      @include line-height('small');
     }
   }
 }
