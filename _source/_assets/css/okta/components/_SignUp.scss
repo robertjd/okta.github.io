@@ -111,11 +111,6 @@
       margin-right: auto;
       width: 100% !important;
 
-      .mktoButtonRow {
-        display: flex;
-        justify-content: center;
-      }
-
       .mktoButtonWrap {
         margin-left: auto !important;
         margin-right: auto !important;
@@ -139,7 +134,11 @@
       }
 
       label[for='Prospecting_Notes__c'] {
+        @include color('default');
+        @include font-size('small');
         @include font-weight('bold');
+        @include line-height('small');
+        font-family: $font-family;
         display: block;
         margin-bottom: get-spacing(xx-small);
       }
