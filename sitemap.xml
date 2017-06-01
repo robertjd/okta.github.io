@@ -334,19 +334,6 @@
   
     
     <url>
-      <loc>https://developer.okta.com/templates/api-endpoint</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
       <loc>https://developer.okta.com/confirm/contact</loc>
       
       
@@ -399,7 +386,33 @@
   
     
     <url>
+      <loc>https://developer.okta.com/discussion/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>https://developer.okta.com/documentation/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/blog/</loc>
       
       
         <changefreq>monthly</changefreq>
@@ -425,19 +438,6 @@
   
     
     <url>
-      <loc>https://developer.okta.com/discussion/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
       <loc>https://developer.okta.com/integrate_with_okta/</loc>
       
       
@@ -451,7 +451,7 @@
   
     
     <url>
-      <loc>https://developer.okta.com/blog/</loc>
+      <loc>https://developer.okta.com/</loc>
       
       
         <changefreq>monthly</changefreq>
@@ -466,7 +466,7 @@
   
     
     <url>
-      <loc>https://developer.okta.com/</loc>
+      <loc>https://developer.okta.com/signup/</loc>
       
       
         <changefreq>monthly</changefreq>
@@ -519,19 +519,6 @@
     
     <url>
       <loc>https://developer.okta.com/signup/thank-you/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/signup/</loc>
       
       
         <changefreq>monthly</changefreq>
