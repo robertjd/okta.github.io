@@ -212,9 +212,17 @@
 <p><a name="things-that-wont-migrate-and-known-caveats"></a></p>
 <h2 id="things-that-wont-migrate-and-known-caveats">Things That Won’t Migrate and Known Caveats</h2>
 
+<p><a name="usernames-must-be-in-email-format"></a></p>
 <h4 id="usernames-must-be-in-email-format">Usernames Must be in Email Format</h4>
 
-<p>The Stormpath Account <code class="highlighter-rouge">username</code> will be imported into the Okta User Profile <code class="highlighter-rouge">login</code> property. However, this value must be in email format: <code class="highlighter-rouge">example@domain.xyz</code>. If your usernames are not in email format, the import tool will throw an error. If you do have usernames that are not in email format, you can process your export JSON to add an email domain to your usernames, or you can get in touch with us at <a href="mailto:developers@okta.com">developers@okta.com</a>.</p>
+<p>The Stormpath Account <code class="highlighter-rouge">username</code> will be imported into the Okta User Profile <code class="highlighter-rouge">login</code> property. However, this value must be in email format: <code class="highlighter-rouge">example@domain.xyz</code>. If an Account’s <code class="highlighter-rouge">username</code> is not in email format, the import tool will convert it into email format by appending <code class="highlighter-rouge">@emailnotprovided.local</code>. For example, a Stormpath <code class="highlighter-rouge">username</code> value of <code class="highlighter-rouge">susan</code> will become <code class="highlighter-rouge">susan@emailnotprovided.local</code> after the import into Okta.</p>
+
+<p><a name="email-prefixes-must-be-unique"></a></p>
+<h4 id="email-prefixes-must-be-unique">Email Prefixes Must be Unique</h4>
+
+<p>Username prefixes must be unique in order for Stormpath Accounts to be successfully imported. This is because users in Okta may sign in with either  their username prefix, or their full username (in email format). This means that from Okta’s perspective <code class="highlighter-rouge">susan@example.com</code> and <code class="highlighter-rouge">susan</code> can both be used for sign in.</p>
+
+<p>This means that if a Stormpath Account shares an email prefix with one or more other Accounts, none of them can be created by the import tool and errors will be returned instead.  While this should be uncommon, if you do run into this scenario, reach out to our support team at <a href="mailto:developers@okta.com">developers@okta.com</a>.</p>
 
 <p><a name="custom-data-for-accounts-only"></a></p>
 <h4 id="custom-data-for-accounts-only">Custom Data For Accounts Only</h4>
