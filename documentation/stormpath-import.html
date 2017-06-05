@@ -222,7 +222,13 @@
 
 <p>Username prefixes must be unique in order for Stormpath Accounts to be successfully imported. This is because users in Okta may sign in with either  their username prefix, or their full username (in email format). This means that from Okta’s perspective <code class="highlighter-rouge">susan@example.com</code> and <code class="highlighter-rouge">susan</code> can both be used for sign in.</p>
 
-<p>This means that if a Stormpath Account shares an email prefix with one or more other Accounts, none of them can be created by the import tool and errors will be returned instead.  While this should be uncommon, if you do run into this scenario, reach out to our support team at <a href="mailto:developers@okta.com">developers@okta.com</a>.</p>
+<p>This means that if a Stormpath Account shares an email prefix with one or more other Accounts, these Accounts will be imported, but the import tool will also log a warning to the console. Technically both users will still be able to log in, though they would only be able to do it with their full username (for example <code class="highlighter-rouge">susan@emailnotprovided.local</code>). The recommended options for this situation are:</p>
+
+<ul>
+  <li>Let affected users know that they need to sign in with the email suffix, and after they sign in they should update their username to use their real email address</li>
+  <li>Pre-process the Stormpath Accounts to use a different email suffix of your choosing</li>
+  <li>Contact <a href="mailto:developers@okta.com">developers@okta.com</a> to disable the requirement that usernames must be in the form of an email address.</li>
+</ul>
 
 <p><a name="custom-data-for-accounts-only"></a></p>
 <h4 id="custom-data-for-accounts-only">Custom Data For Accounts Only</h4>
