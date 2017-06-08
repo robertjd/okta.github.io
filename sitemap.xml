@@ -373,6 +373,19 @@
   
     
     <url>
+      <loc>https://developer.okta.com/feed/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>https://developer.okta.com/discussion/</loc>
       
       
@@ -386,33 +399,7 @@
   
     
     <url>
-      <loc>https://developer.okta.com/signup/thank-you/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/signup/stormpath/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/signup/</loc>
+      <loc>https://developer.okta.com/documentation/</loc>
       
       
         <changefreq>monthly</changefreq>
@@ -438,6 +425,19 @@
   
     
     <url>
+      <loc>https://developer.okta.com/contact/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>https://developer.okta.com/integrate_with_okta/</loc>
       
       
@@ -451,33 +451,7 @@
   
     
     <url>
-      <loc>https://developer.okta.com/search/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/privacy/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/documentation/</loc>
+      <loc>https://developer.okta.com/</loc>
       
       
         <changefreq>monthly</changefreq>
@@ -492,20 +466,7 @@
   
     
     <url>
-      <loc>https://developer.okta.com/feed/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/contact/</loc>
+      <loc>https://developer.okta.com/signup/</loc>
       
       
         <changefreq>monthly</changefreq>
@@ -531,7 +492,7 @@
   
     
     <url>
-      <loc>https://developer.okta.com/</loc>
+      <loc>https://developer.okta.com/search/</loc>
       
       
         <changefreq>monthly</changefreq>
@@ -544,7 +505,59 @@
   
     
     <url>
-      <loc>https://developer.okta.com/confirm/</loc>
+      <loc>https://developer.okta.com/signup/stormpath/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/signup/thank-you/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/privacy/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/sitemap/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/terms/</loc>
       
       
         <changefreq>monthly</changefreq>
@@ -583,20 +596,7 @@
   
     
     <url>
-      <loc>https://developer.okta.com/terms/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/sitemap/</loc>
+      <loc>https://developer.okta.com/confirm/</loc>
       
       
         <changefreq>monthly</changefreq>
