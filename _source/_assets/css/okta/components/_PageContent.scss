@@ -68,7 +68,7 @@
 		}
 
 		h3, h4, h5, h6 {
-			@include color('blue-bright');
+			color: #5d5d5d;
 
 			& img {
 				height: 50px;
