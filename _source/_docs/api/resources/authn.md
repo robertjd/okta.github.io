@@ -3220,7 +3220,7 @@ Verifies an enrolled factor for an authentication transaction with the `MFA_REQU
 - [Verify U2F Factor](#verify-u2f-factor)
 - [Verify Call Factor](#verify-call-factor)
 
-> If the sign-on (or app sign-on) [policy](#remember-device-policy-object) allows remembering the device, then end user should be prompted to choose whether current device should be remembered. This would help reduce the number of times user is prompted for MFA on the current device. The user's choice should be passed to Okta using the request parameter `rememberDevice` to the verify endpoint. Default value of `rememberDevice` parameter is `false`.
+> If the sign-on (or app sign-on) [policy](#remember-device-policy-object) allows remembering the device, then the end user should be prompted to choose whether the current device should be remembered. This helps reduce the number of times the user is prompted for MFA on the current device. The user's choice should be passed to Okta using the request parameter `rememberDevice` to the verify endpoint. The default value of `rememberDevice` parameter is `false`.
 
 #### Verify Security Question Factor
 {:.api .api-operation}
@@ -3237,7 +3237,7 @@ Parameter      | Description                                         | Param Typ
 fid            | `id` of factor returned from enrollment             | URL        | String   | TRUE     |
 stateToken     | [state token](#state-token) for current transaction | Body       | String   | TRUE     |
 answer         | answer to security question                         | Body       | String   | TRUE     |
-rememberDevice | user's choice to remember device                    | URL        | Boolean  | FALSE    |
+rememberDevice | user's decision to remember device                  | URL        | Boolean  | FALSE    |
 
 ##### Response Parameters
 {:.api .api-response .api-response-params}
@@ -3311,7 +3311,7 @@ Parameter      | Description                                         | Param Typ
 fid            | `id` of factor                                      | URL        | String   | TRUE     |
 stateToken     | [state token](#state-token) for current transaction | Body       | String   | TRUE     |
 passCode       | OTP sent to device                                  | Body       | String   | FALSE    |
-rememberDevice | user's choice to remember device                    | URL        | Boolean  | FALSE    |
+rememberDevice | user's decision to remember device                  | URL        | Boolean  | FALSE    |
 
 > If you omit `passCode` in the request a new OTP will be sent to the device, otherwise the request will attempt to verify the `passCode`
 
@@ -3482,7 +3482,7 @@ Parameter      | Description                                         | Param Typ
 fid            | `id` of factor                                      | URL        | String   | TRUE     |
 stateToken     | [state token](#state-token) for current transaction | Body       | String   | TRUE     |
 passCode       | OTP sent to device                                  | Body       | String   | FALSE    |
-rememberDevice | user's choice to remember device                    | URL        | Boolean  | FALSE    |
+rememberDevice | user's decision to remember device                  | URL        | Boolean  | FALSE    |
 
 ##### Response Parameters
 {:.api .api-response .api-response-params}
@@ -3557,7 +3557,7 @@ Parameter      | Description                                         | Param Typ
 -------------- | --------------------------------------------------- | ---------- | -------- | -------- |
 fid            | `id` of factor returned from enrollment             | URL        | String   | TRUE     |
 stateToken     | [state token](#state-token) for current transaction | Body       | String   | TRUE     |
-rememberDevice | user's choice to remember device                    | URL        | Boolean  | FALSE    |
+rememberDevice | user's decision to remember device                  | URL        | Boolean  | FALSE    |
 
 
 ##### Request Example
@@ -4013,7 +4013,7 @@ fid            | `id` of factor returned from enrollment             | URL      
 stateToken     | [state token](#state-token) for current transaction | Body       | String   | TRUE     |
 clientData     | base64 encoded client data from the U2F token       | Body       | String   | TRUE     |
 signatureData  | base64 encoded signature data from the U2F token    | Body       | String   | TRUE     |
-rememberDevice | user's choice to remember device                    | URL        | Boolean  | FALSE    |
+rememberDevice | user's decision to remember device                  | URL        | Boolean  | FALSE    |
 
 ##### Start verification to get challenge nonce
 
@@ -4188,7 +4188,7 @@ Parameter      | Description                                         | Param Typ
 fid            | `id` of factor                                      | URL        | String   | TRUE     |
 stateToken     | [state token](#state-token) for current transaction | Body       | String   | TRUE     |
 passCode       | OTP sent to device                                  | Body       | String   | FALSE    |
-rememberDevice | user's choice to remember device                    | URL        | Boolean  | FALSE    |
+rememberDevice | user's decision to remember device                  | URL        | Boolean  | FALSE    |
 
 > If you omit `passCode` in the request a new OTP will be sent to the device, otherwise the request will attempt to verify the `passCode`
 
