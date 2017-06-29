@@ -3,6 +3,66 @@
   
     
     <url>
+      <loc>https://developer.okta.com/blog/2017/06/27/seven-tools-net-developers</loc>
+      
+        <lastmod>2017-06-27T00:00:00+00:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth</loc>
+      
+        <lastmod>2017-06-21T00:00:00+00:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/blog/2017/06/20/develop-microservices-with-jhipster</loc>
+      
+        <lastmod>2017-06-20T00:00:00+00:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/blog/2017/06/15/build-microservices-architecture-spring-boot</loc>
+      
+        <lastmod>2017-06-15T00:00:00+00:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>https://developer.okta.com/blog/2017/06/13/add-authentication-angular-pwa</loc>
       
         <lastmod>2017-06-13T00:00:00+00:00</lastmod>
@@ -388,139 +448,7 @@
   
     
     <url>
-      <loc>https://developer.okta.com/feed/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
       <loc>https://developer.okta.com/discussion/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/documentation/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/blog/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/contact/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/integrate_with_okta/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/signup/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/product/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/search/</loc>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>https://developer.okta.com/signup/stormpath/</loc>
       
       
         <changefreq>monthly</changefreq>
@@ -546,6 +474,71 @@
   
     
     <url>
+      <loc>https://developer.okta.com/signup/stormpath/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/signup/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/blog/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/integrate_with_okta/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/search/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>https://developer.okta.com/privacy/</loc>
       
       
@@ -559,7 +552,22 @@
   
     
     <url>
-      <loc>https://developer.okta.com/sitemap/</loc>
+      <loc>https://developer.okta.com/documentation/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/feed/</loc>
       
       
         <changefreq>monthly</changefreq>
@@ -572,7 +580,46 @@
   
     
     <url>
-      <loc>https://developer.okta.com/terms/</loc>
+      <loc>https://developer.okta.com/contact/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/product/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/confirm/</loc>
       
       
         <changefreq>monthly</changefreq>
@@ -611,7 +658,20 @@
   
     
     <url>
-      <loc>https://developer.okta.com/confirm/</loc>
+      <loc>https://developer.okta.com/terms/</loc>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>https://developer.okta.com/sitemap/</loc>
       
       
         <changefreq>monthly</changefreq>
