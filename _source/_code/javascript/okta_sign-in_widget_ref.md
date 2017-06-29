@@ -253,7 +253,7 @@ oktaSignIn.renderEl({
 
  Property       | Description                              |  Type    |  Required    | Default
 --------------  | ---------------------------------------  | ------   | -----------  | -------
- `clientId`     | [Client Id](/docs/api/resources/oauth-clients.html#client-application-properties) pre-registered with Okta for OIDC authentication flow. | String | Yes | None
+ `clientId`     | [Client ID](/docs/api/resources/oauth-clients.html#client-application-properties) pre-registered with Okta for an OpenID Connect authentication flow. | String | Yes | None
  `redirectUri`  | Callback location to send the authorization code to. This must be pre-registered as part of client registration. | String | Yes | `window.location.href`
  `oAuthTimeout` | Timeout for OIDC authentication flow requests. | Number | No | `120000`
  `authParams`   | Authentication parameters for OIDC. [List](#authParams-parameters) |See [List](#authParams-parameters) |See [List](#authParams-parameters) | See [List](#authParams-parameters)

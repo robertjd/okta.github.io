@@ -19,7 +19,7 @@ When do you use API Access Management and when do you use OpenID Connect?
 ### Simple Use Cases
 
 In general, use OpenID Connect to sign users into apps, and use API Access Management to secure your APIs: 
-create one or more authentication servers, define scopes and claims, and create policies and rules to determine who can access your API resources.
+create one or more Custom Authorization Servers, define scopes and claims, and create policies and rules to determine who can access your API resources.
 
 For example:
 
@@ -37,7 +37,7 @@ See [OAuth 2.0 and OpenID Connect](#oauth-20-and-openid-connect) for details.
 Centralizing the management of your APIs makes it easier for others to consume your API resources.
 Using Okta's OAuth-as-a-Service feature, API Access Management, provides many benefits:
 
-* Create one or more hosted authentication servers, which makes it easier to manage sets of API access for multiple client apps across many customer types.
+* Create one or more [Custom Authorization Servers](/standards/OAuth/index.html#authorization-servers), hosted on Okta. Custom Authorization Server makes it easier to manage sets of API access for multiple client apps across many customer types.
 * Create custom scopes and claims. Map your claims to the profiles in your user directory. 
 * Tokens are passed instead of credentials. In addition, the JWT tokens carry payloads for user context.
 * Stay protected with security standards compliance.
@@ -77,6 +77,8 @@ This benefit depends, of course, on the level of security your apps require.
 
 ## Getting Started with API Access Management
 
-* [Set up an authorization server](https://help.okta.com/en/prev/Content/Topics/Security/API_Access.htm) and use the power of Okta's API Access Management.
+
+* [Learn more](/standards/OAuth/index.html) about Okta and OAuth 2.0.
+* [Set up a custom authorization server](https://help.okta.com/en/prev/Content/Topics/Security/API_Access.htm) and use the power of Okta's API Access Management.
 * Visit [the API Access Management endpoint documentation](/docs/api/resources/oauth2.html) and start building your integration today.
 * For simpler use cases focused on single-sign on, visit [the OpenID Connect documentation](/docs/api/resources/oidc.html).

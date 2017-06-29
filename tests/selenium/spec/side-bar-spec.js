@@ -45,9 +45,9 @@ describe('sidebar navigation spec', () => {
 
     sideBarPage.clickAuthenticationReferenceLink();
     expect(sideBarPage.getCurrentURL()).toBe('/docs/api/resources/authn.html');
-    expectedSubLinks = ['Authentication API', 'OAuth 2.0',
+    expectedSubLinks = ['Authentication', 'OAuth 2.0',
         'OpenID Connect', 'Social Login',
-        'Sessions'];
+        'Sessions', 'Dynamic Client Registration'];
     expect(sideBarPage.doesReferenceHaveLinks(expectedSubLinks)).toBe(true);
 
     sideBarPage.clickAPIReferenceLink();
