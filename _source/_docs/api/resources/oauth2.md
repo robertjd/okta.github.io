@@ -7,7 +7,7 @@ weight: 4
 
 {% api_lifecycle ea %}
 
-Okta is a fully standards-compliant [OAuth 2.0](http://oauth.net/documentation) authorization server and a certified [OpenID Provider](http://openid.net/certification).
+Okta is a standards-compliant [OAuth 2.0](http://oauth.net/documentation) authorization server and a certified [OpenID Provider](http://openid.net/certification).
 
 The OAuth 2.0 API provides API security via scoped access tokens, and OpenID Connect provides user authentication and an SSO layer which is lighter and easier to use than SAML.
 
@@ -18,7 +18,7 @@ To understand more about OAuth 2.0 and Okta:
 
 ## Endpoints
 
-You can perform authorization and token operations, as well as create, configure, and delete Custom Authorization Servers, policies, rules, scopes, or claims.
+You can perform authorization and token operations, as well as create, update, and delete Custom Authorization Servers, policies, rules, scopes, or claims.
 
 * [Authorization Operations](#authorization-operations)
 * [Authorization Server Operations](#authorization-server-operations)
@@ -1767,7 +1767,7 @@ curl -v -X GET \
 
 {% api_operation post /api/v1/authorizationServers/:authorizationServerId/credentials/lifecycle/keyRotate %}
 
-Rotates the current keys for a Custom Authorization Server. If you rotate keys, the `ACTIVE` key becomes the `EXPIRED` key, the `NEXT` key becomes the `ACTIVE` key, and a Custom Authorization Server immediately issues tokens signed with the new active key.
+Rotates the current keys for a Custom Authorization Server. If you rotate keys, the `ACTIVE` key becomes the `EXPIRED` key, the `NEXT` key becomes the `ACTIVE` key, and the Custom Authorization Server immediately issues tokens signed with the new active key.
 
 >Authorization server keys can be rotated in both *MANUAL* and *AUTO* mode, however, it is recommended to rotate keys manually only when the authorization server is in *MANUAL* mode.
 >If keys are rotated manually, any intermediate cache should be invalidated and keys should be fetched again using the [get keys](oauth2.html#get-keys) endpoint.
