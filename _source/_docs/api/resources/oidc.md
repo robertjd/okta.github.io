@@ -729,7 +729,7 @@ This is a starting point for OpenID Connect flows such as implicit and authoriza
 authenticates the user and returns tokens along with an authorization grant to the client application as a part
 of the response.
 
-> Because this endpoint works with the [Okta AS](/standards/OAuth/index.html#authorization-servers), you don't need an authorization server ID.
+> Because this endpoint works with the [Okta Authorization Server](/standards/OAuth/index.html#authorization-servers), you don't need an authorization server ID.
 
 #### Request Parameters
 {:.api .api-request .api-request-params}
