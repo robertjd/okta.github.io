@@ -77,8 +77,7 @@ This benefit depends, of course, on the level of security your apps require.
 
 # Getting Started with API Access Management
 
-
 * [Learn more](/standards/OAuth/index.html) about Okta and OAuth 2.0.
 * [Set up a custom authorization server](https://help.okta.com/en/prev/Content/Topics/Security/API_Access.htm) and use the power of Okta's API Access Management.
 * Visit [the API Access Management endpoint documentation](/docs/api/resources/oauth2.html) and start building your integration today.
-* For simpler use cases focused on single-sign on, visit [the OpenID Connect documentation](/docs/api/resources/oidc.html).
+* For simpler use cases focused on SSO, visit [the OpenID Connect documentation](/docs/api/resources/oidc.html).
