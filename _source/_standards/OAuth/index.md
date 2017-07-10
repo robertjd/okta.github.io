@@ -330,26 +330,26 @@ The actions in a rule define the lifetime of the Access Token and Refresh Token.
 
 ## Authorization Servers
 
-At its core, an authorization server is simply an engine for minting OAuth 2.0 tokens.
+At its core, an authorization server is simply an engine for minting OpenID Connect or OAuth 2.0 tokens.
 
 Okta provides two types of authorization servers:
 
 * Okta Authorization Server:
-Use the Okta Authorization Server to perform single-sign on with Okta or log users into their apps displayed on the Okta home page.
+Use the Okta Authorization Server to perform SSO with Okta or sign in users for apps displayed on the Okta home page.
 Okta hosts and manages the Okta Authorization Server. It can't be configured,
 though you can add a [groups claim](/docs/api/resources/oidc.html#scope-dependent-claims-not-always-returned)
 and [app-user profile attributes](/docs/api/resources/apps.html#application-user-properties) to a client.
-The Access Token minted by the Okta Authorization Server is consumed by Okta APIs. Its audience is always Okta specific and can't be validated by your applications or APIs.
+The Access Token minted by the Okta Authorization Server is consumed by Okta APIs. The Access Token audience is always Okta specific, so the token can't be validated by your applications.
 
-    >Note: The Okta Authorization Server is available without any additional features enabled.
+    >Note: The Okta Authorization Server doesn't require that the API Access Management feature be enabled.
 
 * Custom Authorization Server:
 Use a Custom Authorization Server to secure your APIs.
-Custom Authorization Servers are hosted on Okta, and created by a user with the correct permissions (Org Admin or Super Org Admin).
-You can create and configure Custom Authorization Servers using the Okta Admin UI or the OAuth 2.0 API.
+Custom Authorization Servers are hosted on Okta, and created and configured by an org administrator.
+You can create and configure Custom Authorization Servers using the Okta Admin UI or the [Custom Authorization Server API](/docs/api/resources/oauth2.html#authorization-server-operations).
 The Access Token minted by a Custom Authorization Server is consumed by your APIs. 
 You can specify the audience to make sure that the Access Token is for your APIs.
-Scopes can be modified to support custom authorization in your application. 
+Also, custom scopes can be configured to support the authorization for your APIs. 
 
      >Note: Custom Authorization Servers are available as part of the [API Access Management](/use_cases/api_access_management/index.html) feature.
 
@@ -366,11 +366,10 @@ Scopes can be modified to support custom authorization in your application.
 | Custom Claims                            |                           | &#10004;                    |
 | Custom Access Policies and Rules         |                           | &#10004;                    |
 
+To configure a Custom Authorization Server, sign in to your org and navigate to **Security** > **API** > **Add Authorization Server** or use the [Custom Authorization Server API](/docs/api/resources/oauth2.html#authorization-server-operations).
 
-To configure a Custom Authorization Server, sign in to your org and navigate to **Security** > **API** > **Add Authorization Server**.
-
-We recommend that if you use a Custom Authorization Server, that you use it instead of the Okta Authorization Server for 
-any platform use cases (applications that will be exposed outside your own company, or securing API access).
+If you use a Custom Authorization Server, we recommend that you use it instead of the Okta Authorization Server for 
+any platform use cases (perform SSO or secure your API access).
 Doing so will make it easier to consume enhancements to the API Access Management product and features.  
 
 ## OpenID Connect and Authorization Servers
