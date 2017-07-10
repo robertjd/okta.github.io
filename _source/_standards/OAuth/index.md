@@ -347,7 +347,7 @@ The Access Token minted by the Okta Authorization Server is consumed by Okta API
 Use a Custom Authorization Server to secure your APIs.
 Custom Authorization Servers are hosted on Okta, and created by a user with the correct permissions (Org Admin or Super Org Admin).
 You can create and configure Custom Authorization Servers using the Okta Admin UI or the OAuth 2.0 API.
-and configures, using the Okta User Interface or Okta API. The Access Token minted by a Custom Authorization Server is consumed by your APIs. 
+The Access Token minted by a Custom Authorization Server is consumed by your APIs. 
 You can specify the audience to make sure that the Access Token is for your APIs.
 Scopes can be modified to support custom authorization in your application. 
 
