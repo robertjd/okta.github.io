@@ -487,6 +487,7 @@ Enrolls a user with a supported [factor](#list-factors-to-enroll)
 - [Enroll RSA SecurID Factor](#enroll-rsa-securid-factor)
 - [Enroll Symantec VIP Factor](#enroll-symantec-vip-factor)
 - [Enroll YubiKey Factor](#enroll-yubikey-factor)
+- [Enroll Okta Email Factor](#enroll-okta-email-factor)
 
 ##### Request Parameters
 {:.api .api-request .api-request-params}
@@ -1348,6 +1349,89 @@ curl -v -X POST \
 }
 ~~~
 
+#### Enroll Okta Email Factor
+{:.api .api-operation}
+
+Enrolls a user with a email factor. An email message with an OTP is sent to the primary/secondary (depending on which one is enrolled) email address of the user during enrollment and must be [activated](#activate-email-factor) by following the `activate` link relation to complete the enrollment process. "tokenLifetimeSeconds" can be specified as query parameter to indicate the lifetime of the OTP. The default lifetime is 300 seconds.
+
+##### Request Example
+{:.api .api-request .api-request-example}
+
+~~~sh
+curl -v -X POST \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: SSWS ${api_token}" \
+-d '{
+    "factorType": "email",
+    "provider": "OKTA",
+    "profile": {
+        "email": "test@gmail.com"
+    }
+  }' "https://${org}.okta.com/api/v1/users/00u15s1KDETTQMQYABRL/factors?tokenLifetimeSeconds=600"
+~~~
+
+##### Response Example
+{:.api .api-response .api-response-example}
+
+~~~json
+{
+    "id": "emfnf3gSScB8xXoXK0g3",
+    "factorType": "email",
+    "provider": "OKTA",
+    "vendorName": "OKTA",
+    "status": "PENDING_ACTIVATION",
+    "_links": {
+        "activate": {
+            "href": "https://${org}.okta.com/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3/lifecycle/activate",
+            "hints": {
+                "allow": [
+                    "POST"
+                ]
+            }
+        },
+        "resend": [
+            {
+                "name": "email",
+                "href": "https://${org}.okta.com/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3/resend",
+                "hints": {
+                    "allow": [
+                        "POST"
+                    ]
+                }
+            }
+        ],
+        "self": {
+            "href": "https://${org}.okta.com/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3",
+            "hints": {
+                "allow": [
+                    "GET"
+                ]
+            }
+        },
+        "user": {
+            "href": "https://${org}.okta.com/api/v1/users/00umvfJKwXOQ1mEL50g3",
+            "hints": {
+                "allow": [
+                    "GET"
+                ]
+            }
+        }
+    }
+}
+~~~
+
+###### Invalid Email address response
+
+~~~json
+{
+    "errorCode": "E0000001",
+    "errorSummary": "Api validation failed: Only verified primary or secondary email can be enrolled.",
+    "errorLink": "E0000001",
+    "errorId": "oaeeJunJcxXQlCsrYEwGzN2LQ",
+    "errorCauses": []
+}
+~~~
 
 ### Activate Factor
 {:.api .api-operation}
@@ -1360,6 +1444,7 @@ The `sms` and `token:software:totp` [factor types](#factor-type) require activat
 - [Activate SMS Factor](#activate-sms-factor)
 - [Activate Call Factor](#activate-call-factor)
 - [Activate Push Factor](#activate-push-factor)
+- [Activate Email Factor](#activate-email-factor)
 
 #### Activate TOTP Factor
 {:.api .api-operation}
@@ -1772,6 +1857,95 @@ curl -v -X POST \
         },
         "user": {
             "href": "https://your-domain.okta.com/api/v1/users/00u15s1KDETTQMQYABRL",
+            "hints": {
+                "allow": [
+                    "GET"
+                ]
+            }
+        }
+    }
+}
+~~~
+
+#### Activate Email Factor
+{:.api .api-operation}
+
+Activates a `email` factor by verifying the OTP.  The request/response is identical to [activating a TOTP factor](#activate-totp-factor).
+
+##### Request Parameters
+{:.api .api-request .api-request-params}
+
+Parameter    | Description                                         | Param Type | DataType | Required | Default
+------------ | --------------------------------------------------- | ---------- | -------- | -------- |
+uid          | `id` of user                                        | URL        | String   | TRUE     |
+fid          | `id` of factor returned from enrollment             | URL        | String   | TRUE     |
+passCode     | OTP sent to mobile device                           | Body       | String   | TRUE     |
+
+##### Response Parameters
+{:.api .api-response .api-response-params}
+
+If the passcode is correct you will receive the [Factor](#factor-model) with an `ACTIVE` status.
+
+If the passcode is invalid you will receive a `403 Forbidden` status code with the following error:
+
+~~~json
+{
+  "errorCode": "E0000068",
+  "errorSummary": "Invalid Passcode/Answer",
+  "errorLink": "E0000068",
+  "errorId": "oaei_IfXcpnTHit_YEKGInpFw",
+  "errorCauses": [
+    {
+      "errorSummary": "Your passcode doesn't match our records. Please try again."
+    }
+  ]
+}
+~~~
+
+#### Request Example
+{:.api .api-request .api-request-example}
+
+~~~sh
+curl -v -X POST \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: SSWS ${api_token}" \
+"https://${org}.okta.com/api/v1/users/users/00u15s1KDETTQMQYABRL/factors/emfnf3gSScB8xXoXK0g3/lifecycle/activate"
+~~~
+
+#### Response Example (Activated)
+{:.api .api-response .api-response-example}
+
+~~~json
+{
+    "id": "emfnf3gSScB8xXoXK0g3",
+    "factorType": "email",
+    "provider": "OKTA",
+    "vendorName": "OKTA",
+    "status": "ACTIVE",
+    "profile": {
+        "email": "c...d@clouditude.net"
+    },
+    "_links": {
+        "verify": {
+            "href": "https://${org}.okta.com/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3/verify",
+            "hints": {
+                "allow": [
+                    "POST"
+                ]
+            }
+        },
+        "self": {
+            "href": "https://${org}.okta.com/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3",
+            "hints": {
+                "allow": [
+                    "GET",
+                    "DELETE"
+                ]
+            }
+        },
+        "user": {
+            "href": "https://${org}.okta.com/api/v1/users/00umvfJKwXOQ1mEL50g3",
             "hints": {
                 "allow": [
                     "GET"
@@ -2375,6 +2549,83 @@ curl -v -X POST \
 }
 ~~~
 
+### Verify Email Factor
+{:.api .api-operation}
+
+<span class="api-uri-template api-uri-post"><span class="api-label">POST</span> /api/v1/users/*:uid*/factors/*:fid*/verify</span>
+
+Verifies an OTP for a `email` factor
+
+#### Request Parameters
+{:.api .api-request .api-request-params}
+
+Parameter    | Description                                         | Param Type | DataType | Required | Default
+------------ | --------------------------------------------------- | ---------- | -------- | -------- | -------
+uid          | `id` of user                                        | URL        | String   | TRUE     |
+fid          | `id` of factor                                      | URL        | String   | TRUE     |
+passCode     | OTP sent to email address                                  | Body       | String   | FALSE    |
+
+> If you omit `passCode` in the request a new OTP is sent to the email address, otherwise the request attempts to verify the `passCode`.
+
+#### Response Parameters
+{:.api .api-response .api-response-params}
+
+Parameter    | Description                                         | Param Type | DataType                                            | Required | Default
+------------ | --------------------------------------------------- | ---------- | --------------------------------------------------- | -------- | -------
+factorResult | verification result                                 | Body       | [Factor Verify Result](#factor-verify-result-object) | TRUE     |
+
+If the passcode is invalid you will receive a `403 Forbidden` status code with the following error:
+
+~~~json
+{
+  "errorCode": "E0000068",
+  "errorSummary": "Invalid Passcode/Answer",
+  "errorLink": "E0000068",
+  "errorId": "oaei_IfXcpnTHit_YEKGInpFw",
+  "errorCauses": [
+    {
+      "errorSummary": "Your passcode doesn't match our records. Please try again."
+    }
+  ]
+}
+~~~
+
+`429 Too Many Requests` status code may be returned if you attempt to resend a Email challenge (OTP) within the same time window.
+
+*The current rate limit is one per email address every 5 seconds.*
+
+~~~json
+{
+    "errorCode": "E0000118",
+    "errorSummary": "An email was recently sent. Please wait 5 seconds before trying again.",
+    "errorLink": "E0000118",
+    "errorId": "oae0qf10rGJQQeWFX1OSuStdQ",
+    "errorCauses": []
+}
+~~~
+
+#### Request Example
+{:.api .api-request .api-request-example}
+
+~~~sh
+curl -v -X POST \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-H "Authorization: SSWS ${api_token}" \
+-d '{
+  "passCode": "123456"
+}' "https://${org}.okta.com/api/v1/users/00u15s1KDETTQMQYABRL/factors/emfnf3gSScB8xXoXK0g3/verify?tokenLifetimeSeconds=600"
+~~~
+
+#### Response Example
+{:.api .api-response .api-response-example}
+
+~~~json
+{
+  "factorResult": "SUCCESS"
+}
+~~~
+
 ## Factor Model
 
 ### Example
@@ -2419,7 +2670,6 @@ curl -v -X POST \
   }
 }
 ~~~
-
 
 ### Factor Properties
 
