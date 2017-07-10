@@ -1352,7 +1352,7 @@ curl -v -X POST \
 #### Enroll Okta Email Factor
 {:.api .api-operation}
 
-Enrolls a user with a email factor. An email message with an OTP is sent to the primary/secondary (depending on which one is enrolled) email address of the user during enrollment and must be [activated](#activate-email-factor) by following the `activate` link relation to complete the enrollment process. "tokenLifetimeSeconds" can be specified as query parameter to indicate the lifetime of the OTP. The default lifetime is 300 seconds.
+Enrolls a user with an email factor. An email message with an OTP is sent to the primary or secondary (depending on which one is enrolled) email address of the user during enrollment. The factor must be [activated](#activate-email-factor) by following the `activate` link relation to complete the enrollment process. `tokenLifetimeSeconds` can be specified as a query parameter to indicate the lifetime of the OTP. The default lifetime is 300 seconds.
 
 ##### Request Example
 {:.api .api-request .api-request-example}
@@ -1870,23 +1870,23 @@ curl -v -X POST \
 #### Activate Email Factor
 {:.api .api-operation}
 
-Activates a `email` factor by verifying the OTP.  The request/response is identical to [activating a TOTP factor](#activate-totp-factor).
+Activates an `email` factor by verifying the OTP.  The request and response is identical to [activating a TOTP factor](#activate-totp-factor).
 
 ##### Request Parameters
 {:.api .api-request .api-request-params}
 
-Parameter    | Description                                         | Param Type | DataType | Required | Default
------------- | --------------------------------------------------- | ---------- | -------- | -------- |
-uid          | `id` of user                                        | URL        | String   | TRUE     |
-fid          | `id` of factor returned from enrollment             | URL        | String   | TRUE     |
-passCode     | OTP sent to mobile device                           | Body       | String   | TRUE     |
+Parameter    | Description                                         | Param Type | DataType | Required
+------------ | --------------------------------------------------- | ---------- | -------- | -------- 
+uid          | `id` of user                                        | URL        | String   | TRUE     
+fid          | `id` of factor returned from enrollment             | URL        | String   | TRUE     
+passCode     | OTP sent to mobile device                           | Body       | String   | TRUE     
 
 ##### Response Parameters
 {:.api .api-response .api-response-params}
 
-If the passcode is correct you will receive the [Factor](#factor-model) with an `ACTIVE` status.
+If the passcode is correct the response contains [Factor](#factor-model) with an `ACTIVE` status.
 
-If the passcode is invalid you will receive a `403 Forbidden` status code with the following error:
+If the passcode is invalid response will be `403 Forbidden` with the following error:
 
 ~~~json
 {
@@ -1910,7 +1910,9 @@ curl -v -X POST \
 -H "Accept: application/json" \
 -H "Content-Type: application/json" \
 -H "Authorization: SSWS ${api_token}" \
-"https://${org}.okta.com/api/v1/users/users/00u15s1KDETTQMQYABRL/factors/emfnf3gSScB8xXoXK0g3/lifecycle/activate"
+-d '{
+  "passCode": "12345"
+}' "https://${org}.okta.com/api/v1/users/users/00u15s1KDETTQMQYABRL/factors/emfnf3gSScB8xXoXK0g3/lifecycle/activate"
 ~~~
 
 #### Response Example (Activated)
@@ -2554,7 +2556,7 @@ curl -v -X POST \
 
 <span class="api-uri-template api-uri-post"><span class="api-label">POST</span> /api/v1/users/*:uid*/factors/*:fid*/verify</span>
 
-Verifies an OTP for a `email` factor
+Verifies an OTP for an `email` factor
 
 #### Request Parameters
 {:.api .api-request .api-request-params}
@@ -2563,7 +2565,7 @@ Parameter    | Description                                         | Param Type 
 ------------ | --------------------------------------------------- | ---------- | -------- | -------- | -------
 uid          | `id` of user                                        | URL        | String   | TRUE     |
 fid          | `id` of factor                                      | URL        | String   | TRUE     |
-passCode     | OTP sent to email address                                  | Body       | String   | FALSE    |
+passCode     | OTP sent to email address                                  | Body       | String   | FALSE    | ""
 
 > If you omit `passCode` in the request a new OTP is sent to the email address, otherwise the request attempts to verify the `passCode`.
 
@@ -2574,7 +2576,7 @@ Parameter    | Description                                         | Param Type 
 ------------ | --------------------------------------------------- | ---------- | --------------------------------------------------- | -------- | -------
 factorResult | verification result                                 | Body       | [Factor Verify Result](#factor-verify-result-object) | TRUE     |
 
-If the passcode is invalid you will receive a `403 Forbidden` status code with the following error:
+If the passcode is invalid response will be `403 Forbidden` with the following error:
 
 ~~~json
 {
@@ -2590,7 +2592,7 @@ If the passcode is invalid you will receive a `403 Forbidden` status code with t
 }
 ~~~
 
-`429 Too Many Requests` status code may be returned if you attempt to resend a Email challenge (OTP) within the same time window.
+`429 Too Many Requests` status code may be returned if you attempt to resend an Email challenge (OTP) within the same time window.
 
 *The current rate limit is one per email address every 5 seconds.*
 
