@@ -1353,7 +1353,7 @@ curl -v -X POST \
 {:.api .api-operation}
 {% api_lifecycle ea %}
 
-Enrolls a user with an email factor. An email with an OTP is sent to the primary or secondary (depending on which one is enrolled) email address of the user during enrollment. The factor must be [activated](#activate-email-factor) by following the `activate` link relation to complete the enrollment process. `tokenLifetimeSeconds` can be specified as a query parameter to indicate the lifetime of the OTP. The default lifetime is 300 seconds. `tokenLifetimeSeconds` should be in the range 1 to 86400 inclusive.
+Enrolls a user with an email factor. An email with an OTP is sent to the primary or secondary (depending on which one is enrolled) email address of the user during enrollment. The factor must be [activated](#activate-email-factor) by following the `activate` link relation to complete the enrollment process. An optional `tokenLifetimeSeconds` can be specified as a query parameter to indicate the lifetime of the OTP. The default lifetime is 300 seconds. `tokenLifetimeSeconds` should be in the range 1 to 86400 inclusive.
 
 (a) As an out-of-band transactional factor to send an email challenge to a user. This can be injected into any custom step-up flow and is not part of Okta Sign-On (it does not count as MFA for logging onto Okta). This is currently EA.
 
@@ -1885,7 +1885,7 @@ Parameter    | Description                                         | Param Type 
 ------------ | --------------------------------------------------- | ---------- | -------- | -------- 
 uid          | `id` of user                                        | URL        | String   | TRUE     
 fid          | `id` of factor returned from enrollment             | URL        | String   | TRUE     
-passCode     | OTP sent to mobile device                           | Body       | String   | TRUE     
+passCode     | OTP sent to email                           | Body       | String   | TRUE     
 
 ##### Response Parameters
 {:.api .api-response .api-response-params}
