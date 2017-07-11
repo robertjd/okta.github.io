@@ -2573,7 +2573,7 @@ Parameter    | Description                                         | Param Type 
 uid          | `id` of user                                        | URL        | String   | TRUE     |
 fid          | `id` of factor                                      | URL        | String   | TRUE     |
 passCode     | OTP sent to email address                                  | Body       | String   | FALSE    | ""                              |
-tokenLifetimeSeconds | Lifetime of the OTP                        | QueryString | Int | FALSE        | 300
+tokenLifetimeSeconds | Lifetime of the OTP when requesting one                        | QueryString | Int | FALSE        | 300
 
 > If you omit `passCode` in the request a new OTP is sent to the email address, otherwise the request attempts to verify the `passCode`.
 
