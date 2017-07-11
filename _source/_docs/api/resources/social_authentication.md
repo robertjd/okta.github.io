@@ -28,7 +28,7 @@ Configuring social login with Okta allows you to use the following features:
 
 ### The Social Login Process
 
-The social login process starts at the authorization endpoint, then goes out to the provider and back:
+The social login process starts at the [authentication endpoint](/docs/api/resources/oidc.html#authentication-request), then goes out to the provider and back:
 
 1. The user who wishes to authenticate clicks a “Log in with x” link.
 2. The user authenticates and is asked by the Provider to accept the permissions required by your app.
@@ -55,7 +55,7 @@ ok -> ua: 302 to redirect_uri
 @enduml
 -->
 
-Social authentication requests can take up to fifteen minutes to complete before they are cancelled.
+Social authentication requests are cancelled if not completed within fifteen minutes.
 
 ### The Set-up Process
 
