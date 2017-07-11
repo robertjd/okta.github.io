@@ -1351,8 +1351,13 @@ curl -v -X POST \
 
 #### Enroll Okta Email Factor
 {:.api .api-operation}
+{% api_lifecycle ea %}
 
-Enrolls a user with an email factor. An email message with an OTP is sent to the primary or secondary (depending on which one is enrolled) email address of the user during enrollment. The factor must be [activated](#activate-email-factor) by following the `activate` link relation to complete the enrollment process. `tokenLifetimeSeconds` can be specified as a query parameter to indicate the lifetime of the OTP. The default lifetime is 300 seconds.
+Enrolls a user with an email factor. An email with an OTP is sent to the primary or secondary (depending on which one is enrolled) email address of the user during enrollment. The factor must be [activated](#activate-email-factor) by following the `activate` link relation to complete the enrollment process. `tokenLifetimeSeconds` can be specified as a query parameter to indicate the lifetime of the OTP. The default lifetime is 300 seconds. `tokenLifetimeSeconds` should be in the range 1 to 86400 inclusive.
+
+(a) As an out-of-band transactional factor to send an email challenge to a user. This can be injected into any custom step-up flow and is not part of Okta Sign-On (it does not count as MFA for logging onto Okta). This is currently EA.
+
+(b) As a proper Okta 2nd factor (just like Okta Verify, SMS, etc). This can be configured via the standard MultiFactor UI in the Okta Administrator dashboard. The email factor is then eligible to be used during Okta Sign-On as a valid 2nd factor just like any of other the factors. This is currently BETA.
 
 ##### Request Example
 {:.api .api-request .api-request-example}
@@ -1869,6 +1874,7 @@ curl -v -X POST \
 
 #### Activate Email Factor
 {:.api .api-operation}
+{% api_lifecycle ea %}
 
 Activates an `email` factor by verifying the OTP.  The request and response is identical to [activating a TOTP factor](#activate-totp-factor).
 
@@ -1911,7 +1917,7 @@ curl -v -X POST \
 -H "Content-Type: application/json" \
 -H "Authorization: SSWS ${api_token}" \
 -d '{
-  "passCode": "12345"
+  "passCode": "123456"
 }' "https://${org}.okta.com/api/v1/users/users/00u15s1KDETTQMQYABRL/factors/emfnf3gSScB8xXoXK0g3/lifecycle/activate"
 ~~~
 
@@ -2167,6 +2173,7 @@ curl -v -X POST \
 
 ### Verify Call Factor
 {:.api .api-operation}
+{% api_lifecycle ea %}
 
 {% api_operation post /api/v1/users/*:uid*/factors/*:fid*/verify %}
 
@@ -2565,7 +2572,8 @@ Parameter    | Description                                         | Param Type 
 ------------ | --------------------------------------------------- | ---------- | -------- | -------- | -------
 uid          | `id` of user                                        | URL        | String   | TRUE     |
 fid          | `id` of factor                                      | URL        | String   | TRUE     |
-passCode     | OTP sent to email address                                  | Body       | String   | FALSE    | ""
+passCode     | OTP sent to email address                                  | Body       | String   | FALSE    | ""                              |
+tokenLifetimeSeconds | Lifetime of the OTP                        | QueryString | Int | FALSE        | 300
 
 > If you omit `passCode` in the request a new OTP is sent to the email address, otherwise the request attempts to verify the `passCode`.
 
@@ -2738,6 +2746,7 @@ Each provider supports a subset of factor types.  The following table lists the 
 | `OKTA`     | `sms`                  |
 | `OKTA`     | `call`                 |
 | `OKTA`     | `token:software:totp`  |
+| `OKTA`     | `email`                |
 | `GOOGLE`   | `token:software:totp`  |
 | `SYMANTEC` | `token`                |
 | `RSA`      | `token`                |
