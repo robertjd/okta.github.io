@@ -1876,7 +1876,7 @@ curl -v -X POST \
 {:.api .api-operation}
 {% api_lifecycle ea %}
 
-Activates an `email` factor by verifying the OTP.  The request and response is identical to [activating a TOTP factor](#activate-totp-factor).
+Activates an `email` factor by verifying the OTP.
 
 ##### Request Parameters
 {:.api .api-request .api-request-params}
@@ -2173,7 +2173,6 @@ curl -v -X POST \
 
 ### Verify Call Factor
 {:.api .api-operation}
-{% api_lifecycle ea %}
 
 {% api_operation post /api/v1/users/*:uid*/factors/*:fid*/verify %}
 
@@ -2560,6 +2559,7 @@ curl -v -X POST \
 
 ### Verify Email Factor
 {:.api .api-operation}
+{% api_lifecycle ea %}
 
 <span class="api-uri-template api-uri-post"><span class="api-label">POST</span> /api/v1/users/*:uid*/factors/*:fid*/verify</span>
 
