@@ -1355,10 +1355,6 @@ curl -v -X POST \
 
 Enrolls a user with an email factor. An email with an OTP is sent to the primary or secondary (depending on which one is enrolled) email address of the user during enrollment. The factor must be [activated](#activate-email-factor) by following the `activate` link relation to complete the enrollment process. An optional `tokenLifetimeSeconds` can be specified as a query parameter to indicate the lifetime of the OTP. The default lifetime is 300 seconds. `tokenLifetimeSeconds` should be in the range 1 to 86400 inclusive.
 
-(a) As an out-of-band transactional factor to send an email challenge to a user. This can be injected into any custom step-up flow and is not part of Okta Sign-On (it does not count as MFA for logging onto Okta). This is currently EA.
-
-(b) As a proper Okta 2nd factor (just like Okta Verify, SMS, etc). This can be configured via the standard MultiFactor UI in the Okta Administrator dashboard. The email factor is then eligible to be used during Okta Sign-On as a valid 2nd factor just like any of other the factors. This is currently BETA.
-
 ##### Request Example
 {:.api .api-request .api-request-example}
 
@@ -2880,6 +2876,12 @@ Specifies the profile for a `email` factor
   }
 }
 ~~~
+
+##### Note
+
+* As an out-of-band transactional factor to send an email challenge to a user. This can be injected into any custom step-up flow and is not part of Okta Sign-On (it does not count as MFA for logging onto Okta). This is currently EA.
+
+* As a proper Okta 2nd factor (just like Okta Verify, SMS, etc). This can be configured via the standard MultiFactor UI in the Okta Administrator dashboard. The email factor is then eligible to be used during Okta Sign-On as a valid 2nd factor just like any of other the factors. This is currently BETA.
 
 ### Factor Verification Object
 
