@@ -1928,7 +1928,7 @@ curl -v -X POST \
     "vendorName": "OKTA",
     "status": "ACTIVE",
     "profile": {
-        "email": "c...d@clouditude.net"
+        "email": "changed@clouditude.net"
     },
     "_links": {
         "verify": {
@@ -2866,13 +2866,13 @@ Specifies the profile for a `email` factor
 |---------------+-------------------------------+-----------------------------------------------------------------+----------+---------+----------+-----------+-----------+------------|
 | Property      | Description                   | DataType                                                        | Nullable | Unique  | Readonly | MinLength | MaxLength | Validation |
 | ------------- | ----------------------------- | --------------------------------------------------------------- | -------- | ------- | -------- | --------- | --------- | ---------- |
-| email   | email address of the user | String (showing only first and last character of the username part with domain name)   | FALSE    | TRUE    | FALSE    |           | 100        |            |
+| email   | email address of the user | String  | FALSE    | TRUE    | FALSE    |           | 100        |            |
 |---------------+-------------------------------+-----------------------------------------------------------------+----------+---------+----------+-----------+-----------+------------|
 
 ~~~json
 {
   "profile": {
-    "email": "a...l@okta.com"
+    "email": "alice@okta.com"
   }
 }
 ~~~
