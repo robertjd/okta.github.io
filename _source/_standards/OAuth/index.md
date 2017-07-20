@@ -202,7 +202,7 @@ The payload includes the following reserved claims:
 
 ### Custom scopes and claims
 
-The admin can configure custom scopes and claims for the Authorization Server.
+The admin can configure custom scopes and claims for the Custom Authorization Server.
 
 #### Custom scopes
 
@@ -212,7 +212,7 @@ If the request that generates the access token contains any custom scopes, those
 
 #### Custom claims
 
-Custom claims are associated with scopes. If one of the associated scopes is granted to the Access Token, the custom claim is added into it. The value of a custom claim can be either an [expression](/reference/okta_expression_language/) or a group filter. The expression is evaluated at runtime, and if the evaluated result is null, that custom claim isn't added into the Access Token. The datatype of a claim is Array if its value is a group filter, or the same datatype as the evaluated result if its value is an expression.
+Custom claims are associated with scopes. If one of the associated scopes is granted to the access token, the custom claim is added into it. The value of a custom claim can be either an [expression](/reference/okta_expression_language/) or a group filter. The expression is evaluated at runtime, and if the evaluated result is null, that custom claim isn't added into the Access Token. The datatype of a claim is Array if its value is a group filter, or the same datatype as the evaluated result if its value is an expression.
 
 >*Note:* For the custom claim with group filter, its value has a limit of 100. If more than 100 groups match the filter, then the request fails. Expect that this limit may change in the future.
 
@@ -259,7 +259,6 @@ You can use an [introspection endpoint](/docs/api/resources/oauth2.html#introspe
 A Refresh Token is an opaque string. It is a long-lived token that the client can use to obtain a new Access Token without re-obtaining authorization from the resource owner. The new Access Token must have the same or subset of the scopes associated with the Refresh Token.
 A Refresh Token will be returned if 'offline_access' scope is requested using authorization_code, password, or refresh_token grant type.
 
-
 The lifetime of a Refresh Token is configured in [Access Policies](#access-policies), the minimum value is 24 hours. The refresh token can also expire after a period if no clients redeem it for an Access Token. The period should be equal to or larger than 10 minutes. If the token's lifetime is set to unlimited, the Authorization Server will not check if clients use it or not.
 
 ### Refresh Token Revocation
@@ -273,16 +272,24 @@ Refresh Tokens can be revoked explicitly by making a [Revocation Request](/docs/
 No other modifications affect existing tokens.
 
 ## ID Token
-An Authorization Server can also issue an ID Token to the client, as in OpenID Connect, but with the following differences:
 
-* The ID Token cannot contain a reserved scope or claim called 'groups'. To obtain a claim with group information, administrators must define a custom claim with a group filter and associate it with a scope.
+A Custom Authorization Server can issue an ID Token to the client, as the Okta Authorization Server can, but with the following differences:
+
+* The ID Token can contain [custom scopes](#custom-scopes) and [custom claims](#custom-claims).
+* The ID Token can't contain a reserved scope or claim called 'groups'. To obtain a claim with group information, administrators must define a custom claim with a group filter and associate it with a scope.
 * The custom properties in the app user profile are not included in the Id Token by default, even if profile scope is granted. To obtain a claim for a custom property, administrators must define a custom claim with an Okta Expression Language expression and associate it with a scope.
 
-The lifetime of an Id Token is 1 hour. If the client that issued the token is deactivated, the token is
+The lifetime of an ID Token is 1 hour. If the client that issued the token is deactivated, the token is
 immediately and permanently invalidated. Reactivating the client does not make the token valid again.
 
-The same validation steps for [OpenID Connect](/docs/api/resources/oidc.html#validating-id-tokens) can also be applied to ID Token for
-OAuth2, except the public keys should be retrieved via the [Get Keys endpoint](/docs/api/resources/oauth2.html#get-keys).
+The same validation steps for [OpenID Connect with the Okta Authorization Server](/docs/api/resources/oidc.html#validating-id-tokens) can also be applied to ID Token for
+OAuth 2.0, except the public keys should be retrieved via the [Get Keys endpoint](/docs/api/resources/oauth2.html#get-keys). 
+
+For more information about OpenID Connect with the Okta Authorization Server, see [OpenID Connect API](/docs/api/resources/oidc.html).
+
+## Requesting a Token
+
+For a list of tokens returned, depending on grant type and scope in your request, see [Response Parameters](/docs/api/resources/oidc.html#response-parameters-4).
 
 ## Access Policies
 
