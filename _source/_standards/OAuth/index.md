@@ -202,11 +202,11 @@ The payload includes the following reserved claims:
 
 ### Custom scopes and claims
 
-The admin can configure custom scopes and claims for the Custom Authorization Server.
+The admin can configure custom scopes and claims for the Custom Authorization Server. The admin can also configure a groups claim for the Okta Authorization Server.
 
 #### Custom scopes
 
-If the request that generates the access token contains any custom scopes, those scopes will be part of the *scp* claim together with the scopes provided from the [OIDC specification](http://openid.net/specs/openid-connect-core-1_0.html). The form of these custom scopes must conform to the [OAuth2 specification](https://tools.ietf.org/html/rfc6749#section-3.3).
+If the request that generates the access token contains any custom scopes, those scopes will be part of the *scp* claim together with the scopes provided from the [OIDC specification](http://openid.net/specs/openid-connect-core-1_0.html). The form of these custom scopes must conform to the [OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-3.3).
 
 >*Note:* Scope names can contain the characters < (less than) or > (greater than), but not both characters.
 
@@ -282,7 +282,7 @@ A Custom Authorization Server can issue an ID Token to the client, as the Okta A
 The lifetime of an ID Token is 1 hour. If the client that issued the token is deactivated, the token is
 immediately and permanently invalidated. Reactivating the client does not make the token valid again.
 
-The same validation steps for [OpenID Connect with the Okta Authorization Server](/docs/api/resources/oidc.html#validating-id-tokens) can also be applied to ID Token for
+The same validation steps for [OpenID Connect with the Okta Authorization Server](/docs/api/resources/oidc.html#validating-id-tokens) can also be applied to ID Tokens for
 OAuth 2.0, except the public keys should be retrieved via the [Get Keys endpoint](/docs/api/resources/oauth2.html#get-keys). 
 
 For more information about OpenID Connect with the Okta Authorization Server, see [OpenID Connect API](/docs/api/resources/oidc.html).
