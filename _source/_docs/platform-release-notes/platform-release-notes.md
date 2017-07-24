@@ -6,24 +6,16 @@ excerpt: Summary of changes to the Okta Platform since Release 2017.29
 
 ## Release 2017.30
 
-### Platform Features
-
-#### Email Factor  <!-- OKTA-133829  -->
+### Platform Feature: Email Factor  <!-- OKTA-133829  -->
 
 The following EA feature enhancement is in preview orgs and expected in production orgs during the week of July 24, 2017. To enable an EA feature, contact Okta Support.
 
 You can send a one-time password (OTP) and an activation link to an email address as part of enrolling a user.
 
-#### Sign-In Widget Build Changes   <!--  OKTA-132800  -->
-
-The way to build the Okta Sign-In Widget has changed. For more information, see [Okta Sign-In Widget Quickstart](/code/javascript/okta_sign-in_widget.html).
-
 
 ### Platform Bugs Fixed
 
 These platform bug fixes are available in preview orgs and expected in production orgs the week of July 31, 2017.
-
-* Okta Sign-In Widget formatting conflicted with the surrounding user interface.  (OKTA-121127)
 
 * Under some circumstances users who did not have a secondary email address could not perform a self-service password reset operation.   (OKTA-128340)
 
