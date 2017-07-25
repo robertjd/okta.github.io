@@ -8,7 +8,7 @@ excerpt: Summary of changes to the Okta Platform since Release 2017.28
 
 ### Platform Features
 
-The following platform features are Generally Available (GA) in preview orgs (as of Release 2017.28), and expected to roll out as GA to production orgs during the week of August 8, 2017:
+The following platform features are Generally Available (GA) in preview orgs (as of Release 2017.28), and expected to roll out as GA to production orgs during the week of August 7, 2017:
 
 * [OpenID Connect](#openid-connect)
 
