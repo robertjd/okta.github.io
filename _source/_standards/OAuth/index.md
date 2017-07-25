@@ -282,7 +282,11 @@ A Custom Authorization Server can issue an ID Token to the client, as the Okta A
 The lifetime of an ID Token is 1 hour. If the client that issued the token is deactivated, the token is
 immediately and permanently invalidated. Reactivating the client does not make the token valid again.
 
+<<<<<<< HEAD
 The same validation steps for [OpenID Connect with the Okta Authorization Server](/docs/api/resources/oidc.html#validating-id-tokens) can also be applied to ID Tokens for
+=======
+The same validation steps for [OpenID Connect with the Okta Authorization Server](/docs/api/resources/oidc.html#validating-id-tokens) can also be applied to ID Token for
+>>>>>>> 756aef5b2446fefd2921403a47312ecff3a00beb
 OAuth 2.0, except the public keys should be retrieved via the [Get Keys endpoint](/docs/api/resources/oauth2.html#get-keys). 
 
 For more information about OpenID Connect with the Okta Authorization Server, see [OpenID Connect API](/docs/api/resources/oidc.html).
