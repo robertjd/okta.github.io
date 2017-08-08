@@ -1,6 +1,9 @@
 //= require vendor/director-1.2.6.min.js
 $(function() {
 
+  // links working
+  // default content
+  // icons
 
 /**
  * need to have implicit vs code template for each server/framework choice
@@ -42,6 +45,7 @@ $(function() {
     ]
   };
 
+
   var routes = {
     '/([^\/]*)?\/?([^\/]*)?\/?([^\/]*)': function(client, server, framework) {
 
@@ -49,10 +53,8 @@ $(function() {
 
       // When the client changes, need to change the deep links for servers
 
-      if (client && !server) {
-        $('#server-language-selector a').each(function (i, element) {
-          element.hash = element.hash.replace(/#\/([^\/]+)\/([^\/]+)/, '#/' + client + '/$2')
-        });
+      if (!client) {
+        client = defaultClient
       }
 
       if (!server) {
@@ -62,6 +64,24 @@ $(function() {
       if (!framework) {
         framework = defaultFramework;
       }
+
+
+      $('#client-selector a').each(function (i, element) {
+        element.href = '#/' + element.dataset.value + '/' + server + '/' + framework;
+        console.log(1, element.href);
+        // element.href = '#/' + element.hash.replace(/#\/([^\/]+)\/([^\/]+)\/([^\/]+)/, '#/' + '$1/' + server + '/$3' );
+      });
+
+      $('#server-selector a').each(function (i, element) {
+        element.href = '#/' + client + '/' + element.dataset.value + '/' + framework;
+        console.log(2, element.href);
+      });
+
+      $('#framework-selector a').each(function (i, element) {
+        element.href = '#/' + client + '/' + server + '/' + element.dataset.value;
+        console.log(3, element.href);
+      });
+
 
       var clientContentUrl = client + '/default-example.html';
 
@@ -87,13 +107,13 @@ $(function() {
         }
         $(element).removeClass('active');
       });
-      $('#server-language-selector a').each(function (i, element) {
+      $('#server-selector a').each(function (i, element) {
         if (element.hash.match(server)) {
           return $(element).addClass('active');
         }
         $(element).removeClass('active');
       });
-      $('#server-framework-selector a').each(function (i, element) {
+      $('#framework-selector a').each(function (i, element) {
         $(element).remove();
       });
       frameworkDefinitions[server].forEach(function(frameworkDefinition) {
@@ -102,7 +122,7 @@ $(function() {
           href: '#/' + client + '/' + server + '/' + frameworkDefinition.name,
           class: frameworkDefinition.name === framework ? 'active' : ''
         });
-        $('#server-framework-selector').append(link);
+        $('#framework-selector').append(link);
       });
 
     }

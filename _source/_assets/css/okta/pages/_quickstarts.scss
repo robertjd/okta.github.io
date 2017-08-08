@@ -5,6 +5,7 @@
   h3 {
     font-size: 18px;
     color: #fff;
+    font-weight: lighter;
   }
   a {
     display: inline-block;
@@ -27,6 +28,12 @@
 
 .quickstart-page {
   padding-right: 300px;
+
+  h2 {
+    border-bottom: none;
+    font-size: 23px;
+    font-weight: lighter;
+  }
 
   .TableOfContents-item{
     &.active {
