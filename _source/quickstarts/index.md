@@ -6,30 +6,27 @@ title: Authentication Quickstart Guide
 
 <h1>{{ page.title }}</h1>
 
-<div class="code-selector" id="client-selector">
+<h2 id="client_setup">Client Setup</h2>
 
+<div class="code-selector" id="client-selector">
+  <h3>Client</h3>
   <a href="#/angular">Angular</a>
   <a href="#/react">React</a>
   <a href="#/widget">Widget</a>
 </div>
 
-<div id="client_content"></div>
+<div id="client_content" class="example-content-well"></div>
+
+<h2 id="server_setup">Server Setup</h2>
 
 <div class="code-selector" id="server-language-selector">
-  <a href="#/widget/nodejs">Node.js</a>
-  <a href="#/widget/nodejs">Java</a>
+  <h3>Server</h3>
+  <a href="#/widget/node">Node.js</a>
+  <a href="#/widget/java">Java</a>
 </div>
 
 <div class="code-selector" id="server-framework-selector">
-  <a href="#express">Express</a>
+  <h3>Framework</h3>
 </div>
 
-<div id="server_content"></div>
-
-
-https://developer.okta.com/quickstart/#/angular/
-https://developer.okta.com/quickstart/#/widget/
-https://developer.okta.com/quickstart/#/widget/.net/  (aka “generic”)
-https://developer.okta.com/quickstart/#/widget/.net/core
-https://developer.okta.com/quickstart/#/angular/php/lumen
-https://developer.okta.com/quickstart/#/angular/php   (aka “generic”)
+<div id="server_content" class="example-content-well"></div>
