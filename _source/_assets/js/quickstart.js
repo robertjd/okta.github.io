@@ -1,5 +1,4 @@
 //= require vendor/director-1.2.6.min.js
-$(function() {
 
   // links working
   // default content
@@ -18,33 +17,157 @@ $(function() {
 
   var knownClients = new RegExp(implicitClients.concat(authCodeClients).join('|'));
 
+  var linkDefinitions = {
+    clients: [
+      {
+        name: 'angular',
+        label: 'Angular'
+      },
+      {
+        name: 'ios',
+        label: 'iOS'
+      },
+      {
+        name: 'widget',
+        label: 'Sign-In Widget',
+        active: true
+      }
+    ],
+    servers: [
+      {
+        active: true,
+        name: 'node',
+        label: 'Node JS',
+        frameworks: [
+          {
+            active: true,
+            name: 'generic',
+            label: 'Generic Node'
+          },
+          {
+            name: 'express',
+            label: 'Express.js'
+          }
+        ]
+      },
+      {
+        name: 'java',
+        label: 'Java',
+        frameworks: [
+          {
+            name: 'generic',
+            label: 'Generic Java',
+            active: true
+          },
+          {
+            name: 'spring',
+            label: 'Spring'
+          }
+        ]
+      },
+      {
+        name: 'php',
+        label: 'PHP',
+        frameworks: [
+          {
+            name: 'generic',
+            label: 'Generic PHP',
+            active: true
+          }
+        ]
+      }
+    ]
+  }
+
+  linkDefinitions.clients.forEach(function (client) {
+    var link = $('<a>', {
+      text: client.label,
+      class: client.active ? 'active' : '',
+      click: function () {
+        linkDefinitions.clients.forEach(function (client) {
+          client.link.removeClass('active');
+          client.active = false;
+        });
+        $(this).addClass('active');
+        client.active = true;
+        setUrl();
+      }
+    });
+    client.link = link;
+    $('#client-selector').append(link);
+  });
+
+  linkDefinitions.servers.forEach(function (server) {
+    var link = $('<a>', {
+      text: server.label,
+      class: server.active ? 'active' : '',
+      click: function () {
+        linkDefinitions.servers.forEach(function (server) {
+          server.link.removeClass('active');
+           server.active = false;
+        });
+        renderFrameworkLinks(server);
+        $(this).addClass('active');
+        server.active = true;
+        setUrl();
+      }
+    });
+    server.link = link;
+    $('#server-selector').append(link);
+    if (server.active) {
+      renderFrameworkLinks(server);
+    }
+  });
+
+  function renderFrameworkLinks(server) {
+    $('#framework-selector a').each(function (i, element) {
+      $(element).remove();
+    });
+
+    server.frameworks.forEach(function (framework) {
+      var link = $('<a>', {
+        text: framework.label,
+        class: framework.active ? 'active' : '',
+        click: function () {
+          server.frameworks.forEach(function (framework) {
+            framework.link.removeClass('active');
+            framework.active = false;
+          });
+          $(this).addClass('active');
+          framework.active = true;
+          setUrl();
+        }
+      });
+      framework.link = link;
+      $('#framework-selector').append(link);
+    });
+  }
+
+  function setUrl() {
+    var hash = '#/';
+    linkDefinitions.clients.forEach(function (client) {
+      if (client.active) {
+        hash += client.name + '/';
+      }
+    });
+    linkDefinitions.servers.forEach(function (server) {
+      if (server.active) {
+        hash += server.name + '/';
+        server.frameworks.forEach(function (framework) {
+          if (framework.active) {
+            hash += framework.name;
+          }
+        });
+      }
+    });
+
+    window.location.replace(hash);
+  }
+
+
   if (!window.location.hash || !knownClients.test(window.location.hash)) {
     window.location.hash.replace('/' + defaultClient);
   }
-
-  var frameworkDefinitions = {
-    node: [
-      {
-        name: 'generic',
-        label: 'Generic Node'
-      },
-      {
-        name: 'express',
-        label: 'Express.js'
-      }
-    ],
-    java: [
-      {
-        name: 'generic',
-        label: 'Generic Java'
-      },
-      {
-        name: 'spring',
-        label: 'Spring'
-      }
-    ]
-  };
-
 
   var routes = {
     '/([^\/]*)?\/?([^\/]*)?\/?([^\/]*)': function(client, server, framework) {
@@ -65,29 +188,11 @@ $(function() {
         framework = defaultFramework;
       }
 
-
-      $('#client-selector a').each(function (i, element) {
-        element.href = '#/' + element.dataset.value + '/' + server + '/' + framework;
-        console.log(1, element.href);
-        // element.href = '#/' + element.hash.replace(/#\/([^\/]+)\/([^\/]+)\/([^\/]+)/, '#/' + '$1/' + server + '/$3' );
-      });
-
-      $('#server-selector a').each(function (i, element) {
-        element.href = '#/' + client + '/' + element.dataset.value + '/' + framework;
-        console.log(2, element.href);
-      });
-
-      $('#framework-selector a').each(function (i, element) {
-        element.href = '#/' + client + '/' + server + '/' + element.dataset.value;
-        console.log(3, element.href);
-      });
-
-
       var clientContentUrl = client + '/default-example.html';
 
-      var serverExampleType = implicitClients.indexOf(client) > -1 ? 'implicit' : 'code';
+      var serverExampleType = implicitClients.indexOf(client) > -1 ? 'implicit' : 'auth-code';
 
-      var serverContentUrl = server + '/' + serverExampleType + '-' + framework + '.html';
+      var serverContentUrl = server + '/' + framework + '-' + serverExampleType + '.html';
 
       $.ajax({
         url: clientContentUrl
@@ -99,30 +204,6 @@ $(function() {
         url: serverContentUrl
       }).done(function( html ) {
         $( "#server_content" ).html( html );
-      });
-
-      $('#client-selector a').each(function (i, element) {
-        if (element.hash.match(client)) {
-          return $(element).addClass('active');
-        }
-        $(element).removeClass('active');
-      });
-      $('#server-selector a').each(function (i, element) {
-        if (element.hash.match(server)) {
-          return $(element).addClass('active');
-        }
-        $(element).removeClass('active');
-      });
-      $('#framework-selector a').each(function (i, element) {
-        $(element).remove();
-      });
-      frameworkDefinitions[server].forEach(function(frameworkDefinition) {
-        var link = $('<a>', {
-          text: frameworkDefinition.label,
-          href: '#/' + client + '/' + server + '/' + frameworkDefinition.name,
-          class: frameworkDefinition.name === framework ? 'active' : ''
-        });
-        $('#framework-selector').append(link);
       });
 
     }
@@ -146,4 +227,3 @@ $(function() {
 
   $('#client_setup_link').addClass('active');
 
-}());

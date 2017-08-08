@@ -1,6 +1,6 @@
 ---
 layout: quickstart_partial
-exampleDescription: Angular Implicit
+exampleDescription: .NET Implicit Example
 ---
 
 {% include quickstart-coming-soon.html %}

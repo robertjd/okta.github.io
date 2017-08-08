@@ -1,6 +1,6 @@
 ---
 layout: quickstart_partial
-libraryName: NodeJS
+exampleDescription: Spring Auth Code Example
 ---
 
 {% include quickstart-coming-soon.html %}

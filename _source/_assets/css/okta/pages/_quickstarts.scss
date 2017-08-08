@@ -10,9 +10,10 @@
   a {
     display: inline-block;
     color: #fff;
-
+    padding: 0 10px;
     &:hover{
       text-decoration: none;
+      cursor: pointer;
     }
     &.active,
     &:hover {

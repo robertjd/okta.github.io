@@ -1,6 +1,6 @@
 ---
 layout: quickstart_partial
-exampleDescription: Angular Implicit
+exampleDescription: PHP Auth Code Example
 ---
 
 {% include quickstart-coming-soon.html %}

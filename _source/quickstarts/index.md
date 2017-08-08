@@ -10,10 +10,6 @@ title: Authentication Quickstart Guide
 
 <div class="code-selector" id="client-selector">
   <h3>Client</h3>
-  <a data-value="angular">Angular</a>
-  <a data-value="react">React</a>
-  <a data-value="widget">Widget</a>
-  <a data-value="ios">iOS</a>
 </div>
 
 <div id="client_content" class="example-content-well"></div>
@@ -22,8 +18,6 @@ title: Authentication Quickstart Guide
 
 <div class="code-selector" id="server-selector">
   <h3>Server</h3>
-  <a data-value="node">Node.js</a>
-  <a data-value="java">Java</a>
 </div>
 
 <div class="code-selector" id="framework-selector">
