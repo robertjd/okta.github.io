@@ -79,6 +79,26 @@
     ]
   }
 
+  function applyCurrentUrl() {
+    var matches = window.location.hash.match('/([^\/]*)?\/?([^\/]*)?\/?([^\/]*)');
+    if (matches && matches.length) {
+      var activeClient = matches[1];
+      var activeServer = matches[2];
+      var activeFramework = matches[3];
+      linkDefinitions.clients.forEach(function (client) {
+        client.active = client.name === activeClient;
+      });
+      linkDefinitions.servers.forEach(function (server) {
+        server.active = server.name === activeServer;
+        server.frameworks.forEach(function (framework) {
+          framework.active = framework.name === activeFramework;
+        });
+      });
+    }
+  }
+
+  applyCurrentUrl();
+
   linkDefinitions.clients.forEach(function (client) {
     var link = $('<a>', {
       text: client.label,
@@ -166,15 +186,11 @@
 
 
   if (!window.location.hash || !knownClients.test(window.location.hash)) {
-    window.location.hash.replace('/' + defaultClient);
+    setUrl();
   }
 
   var routes = {
     '/([^\/]*)?\/?([^\/]*)?\/?([^\/]*)': function(client, server, framework) {
-
-      console.log('GET', client, server, framework);
-
-      // When the client changes, need to change the deep links for servers
 
       if (!client) {
         client = defaultClient
