@@ -32,7 +32,7 @@
     servers: [
       {
         active: true,
-        name: 'node',
+        name: 'nodejs',
         label: 'Node JS',
         frameworks: [
           {
