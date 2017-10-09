@@ -7,9 +7,9 @@ excerpt: How to implement the authorization code flow in Okta
 
 # Implement the Authorization Code Flow
 
-If you are building a server-side (or "web") application that is capable of securely storing secrets, then the authorization code flow is the recommended method for controlling access to it. 
+If you are building a server-side (or "web") application that is capable of securely storing secrets, then the authorization code flow is the recommended method for controlling access to it.
 
-At a high-level, this flow has the following steps: 
+At a high-level, this flow has the following steps:
 
 - Your application directs the browser to the Okta Sign-In page, where the user authenticates
 - The browser receives an authorization code from your Okta authorization server
@@ -17,10 +17,22 @@ At a high-level, this flow has the following steps:
 - Your application sends this code to Okta, and Okta returns access and ID tokens, and optionally a refresh token
 - Your application can now use these tokens to perform actions on behalf of the user with a resource server (for example an API)
 
+[//]: # (use redirect language whenever applicable, as it makes the flow easy to grok)
+- Your application re-directs the browser to the Okta Sign-In page, where the user authenticates
+- Okta re-directs the browser back to your application, with an authorization code
+- Your application sends this code to Okta, and Okta returns access and ID tokens, and optionally a refresh token
+- Your application can now use these tokens to perform actions on behalf of the user with a resource server (for example an API)
+
 For more information on the authorization code flow, including why to use it, see [our OAuth 2.0 overview](/authentication-guide/auth-overview/#authorization-code-flow).
+
+[//]: # (I'm trying this out.  I'm debating bringing the list of libraries front and center. This is a compromise)
+
+> Ready to integrate this flow?  Skip down to our [integration libraries](#integration-libraries).
+
 
 ### 1. Setting up your Application
 
+0. You need to be logged into the Developer Console.
 1. From the Applications page, choose **Add Application**
 2. You will now be on the Create New Application page. From here, select **Web**
 3. Fill-in the Application Settings, then click **Done**. The "Login redirect URIs" must match a URI that your user can be redirected to with their authorization code. See below for more details.
@@ -35,6 +47,7 @@ https://your-Org.oktapreview.com/oauth2/default/v1/authorize?client_id=0oabucvyc
 
 Note the parameters that are being passed:
 
+// Tell me where to find this client_id
 - `client_id` matches the Client ID of your Okta OAuth application that you created above.
 - `response_type` is `code`, indicating that we are using the authorization code grant type.
 - `scope` is `openid`. This can be left empty if you configure a default scope on the authorization server. For more information about this, see the [Custom Authorization Server chapter](/authentication-guide/implementing-authentication/set-up-authz-server.html#create-scopes-optional).
@@ -43,26 +56,30 @@ Note the parameters that are being passed:
 
 For more information on these parameters, see [the OAuth 2.0 API reference](https://developer.okta.com/docs/api/resources/oauth2.html#obtain-an-authorization-grant-from-a-user).
 
-If the user does not have an existing session, this will open the Okta Sign-in Page. After successfully authenticating, the user will arrive at the specified `redirect_uri` along with a `code`:
+[//]: # (we should also mention what hapens if they do have a session)
+If the user does not have an existing session, this will open the Okta Sign-in Page. After successfully authenticating, the user be redirected to the specified `redirect_uri` along with a `code`:
 
 ```
 http://localhost/?code=P5I7mdxxdv13_JfXrCSq&state=state-296bc9a0-a2a2-4a57-be1a-d0e2fd9bb601
 ```
 
-This code will remain valid for 60 seconds, during which it can be exchanged for tokens.
+This code will remain valid for 60 seconds, during which it can be exchanged for tokens.  Your server must exchange this code for an access token, this is covered in the next step.
 
 ### 3. Exchanging the Code for Tokens
 
 To exchange this code for access and ID tokens, you pass it to your authorization server's `/token` endpoint:
 
+[//]: # (we're trying to standardize on {{yourOktaOkrg}}.com)
 ```
 curl --request POST \
-  --url https://your-Org.oktapreview.com/oauth2/default/v1/token \
+  --url https://{{yourOktaOrg}}.com/oauth2/default/v1/token \
   --header 'accept: application/json' \
   --header 'authorization: Basic MG9hY...' \
   --header 'content-type: application/x-www-form-urlencoded' \
   --data 'grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost&code=P59yPm1_X1gxtdEOEZjn'
 ```
+
+[//]: # (tell me where i can find this ID and secret)
 
 > Important: The call to the `/token` endpoint requires authentication. In this case, it is a Basic Auth digest of the Client ID and Secret. This requirement is why this call is only appropriate for applications that can guarantee the secrecy of the Client Secret. For more on Basic Auth, please see [Token Authentication Methods](https://developer.okta.com/docs/api/resources/oauth2.html#token-authentication-methods).
 
@@ -90,6 +107,10 @@ If the code is still valid, your application will receive back access and ID tok
 
 When your application passes a request with an `access_token`, the resource server will need to validate it. For more on this, see [Validating Access Tokens](/authentication-guide/tokens/validating-access-tokens).
 
-### Examples
+### Integration Libraries
 
-<https://github.com/okta/samples-nodejs-express-4>
+(robert.todo) fill out this section with links to libraries and their samples.  Link do library docs on github, or... ?
+
+| Environment             | Integration                  | Sample projects                      |
+| ----------------------- | ---------------------------- |------------------------------------- |
+| (icon) (name, e.g Node) | Integrate name, e.g. Express | * One sample respository per bullet  |

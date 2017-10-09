@@ -13,13 +13,13 @@ A refresh token is a special token that is used to generate additional access to
 
 ## Setting Up Your Application
 
-Refresh tokens are available for a subset of Okta OAuth 2.0 Client Applications, specifically `web` or `native` applications. For more about creating an OAuth 2.0 application see [Using the App Integration Wizard](https://help.okta.com/en/prev/Content/Topics/Apps/Apps_App_Integration_Wizard.htm).
+Refresh tokens are available for a subset of Okta OAuth 2.0 Client Applications, specifically web or native applications. For more about creating an OAuth 2.0 application see [Using the App Integration Wizard](https://help.okta.com/en/prev/Content/Topics/Apps/Apps_App_Integration_Wizard.htm).
 
-Once you have an application, you need to make sure that the "Allowed grant types" include "Refresh Token". 
+Once you have an application, you need to make sure that the "Allowed grant types" include "Refresh Token".
 
 ## How to Get a Refresh Token
 
-To get a refresh token, you send a request to your Okta Authorization Server. 
+To get a refresh token, you send a request to your Okta Authorization Server.
 
 ### Get a Refresh Token with the Code Flow
 
@@ -50,13 +50,13 @@ This table only shows the minimum requirements. For example, with the `password`
 
 You would then get back an ID token alongside your access and refresh tokens.
 
-> NOTE: Although you requested access, refresh, and ID tokens, the refresh token can only be used to get a new access token. An ID token will not be returned.
+> NOTE: Although you requested access, refresh, and ID tokens, the refresh token can only be used to get a new access token. An ID token cannot be refreshed.
 
 For more information see the [Okta OAuth 2.0 reference page](/docs/api/resources/oauth2.html#response-parameters-1).
 
 ## Get a Refresh Token Silently for Your SPA
 
-In a normal Single-Page Application (SPA) it is usually undesirable to redirect the user to a login page during normal navigation. For example, a user could request access to a resource, prompting your SPA to send a request to the Okta `/authorize` endpoint. Normally, if a user does not have a valid session, this request will result in a redirection to a login page. To avoid this disruptive redirection, the endpoint allows for a request parameter called `prompt`. If the value of the `prompt` parameter is `none`, this guarantees that the user will not be prompted to login, regardless of whether they have an active session or not. Instead, your application will either silently obtain the requested tokens or an OAuth error response. How to act on the error is up to you. 
+In a normal Single-Page Application (SPA) it is usually undesirable to redirect the user to a login page during normal navigation. For example, a user could request access to a resource, prompting your SPA to send a request to the Okta `/authorize` endpoint. Normally, if a user does not have a valid session, this request will result in a redirection to a login page. To avoid this disruptive redirection, the endpoint allows for a request parameter called `prompt`. If the value of the `prompt` parameter is `none`, this guarantees that the user will not be prompted to login, regardless of whether they have an active session or not. Instead, your application will either silently obtain the requested tokens or an OAuth error response. How to act on the error is up to you.
 
 For more information on the `/authorize` endpoint, see the [Authentication Request section of the OIDC Reference](/docs/api/resources/oidc.html#authentication-request).
 
