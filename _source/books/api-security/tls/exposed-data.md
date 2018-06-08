@@ -1,12 +1,13 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "Exposed Data over SSL/TLS - Transport Layer Security"
 book_chapter: "tls"
 book_section: "tls-exposed-data"
 ---
 
-<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="../">&larr; Transport Layer Security</a></div>
+<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="/books/{{page.book}}/{{page.book_chapter}}/">&larr; Transport Layer Security</a></div>
 
 ## Exposed Data over SSL/TLS {#tls-exposed-data}
 

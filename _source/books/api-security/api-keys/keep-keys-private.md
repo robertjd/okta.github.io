@@ -1,12 +1,13 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "Keep Your Credentials Private - Managing API Credentials"
 book_chapter: "api-keys"
 book_section: "api-keys-keep-keys-private"
 ---
 
-<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="../">&larr; Managing API Credentials</a></div>
+<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="/books/{{page.book}}/{{page.book_chapter}}/">&larr; Managing API Credentials</a></div>
 
 ## Keep Your Credentials Private {#api-keys-keep-keys-private}
 

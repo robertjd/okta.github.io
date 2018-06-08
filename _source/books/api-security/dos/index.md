@@ -1,5 +1,6 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "DOS Mitigation Strategies"
 book_chapter: "dos"

@@ -1,12 +1,13 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "Solutions Provided by an API Management Platform - API Gateways"
 book_chapter: "gateways"
 book_section: "gateways-solutions"
 ---
 
-<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="../">&larr; API Gateways</a></div>
+<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="/books/{{page.book}}/{{page.book_chapter}}/">&larr; API Gateways</a></div>
 
 ## Solutions Provided by an API Management Platform {#gateways-solutions}
 

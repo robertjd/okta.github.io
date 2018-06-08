@@ -1,5 +1,6 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "Foreword"
 book_chapter: "foreword"

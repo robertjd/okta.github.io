@@ -1,5 +1,6 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "Managing API Credentials"
 book_chapter: "api-keys"

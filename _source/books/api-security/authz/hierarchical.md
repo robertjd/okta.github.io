@@ -1,12 +1,13 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "Hierarchical - Authorization"
 book_chapter: "authz"
 book_section: "authz-hierarchical"
 ---
 
-<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="../">&larr; Authorization</a></div>
+<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="/books/{{page.book}}/{{page.book_chapter}}/">&larr; Authorization</a></div>
 
 ## Hierarchical {#authz-hierarchical}
 

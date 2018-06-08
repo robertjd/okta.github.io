@@ -1,12 +1,13 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "Best Practices for Secure Data - Sanitizing Data"
 book_chapter: "sanitizing"
 book_section: "sanitizing-best-practices"
 ---
 
-<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="../">&larr; Sanitizing Data</a></div>
+<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="/books/{{page.book}}/{{page.book_chapter}}/">&larr; Sanitizing Data</a></div>
 
 ## Best Practices for Secure Data {#sanitizing-best-practices}
 

@@ -1,12 +1,13 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "Establishing a SSL/TLS Session - Transport Layer Security"
 book_chapter: "tls"
 book_section: "tls-how"
 ---
 
-<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="../">&larr; Transport Layer Security</a></div>
+<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="/books/{{page.book}}/{{page.book_chapter}}/">&larr; Transport Layer Security</a></div>
 
 ## Establishing a SSL/TLS Session {#tls-how}
 

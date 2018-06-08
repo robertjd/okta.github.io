@@ -1,12 +1,13 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "Key Takeaways for Managing API Credentials - Managing API Credentials"
 book_chapter: "api-keys"
 book_section: "api-keys-takeaways"
 ---
 
-<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="../">&larr; Managing API Credentials</a></div>
+<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="/books/{{page.book}}/{{page.book_chapter}}/">&larr; Managing API Credentials</a></div>
 
 ## Key Takeaways for Managing API Credentials {#api-keys-takeaways}
 

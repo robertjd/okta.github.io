@@ -1,5 +1,6 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "Transport Layer Security"
 book_chapter: "tls"

@@ -1,12 +1,13 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "Parting Shots - DOS Mitigation Strategies"
 book_chapter: "dos"
 book_section: "dos-parting"
 ---
 
-<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="../">&larr; DOS Mitigation Strategies</a></div>
+<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="/books/{{page.book}}/{{page.book_chapter}}/">&larr; DOS Mitigation Strategies</a></div>
 
 ## Parting Shots {#dos-parting}
 API services are becoming a more and more critical part of the overall world economy, and attacks on API services is on the rise. Whether your services are targeted for fun, profit, or political reasons, it’s important to know how to protect your assets (and those of your customers). Mitigating the technological and economic effects of a DoS on your internet-based resources is critical to the success of your company’s platform.

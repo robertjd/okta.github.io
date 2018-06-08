@@ -1,12 +1,13 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "The Role of an API Management Platform - API Gateways"
 book_chapter: "gateways"
 book_section: "gateways-management-platform"
 ---
 
-<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="../">&larr; API Gateways</a></div>
+<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="/books/{{page.book}}/{{page.book_chapter}}/">&larr; API Gateways</a></div>
 
 ## The Role of an API Management Platform {#gateways-management-platform}
 

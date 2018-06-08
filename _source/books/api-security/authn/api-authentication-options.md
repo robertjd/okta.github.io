@@ -1,12 +1,13 @@
 ---
 layout: books_page
+book: "api-security"
 weight: 1
 title: "API Authentication Options - Authentication"
 book_chapter: "authn"
 book_section: "authn-api-authentication-options"
 ---
 
-<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="../">&larr; Authentication</a></div>
+<div style="font-size: 0.9em; margin-bottom: -20px;"><a href="/books/{{page.book}}/{{page.book_chapter}}/">&larr; Authentication</a></div>
 
 ## API Authentication Options {#authn-api-authentication-options}
 
